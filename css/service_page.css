@@ -210,3 +210,26 @@ hr {
   font-size: 14px;
 }
 /* Footer /*/
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+  .task-grid {
+    display: block;
+    max-width: 100%;
+    justify-items: center;
+    margin-top: 100px;
+  }
+  .task-card {
+    margin: 0 auto;
+    margin-bottom: 100px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .footer-address{
+    flex: 2;
+    height: fit-content;
+    padding-left: 100px;
+    margin: 0;
+  }
+}
