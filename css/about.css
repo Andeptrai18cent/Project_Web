@@ -1,0 +1,49 @@
+/* Định dạng toàn trang */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+:root{
+    --accent-color: #A5CCFF;
+    --text-color: black;
+    --base-color: white;
+    --navbar-color : #E1EEFF;
+}
+body {
+    font-family: "IBM Plex Sans", sans-serif;
+}
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background-color: var( --navbar-color);
+ }
+ .navbar  a{
+    font-size: 18px;
+    color: var(--text-color);
+    font-weight: 500;
+    text-decoration: none;
+    margin-left: 40px;
+ }
+.banner {
+    position: relative;
+    margin-top: 80px;
+    height: 300px;
+    color: var(--base-color);
+    background: url(/img/taoanhdep_lam_mo_anh_13958.jpeg) center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.container{
+    margin-top: 130px;
+    background-color: #A5CCFF;
+    border-radius: 10px;
+    justify-content: center;
+    min-height: 200px;
+    display: flex;
+}
