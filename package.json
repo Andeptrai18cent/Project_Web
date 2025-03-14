@@ -1,0 +1,17 @@
+{
+  "name": "fullstack",
+  "version": "1.0.0",
+  "description": "learning express and node.js",
+  "main": "sever.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "avbackend",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
