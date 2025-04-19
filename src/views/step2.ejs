@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/step2.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="">
+    <script src="/js/book-tasker-step-2.js" type="text/javascript" defer></script>
+    <title>Tham khảo Tasker và giá</title>
+</head>
+<body>
+    <div class="pop-up">
+        <div class="pop-up-content">
+            <button class="close-pop-up" onclick="turnOffPopUp()">X</button>
+            <h1>Chọn ngày và giờ để đặt lịch</h1>
+            <div class="datepicker">
+                <!-- .datepicker-header -->
+                <div class="datepicker-header">
+                    <button class="prev">Prev</button>
+                    <div>
+                        <select class="month-input">
+                        <option>January</option>
+                        <option>February</option>
+                        <option>March</option>
+                        <option>April</option>
+                        <option>May</option>
+                        <option>June</option>
+                        <option>July</option>
+                        <option>August</option>
+                        <option>September</option>
+                        <option>October</option>
+                        <option>November</option>
+                        <option>December</option>
+                        </select>
+                        <input type="number" class="year-input" />
+                    </div>
+                    <button class="next">Next</button>
+                </div>
+                <!-- /.datepicker-header -->
+                <!-- .days -->
+                <div class="days-and-dates">
+                    <div class="days">
+                    <span>Sun</span>
+                    <span>Mon</span>
+                    <span>Tue</span>
+                    <span>Wed</span>
+                    <span>Thu</span>
+                    <span>Fri</span>
+                    <span>Sat</span>
+                    </div>
+                    <!-- /.days -->
+                    <!-- .dates -->
+                    <div class="dates"></div>
+                </div>
+                <!-- /.dates -->
+            </div>
+            <select class="dropdown-button">
+                <option value="8:00" selected>8:00</option>
+                <option value="8:30">8:30</option>
+                <option value="9:00">9:00</option>
+                <option value="9:30">9:30</option>
+                <option value="10:00">10:00</option>
+                <option value="10:30">10:30</option>
+                <option value="11:00">11:00</option>
+                <option value="11:30">11:30</option>
+                <option value="12:00">12:00</option>
+                <option value="12:30">12:30</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00</option>
+                <option value="16:30">16:30</option>
+                <option value="17:00">17:00</option>
+                <option value="17:30">17:30</option>
+                <option value="18:00">18:00</option>
+                <option value="18:30">18:30</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30">19:30</option>
+                <option value="20:00">20:00</option>
+                <option value="20:30">20:30</option>
+                <option value="21:00">21:00</option>
+                <option value="21:30">21:30</option>
+            </select>
+            <button class="select-date-tasker-button" onclick="confirmPage()">Chọn và tiếp tục</button>
+        </div>
+    </div>
+    <div class="logo">Home-<span>Task</span></div>
+    <div class="intro_title">Tìm người phù hợp với yêu cầu của bạn</div>
+    <div class="tasker-choosing-zone">
+        <div class="sort-tasker-by">
+            <p>Sắp xếp theo:</p> 
+            <select>
+                <option value="recommended" selected>Đề nghị</option>
+                <option value="price-lowest">Giá tăng dần</option>
+                <option value="price-highest">Giá giảm dần</option>
+                <option value="review">Số đánh giá tích cực</option>
+                <option value="completed-tasker">Số công việc đã hoàn thành</option>
+            </select>
+        </div>
+        <div class="date-selection">
+            <h2>Ngày</h2>
+            <div class="date-options">
+                <button class="date-button">Hôm nay</button>
+                <button class="date-button">Trong 3 ngày</button>
+                <button class="date-button">Trong 1 tuần</button>
+            </div>        
+            <div class="divider"></div>
+            <div class="time-selection">
+                <h2>Thời gian trong ngày</h2>
+                <div class="time-options">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="morning">
+                        <label for="morning">Sáng (8:00 - 12:00)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="afternoon">
+                        <label for="afternoon">Chiều (12:00 - 17:00)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="evening">
+                        <label for="evening">Tối (17:00 - 21:30)</label>
+                    </div>
+                </div>
+            </div>
+            <div class="time-divider">hoặc chọn một mốc thời gian cụ thể</div>
+                <select class="dropdown-button">
+                    <option value="flexible" selected>Tôi có thể linh hoạt thời gian</option>
+                    <option value="8:00">8:00</option>
+                    <option value="8:30">8:30</option>
+                    <option value="9:00">9:00</option>
+                    <option value="9:30">9:30</option>
+                    <option value="10:00">10:00</option>
+                    <option value="10:30">10:30</option>
+                    <option value="11:00">11:00</option>
+                    <option value="11:30">11:30</option>
+                    <option value="12:00">12:00</option>
+                    <option value="12:30">12:30</option>
+                    <option value="13:00">13:00</option>
+                    <option value="13:30">13:30</option>
+                    <option value="14:00">14:00</option>
+                    <option value="14:30">14:30</option>
+                    <option value="15:00">15:00</option>
+                    <option value="15:30">15:30</option>
+                    <option value="16:00">16:00</option>
+                    <option value="16:30">16:30</option>
+                    <option value="17:00">17:00</option>
+                    <option value="17:30">17:30</option>
+                    <option value="18:00">18:00</option>
+                    <option value="18:30">18:30</option>
+                    <option value="19:00">19:00</option>
+                    <option value="19:30">19:30</option>
+                    <option value="20:00">20:00</option>
+                    <option value="20:30">20:30</option>
+                    <option value="21:00">21:00</option>
+                    <option value="21:30">21:30</option>
+                </select>
+        </div>
+        <div class="tasker-info-box">
+            <div class="tasker-info">
+                <div class="tasker-info-left">
+                    <div class="profile-img">
+                        <img src="/Img/tasker_placeholder_1.jpg">
+                    </div>
+                    <button class="select-tasker-button">Chọn và tiếp tục</button>
+                    <p>Bạn có thể trò chuyện với Tasker, thay đổi thông tin về công việc hoặc thay đổi thời gian làm việc sau khi đặt</p>
+                </div>
+                <div class="tasker-info-right">
+                    <div class="name-and-pay">
+                        <div class="tasker-name">Vu Thanh Nam</div>
+                        <div class="tasker-wage">150.000đ/ giờ</div>
+                    </div>
+                    <div class="task-and-review">
+                        <span>★</span>
+                        <span>5.0 (90 đánh giá)</span>
+                        <p class="specific-task-count">15 công việc Lắp ráp đồ nội thất</p>
+                        <p class="task-group-count">182 công việc Lắp ráp đã làm tất cả</p>
+                        <div class="introduction-tasker">
+                            <h4>Giới thiệu bản thân:</h4>
+                            <p class="introduction-info">
+                                Tôi tên là Vũ Thành Nam, hiện đang tìm kiếm công việc lắp ráp đồ nội thất tại Home Task. Tôi là người siêng năng, cẩn thận và có trách nhiệm trong công việc. Tôi có kinh nghiệm 3 năm trong việc lắp ráp, sửa chữa và bảo trì các sản phẩm nội thất, đảm bảo đúng kỹ thuật và chất lượng.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tasker-info">
+                <div class="tasker-info-left">
+                    <div class="profile-img">
+                        <img src="/Img/tasker_placeholder_2.jpg">
+                    </div>
+                    <button class="select-tasker-button">Chọn và tiếp tục</button>
+                    <p>Bạn có thể trò chuyện với Tasker, thay đổi thông tin về công việc hoặc thay đổi thời gian làm việc sau khi đặt</p>
+                </div>
+                <div class="tasker-info-right">
+                    <div class="name-and-pay">
+                        <div class="tasker-name">Dinh Hoang Anh</div>
+                        <div class="tasker-wage">177.000đ/ giờ</div>
+                    </div>
+                    <div class="task-and-review">
+                        <span>★</span>
+                        <span>4.7 (10 đánh giá)</span>
+                        <p class="specific-task-count">20 công việc Lắp ráp đồ nội thất</p>
+                        <p class="task-group-count">41 công việc Lắp ráp đã làm tất cả</p>
+                        <div class="introduction-tasker">
+                            <h4>Giới thiệu bản thân:</h4>
+                            <p class="introduction-info">
+                                Tôi tên là Đinh Hoàng Anh, hiện đang tìm kiếm công việc lắp ráp đồ nội thất tại Home Task. Tôi là người siêng năng, cẩn thận và có trách nhiệm trong công việc. Tôi có kinh nghiệm 3 năm trong việc lắp ráp, sửa chữa và bảo trì các sản phẩm nội thất, đảm bảo đúng kỹ thuật và chất lượng.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tasker-info">
+                <div class="tasker-info-left">
+                    <div class="profile-img">
+                        <img src="/Img/tasker_placeholder_3.jpg">
+                    </div>
+                    <button class="select-tasker-button">Chọn và tiếp tục</button>
+                    <p>Bạn có thể trò chuyện với Tasker, thay đổi thông tin về công việc hoặc thay đổi thời gian làm việc sau khi đặt</p>
+                </div>
+                <div class="tasker-info-right">
+                    <div class="name-and-pay">
+                        <div class="tasker-name">Nguyen Quang Huy</div>
+                        <div class="tasker-wage">164.000đ/ giờ</div>
+                    </div>
+                    <div class="task-and-review">
+                        <span>★</span>
+                        <span>4.5 (123 đánh giá)</span>
+                        <p class="specific-task-count">143 công việc Lắp ráp đồ nội thất</p>
+                        <p class="task-group-count">200 công việc Lắp ráp đã làm tất cả</p>
+                        <div class="introduction-tasker">
+                            <h4>Giới thiệu bản thân:</h4>
+                            <p class="introduction-info">
+                                Tôi tên là Nguyễn Quang Huy, hiện đang tìm kiếm công việc lắp ráp đồ nội thất tại Home Task. Tôi là người siêng năng, cẩn thận và có trách nhiệm trong công việc. Tôi có kinh nghiệm 3 năm trong việc lắp ráp, sửa chữa và bảo trì các sản phẩm nội thất, đảm bảo đúng kỹ thuật và chất lượng.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tasker-info">
+                <div class="tasker-info-left">
+                    <div class="profile-img">
+                        <img src="/Img/tasker_placeholder_4.jpg">
+                    </div>
+                    <button class="select-tasker-button">Chọn và tiếp tục</button>
+                    <p>Bạn có thể trò chuyện với Tasker, thay đổi thông tin về công việc hoặc thay đổi thời gian làm việc sau khi đặt</p>
+                </div>
+                <div class="tasker-info-right">
+                    <div class="name-and-pay">
+                        <div class="tasker-name">Nguyen Xuan Nam</div>
+                        <div class="tasker-wage">144.000đ/ giờ</div>
+                    </div>
+                    <div class="task-and-review">
+                        <span>★</span>
+                        <span>4.8 (11 đánh giá)</span>
+                        <p class="specific-task-count">4 công việc Lắp ráp đồ nội thất</p>
+                        <p class="task-group-count">21 công việc Lắp ráp đã làm tất cả</p>
+                        <div class="introduction-tasker">
+                            <h4>Giới thiệu bản thân:</h4>
+                            <p class="introduction-info">
+                                Tôi tên là Nguyễn Xuân Nam, hiện đang tìm kiếm công việc lắp ráp đồ nội thất tại Home Task. Tôi là người siêng năng, cẩn thận và có trách nhiệm trong công việc. Tôi có kinh nghiệm 3 năm trong việc lắp ráp, sửa chữa và bảo trì các sản phẩm nội thất, đảm bảo đúng kỹ thuật và chất lượng.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

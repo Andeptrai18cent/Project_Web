@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+:root{
+  --accent-color: #A5CCFF;
+  --text-color: black;
+  --base-color: white;
+  --navbar-color : #E1EEFF;
+}
+body{
+    margin: 0;
+    font-family: "IBM Plex Sans", sans-serif;
+    background-color: #ffffff;
+}
+/* narbar */
+.navbar {
+  min-height: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  background-color: var(--navbar-color);
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+.logo{
+  max-width: 10%;
+  flex-shrink: 0;
+  margin-left: 50px;
+}
+.nav_link{
+  margin-right: 50px;
+  display: flex;
+  gap: 30px;
+}
+.nav_link a {
+  font-size: 18px;
+  color: var(--text-color);
+  font-weight: 500;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.nav_link a:hover{
+  color: #0066d9;
+  text-decoration: underline;
+}
+/* narbar */
+/* Hero Image*/
+.hero-section {
+    width: 100%;
+    height: 400px;
+    /*background: url('/image/placeholder.png') center/cover no-repeat;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 100px;
+}
+
+.content-box {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content-box h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.content-box p {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 15px;
+}
+.content-box a{
+  text-decoration: none;
+  color: var(--base-color);
+}
+.content-box button {
+    background-color: #007bff;
+    color: white;
+    font-size: 14px;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.content-box button:hover {
+    background-color: #0056b3;
+}
+/* Hero Image/ */
+
+/* Task description */
+.task-section {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.task-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.task-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.task-info {
+    flex: 2;
+    background-color: #e6f0ff;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    height: 300px;
+    align-self: flex-start;
+}
+
+.task-image {
+    flex: 1;
+    width: 400px;
+    align-self: flex-start;
+}
+/* Task description/ */
+
+/* How it works */
+.how-it-works{
+  margin-top: 100px;
+  background-color: #f9fafb;
+  height: 550px;
+}
+.how-it-works .step-by-step{
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 auto;
+  margin-top: 25px;
+  width: 100%;
+  align-items: center;
+  gap: 20%;
+  
+}
+.how-it-works .step-by-step div{
+  width: 200px;
+  height: 300px;
+}
+.how-it-works .step-by-step div img{
+  height: 200px;
+  width: 200px;
+}
+.how-it-works h1{
+  width: 50%;
+  padding-top: 25px;
+  margin: 0 auto;
+  text-align: center;
+}
+#step1{
+  padding-left: 10%;
+}
+#step3{
+  padding-right: 10%;
+}
+/* How it works/ */
+
+/* Footer */
+.footer {
+  background-color: #0066d9;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: left;
+  max-height: fit-content;
+}
+
+.footer-address {
+  flex: 2;
+  margin: 10px;
+}
+.footer-social-app-link{
+  flex: 1;
+  min-width: fit-content;
+  padding-left: 100px;
+}
+
+.social-icons {
+  display: inline-block;
+}
+.social-icons a{
+  display: inline-block;
+}
+.social-icons a img {
+  width: 40px;
+  height: 40px;
+  margin: 0 15px;
+}
+
+.app-links a img {
+  width: 250px;
+  margin-right: 5px;
+}
+
+.footer-address{
+  flex: 2;
+  height: fit-content;
+  padding-left: 300px;
+  margin: 0;
+}
+.footer-address a {
+  color: white;
+}
+
+.footer-address a:hover{
+  color: black;
+}
+hr {
+  border: 0;
+  height: 1px;
+  background-color: white;
+  width: 80%;
+  margin: 20px auto;
+}
+
+.footer-text {
+  font-size: 14px;
+}
+/* Footer /*/
+
+/* Responsive */
+@media screen and (max-width: 750px) {
+  .how-it-works{
+    height: 1400px;
+    width: 100%;
+    margin: 0;
+  }
+  .how-it-works .step-by-step{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: fit-content;
+  }
+  .how-it-works .step-by-step div{
+    padding-bottom: 100px;
+  }
+  #step1{
+    padding-left: 0%;
+  }
+  #step3{
+    padding-right: 0%;
+  }
+
+  .task-section {
+    margin-bottom: 100px;
+  }
+  .task-content {
+    flex-direction: column;
+  }
+  .task-info {
+    flex: 2;
+    background-color: #e6f0ff;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    height: 300px;
+    align-self: center;
+  }
+  .task-image {
+    flex: 1;
+    align-self: center;
+  }
+  .task-title {
+    text-align: center;
+  }
+
+  .footer-address{
+    flex: 2;
+    height: fit-content;
+    padding-left: 100px;
+    margin: 0;
+  }
+}

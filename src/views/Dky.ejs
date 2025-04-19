@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home-Task Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        .content {
+            display: flex;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .image-container {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        
+        .login-form {
+            flex: 1;
+            padding: 20px;
+            min-width: 300px;
+        }
+        
+        .login-form h2 {
+            color: #0066cc;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .btn-register {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .btn-register:hover {
+            background-color: #0052a3;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><a href="/">Home</a>-<a href="/">Task</a></h1>
+        </div>
+        
+        <div class="content">
+            <div class="image-container">
+                <img src="https://placehold.co/600x400/png?text=Worker+Image" alt="Worker in safety gear">
+            </div>
+            
+            <div class="login-form">
+                <h2>Gia nhập với chúng tôi</h2>
+                
+                <div class="form-group">
+                    <label for="location">Chọn khu vực của bạn:</label>
+                    <select id="location">
+                        <option value="hanoi">Hà Nội</option>
+                        <option value="hcm">Hồ Chí Minh</option>
+                        <option value="danang">Đà Nẵng</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="service">Chọn lĩnh vực của bạn:</label>
+                    <select id="service">
+                        <% for (service_group of service_groups){%>
+                            <option value="<%= service_group.group_id %>"><%= service_group.group_name %></option>
+                        <!-- <option value="transport">Vận chuyển đồ</option>
+                        <option value="repair">Sửa chữa</option>
+                        <option value="cleaning">Dọn dẹp</option> -->
+                        <% } %>
+                    </select>
+                </div>
+                
+                <button class="btn-register">Đăng ký</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form submission handler
+            document.querySelector('.btn-register').addEventListener('click', function() {
+                const location = document.getElementById('location').value;
+                const service = document.getElementById('service').value;
+                
+                // Here you would typically send this data to a server
+                console.log('Registration submitted:', { location, service });
+                alert('Đăng ký thành công!');
+            });
+        });
+    </script>
+</body>
+</html>

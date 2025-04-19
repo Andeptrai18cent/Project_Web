@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#" data-section="dashboard" class="active">
+                        <span class="icon"><i data-feather="code"></i></span>
+                        <span class="title">Admin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="task-manager">
+                        <span class="icon"><i data-feather="briefcase"></i></span>
+                        <span class="title">Task-Manager</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="user">
+                        <span class="icon"><i data-feather="user"></i></span>
+                        <span class="title">User</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="tasker">
+                        <span class="icon"><i data-feather="users"></i></span>
+                        <span class="title">Tasker</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="settings">
+                        <span class="icon"><i data-feather="settings"></i></span>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="sign-out">
+                        <span class="icon"><i data-feather="log-out"></i></span>
+                        <span class="title">Sign-Out</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="password">
+                        <span class="icon"><i data-feather="lock"></i></span>
+                        <span class="title">Password</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <i data-feather="menu"></i>
+                </div>
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <i data-feather="search"></i>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="content" id="dashboard-content">
+                <div class="cardBox">
+                    <div class="card">
+                        <div>
+                            <div class="numbers">1,504</div>
+                            <div class="cardName">Daily Views</div>
+                        </div>
+                        <div class="iconBx">
+                            <i data-feather="eye"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers">123,220</div>
+                            <div class="cardName">User-Online</div>
+                        </div>
+                        <div class="iconBx">
+                            <i data-feather="user"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers">1,224</div>
+                            <div class="cardName">Tasker-Online</div>
+                        </div>
+                        <div class="iconBx">
+                            <i data-feather="users"></i>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers">175,000</div>
+                            <div class="cardName">Earning</div>
+                        </div>
+                        <div class="iconBx">
+                            <i data-feather="dollar-sign"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details">
+                    <div class="recentOrders">
+                        <div class="cardHeader">
+                            <h2>Recent Order Tasks</h2>
+                            <a href="#" class="btn">View All</a>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Address</td>
+                                    <td>Task</td>
+                                    <td>Date</td>
+                                    <td>Price</td>
+                                    <td>Status</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Le Hiep</td>
+                                    <td>171 Yen Xa</td>
+                                    <td>Cooking</td>
+                                    <td>17/2/2025</td>
+                                    <td>156,000</td>
+                                    <td><span class="status done">Done</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Thanh Nam</td>
+                                    <td>Phung Khoang</td>
+                                    <td>Clean-room</td>
+                                    <td>14/2/2025</td>
+                                    <td>156,000</td>
+                                    <td><span class="status pending">Pending</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Vo An</td>
+                                    <td>Van Quan</td>
+                                    <td>Washing</td>
+                                    <td>14/2/2025</td>
+                                    <td>200,000</td>
+                                    <td><span class="status inprogress">In Progress</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Ta Bao</td>
+                                    <td>17 Thanh Xuan</td>
+                                    <td>Carry Heavy</td>
+                                    <td>14/2/2025</td>
+                                    <td>300,000</td>
+                                    <td><span class="status done">Done</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="recentUsers">
+                        <div class="cardHeader">
+                            <h2>Online Users</h2>
+                        </div>
+                        <div class="usersList">
+                            <div class="user">
+                                <div class="imgBx">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=faces" alt="User">
+                                </div>
+                                <div class="userInfo">
+                                    <h4>An Vo<br><span>171 Yen Xa</span></h4>
+                                </div>
+                            </div>
+                            <div class="user">
+                                <div class="imgBx">
+                                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=64&h=64&fit=crop&crop=faces" alt="User">
+                                </div>
+                                <div class="userInfo">
+                                    <h4>Thanh Nam<br><span>Phung Khoang</span></h4>
+                                </div>
+                            </div>
+                            <div class="user">
+                                <div class="imgBx">
+                                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=64&h=64&fit=crop&crop=faces" alt="User">
+                                </div>
+                                <div class="userInfo">
+                                    <h4>Le Hiep<br><span>Van Quan</span></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Content -->
+            <div class="content hidden" id="user-content">
+                <div class="user-cards">
+                    <div class="user-card">
+                        <div class="user-header">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=128&h=128&fit=crop&crop=faces" alt="User">
+                            <div class="user-info">
+                                <h3>John Doe</h3>
+                                <span class="status active">Active</span>
+                            </div>
+                        </div>
+                        <div class="user-details">
+                            <div class="detail">
+                                <i data-feather="mail"></i>
+                                <span>john@example.com</span>
+                            </div>
+                            <div class="detail">
+                                <i data-feather="phone"></i>
+                                <span>+1 234 567 890</span>
+                            </div>
+                            <div class="detail">
+                                <i data-feather="map-pin"></i>
+                                <span>123 Main St, City</span>
+                            </div>
+                        </div>
+                        <div class="user-stats">
+                            <div class="stat">
+                                <label>Join Date</label>
+                                <span>2024-01-15</span>
+                            </div>
+                            <div class="stat">
+                                <label>Tasks</label>
+                                <span>25</span>
+                            </div>
+                        </div>
+                        <div class="user-actions">
+                            <button class="btn-edit">Edit</button>
+                            <button class="btn-deactivate">Deactivate</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tasker Content -->
+            <div class="content hidden" id="tasker-content">
+                <div class="tasker-cards">
+                    <div class="tasker-card">
+                        <div class="tasker-header">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=128&h=128&fit=crop&crop=faces" alt="Tasker">
+                            <div class="tasker-info">
+                                <h3>Michael Johnson</h3>
+                                <div class="rating">
+                                    <i data-feather="star" class="star-filled"></i>
+                                    <span>4.8</span>
+                                </div>
+                            </div>
+                            <span class="status active">Active</span>
+                        </div>
+                        <div class="specialties">
+                            <span class="specialty">Cleaning</span>
+                            <span class="specialty">Gardening</span>
+                            <span class="specialty">Moving</span>
+                        </div>
+                        <div class="tasker-stats">
+                            <div class="stat">
+                                <i data-feather="check-circle"></i>
+                                <div>
+                                    <label>Completed Tasks</label>
+                                    <span>156</span>
+                                </div>
+                            </div>
+                            <div class="stat">
+                                <i data-feather="clock"></i>
+                                <div>
+                                    <label>Experience</label>
+                                    <span>3 years</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tasker-footer">
+                            <div class="location">
+                                <i data-feather="map-pin"></i>
+                                <span>Brooklyn, NY</span>
+                            </div>
+                            <div class="rate">$25/hr</div>
+                        </div>
+                        <div class="tasker-actions">
+                            <button class="btn-view">View Profile</button>
+                            <button class="btn-contact">Contact</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src ="script.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+</body>
+</html>

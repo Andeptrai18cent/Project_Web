@@ -1,0 +1,493 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docu ment</title>
+    <link rel="stylesheet" href="/css/AdminCss.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class = "icon"> <ion-icon name="code-slash-outline"></ion-icon> </span>
+                        <span class = "title">Admin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="task-manager">
+                        <span class = "icon"> <ion-icon name="bag-handle-outline"></ion-icon></span>
+                        <span class = "title">Task-Manager</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="user">
+                        <span class = "icon"> <ion-icon name="person-outline"></ion-icon></span>
+                        <span class = "title">User</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="tasker">
+                        <span class = "icon"> <ion-icon name="briefcase-outline"></ion-icon> </span>
+                        <span class = "title">Tasker</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="settings">
+                        <span class = "icon"> <ion-icon name="settings-outline"></ion-icon></span>
+                        <span class = "title">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class = "icon"> <ion-icon name="log-in-outline"></ion-icon></span>
+                        <span class = "title">Sign-Out</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class = "icon"><ion-icon name="lock-closed-outline"></ion-icon> </span>
+                        <span class = "title">PassWord</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!--main-->
+        <div class = "main">
+            <div class = "topbar">
+                <div class = "toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                <div class = "search">
+                    <label> 
+                        <input type ="text" placeholder="search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label> 
+                </div>
+            </div>
+            <!--dashboard-->
+            <div class="content" id="dashboard-content">
+            <!--card-->
+            <div class = "cardBox">
+                <div class = "card">
+                    <div>
+                        <div class = "numbers">1.504</div>
+                        <div class = "cardName">Daily View</div>
+                    </div>    
+                    <div class="iconBx">
+                        <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+                </div>
+                <div class = "card">
+                    <div>
+                        <div class = "numbers">123.220</div>
+                        <div class = "cardName">User-Online</div>
+                    </div>    
+                    <div class="iconBx">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </div>
+                </div>
+                <div class = "card">
+                    <div>
+                        <div class = "numbers">1.224</div>
+                        <div class = "cardName">Tasker-Online</div>
+                    </div>    
+                    <div class="iconBx">
+                        <ion-icon name="people-circle-outline"></ion-icon>
+                    </div>
+                </div>
+                <div class = "card">
+                    <div>
+                        <div class = "numbers">175.000</div>
+                        <div class = "cardName">Eanring</div>
+                    </div>    
+                    <div class="iconBx">
+                        <ion-icon name="cash-outline"></ion-icon>
+                    </div>
+                </div>
+            </div>   
+            <!--data-list-->
+            <div class = "details">
+                <div class = "recentOderTask"> 
+                    <div class = "cardHeader">
+                        <h2>rencent Oder Task</h2>
+                        <a href="#" class = "btn"> View All</a>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Order Id</td>
+                                <td>Name</td>
+                                <td>Address</td>
+                                <td>Tasker-id</td>
+                                <td>Task</td>
+                                <td>Date</td>
+                                <td>Price</td>
+                                <td>Status</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#1122</td>
+                                <td>Le Hiep</td>
+                                <td>171 Yen Xa</td>
+                                <td>#23132</td>
+                                <td>Cooking</td>
+                                <td>17/2/2025</td>
+                                <td>156.000</td>
+                                <td><span class = "status done">Done</span></td>
+                            </tr>
+                            <tr>
+                                <td>#1123</td>
+                                <td>Thanh Nam</td>
+                                <td>Phung Khoang</td>
+                                <td>#23132</td>
+                                <td>Clean-room</td>
+                                <td>14/2/2025</td>
+                                <td>156.000</td>
+                                <td><span class ="status pendding">pendding</span></td>
+                            </tr>
+                            <tr>
+                                <td>#1124</td>
+                                <td>Vo An</td>
+                                <td>Van Quan</td>
+                                <td>#23132</td>
+                                <td>Washing</td>
+                                <td>14/2/2025</td>
+                                <td>200.000</td>
+                                <td><span class ="status inprogess">In Progess</span></td>
+                            </tr>
+                            <tr>
+                                <td>#1125</td>
+                                <td>Ta Bao</td>
+                                <td>17 Thanh Xuan</td>
+                                <td>#23132</td>
+                                <td>Carry Heavy</td>
+                                <td>14/2/2025</td>
+                                <td>300.000</td>
+                                <td><span class ="status done">Done</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--RecentCustomerr-->
+                <div class ="recentUsers">
+                    <div class="cardHeader">
+                        <h2>Online User</h2>
+                    </div>
+                    <table>
+                        <tr>
+                            <td width = "60px"><div class ="imgBx"><img src="AdminAssest\z4924120722751_fba468b2fe555face31efbc97b866775.jpg" alt="image"></div></td>
+                            <td><h4>An Vo<br><span>171 Yen Xa</span></h4></td>
+                        </tr>
+                        <tr>
+                            <td width = "60px"><div class ="imgBx"><img src="AdminAssest\z4924120722751_fba468b2fe555face31efbc97b866775.jpg" alt="image"></div></td>
+                            <td><h4>An Vo<br><span>171 Yen Xa</span></h4></td>
+                        </tr>
+                        <tr>
+                            <td width = "60px"><div class ="imgBx"><img src="AdminAssest\z4924120722751_fba468b2fe555face31efbc97b866775.jpg" alt="image"></div></td>
+                            <td><h4>An Vo<br><span>171 Yen Xa</span></h4></td>
+                        </tr>
+                        <tr>
+                            <td width = "60px"><div class ="imgBx"><img src="AdminAssest\z4924120722751_fba468b2fe555face31efbc97b866775.jpg" alt="image"></div></td>
+                            <td><h4>An Vo<br><span>171 Yen Xa</span></h4></td>
+                        </tr>
+                        <tr>
+                            <td width = "60px"><div class ="imgBx"><img src="AdminAssest\z4924120722751_fba468b2fe555face31efbc97b866775.jpg" alt="image"></div></td>
+                            <td><h4>An Vo<br><span>171 Yen Xa</span></h4></td>
+                        </tr>
+                        <tr>
+                            <td width = "60px"><div class ="imgBx"><img src="AdminAssest\z4924120722751_fba468b2fe555face31efbc97b866775.jpg" alt="image"></div></td>
+                            <td><h4>An Vo<br><span>171 Yen Xa</span></h4></td>
+                        </tr>
+                        <tr>
+                            <td width = "60px"><div class ="imgBx"><img src="AdminAssest\z4924120722751_fba468b2fe555face31efbc97b866775.jpg" alt="image"></div></td>
+                            <td><h4>An Vo<br><span>171 Yen Xa</span></h4></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--User Content-->
+        <div class="content hidden" id="user-content">
+            <div class="user-cards">
+                <div class="user-card">
+                    <div class="user-header">
+                        <img src="AdminAssest\z4924120722751_fba468b2fe555face31efbc97b866775.jpg" alt="User">
+                        <div class="user-info">
+                            <h3>An Vo</h3>
+                            <span class="status active">Active</span>
+                        </div>
+                    </div>
+                    <div class="user-details">
+                        <div class="detail">
+                            <i data-feather="mail"></i>
+                            <span>john@example.com</span>
+                        </div>
+                        <div class="detail">
+                            <i data-feather="phone"></i>
+                            <span>+1 234 567 890</span>
+                        </div>
+                        <div class="detail">
+                            <i data-feather="map-pin"></i>
+                            <span>123 Main St, City</span>
+                        </div>
+                    </div>
+                    <div class="user-stats">
+                        <div class="stat">
+                            <label>Join Date</label>
+                            <span>2024-01-15</span>
+                        </div>
+                        <div class="stat">
+                            <label>Tasks</label>
+                            <span>25</span>
+                        </div>
+                    </div>
+                    <div class="user-actions">
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-deactivate">Deactivate</button>
+                    </div>
+                </div>
+            </div>
+            <div class="user-cards">
+                <div class="user-card">
+                    <div class="user-header">
+                        <img src="AdminAssest\z4924120722751_fba468b2fe555face31efbc97b866775.jpg" alt="User">
+                        <div class="user-info">
+                            <h3>An Vo</h3>
+                            <span class="status active">Active</span>
+                        </div>
+                    </div>
+                    <div class="user-details">
+                        <div class="detail">
+                            <i data-feather="mail"></i>
+                            <span>john@example.com</span>
+                        </div>
+                        <div class="detail">
+                            <i data-feather="phone"></i>
+                            <span>+1 234 567 890</span>
+                        </div>
+                        <div class="detail">
+                            <i data-feather="map-pin"></i>
+                            <span>123 Main St, City</span>
+                        </div>
+                    </div>
+                    <div class="user-stats">
+                        <div class="stat">
+                            <label>Join Date</label>
+                            <span>2024-01-15</span>
+                        </div>
+                        <div class="stat">
+                            <label>Tasks</label>
+                            <span>25</span>
+                        </div>
+                    </div>
+                    <div class="user-actions">
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-deactivate">Deactivate</button>
+                    </div>
+                </div>
+            </div>
+            <div class="user-cards">
+                <div class="user-card">
+                    <div class="user-header">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=128&h=128&fit=crop&crop=faces" alt="User">
+                        <div class="user-info">
+                            <h3>John Doe</h3>
+                            <span class="status active">Active</span>
+                        </div>
+                    </div>
+                    <div class="user-details">
+                        <div class="detail">
+                            <i data-feather="mail"></i>
+                            <span>john@example.com</span>
+                        </div>
+                        <div class="detail">
+                            <i data-feather="phone"></i>
+                            <span>+1 234 567 890</span>
+                        </div>
+                        <div class="detail">
+                            <i data-feather="map-pin"></i>
+                            <span>123 Main St, City</span>
+                        </div>
+                    </div>
+                    <div class="user-stats">
+                        <div class="stat">
+                            <label>Join Date</label>
+                            <span>2024-01-15</span>
+                        </div>
+                        <div class="stat">
+                            <label>Tasks</label>
+                            <span>25</span>
+                        </div>
+                    </div>
+                    <div class="user-actions">
+                        <button class="btn-edit">Edit</button>
+                        <button class="btn-deactivate">Deactivate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Tasker Content-->
+        <div class="content hidden" id="tasker-content">
+            <div class="tasker-cards">
+                <div class="tasker-card">
+                    <div class="tasker-header">
+                        <img src="AdminAssest\z4924120722751_fba468b2fe555face31efbc97b866775.jpg" alt="Tasker">
+                        <div class="tasker-info">
+                            <h3>Le Hiep</h3>
+                            <div class="rating">
+                                <i data-feather="star" class="star-filled"></i>
+                                <span>4.8</span><br>
+                                <span>#1232</span>
+                            </div>
+                        </div>
+                        <span class="status active">Active</span>
+                    </div>
+                    <div class="specialties">
+                        <span class="specialty">Cleaning</span>
+                        <span class="specialty">Gardening</span>
+                        <span class="specialty">Moving</span>
+                    </div>
+                    <div class="tasker-stats">
+                        <div class="stat">
+                            <i data-feather="check-circle"></i>
+                            <div>
+                                <label>Completed Tasks</label>
+                                <span>156</span>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <i data-feather="clock"></i>
+                            <div>
+                                <label>Experience</label>
+                                <span>3 years</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tasker-footer">
+                        <div class="location">
+                            <i data-feather="map-pin"></i>
+                            <span>Brooklyn, NY</span>
+                        </div>
+                        <div class="rate">$25/hr</div>
+                    </div>
+                    <div class="tasker-actions">
+                        <button class="btn-view">View Profile</button>
+                        <button class="btn-contact">Contact</button>
+                    </div>
+                </div>
+            </div>
+            <div class="tasker-cards">
+                <div class="tasker-card">
+                    <div class="tasker-header">
+                        <img src="AdminAssest\z4924120722751_fba468b2fe555face31efbc97b866775.jpg" alt="Tasker">
+                        <div class="tasker-info">
+                            <h3>An Vo</h3>
+                            <div class="rating">
+                                <i data-feather="star" class="star-filled"></i>
+                                <span>4.8</span><br>
+                                <span>#312131</span>
+                            </div>
+                        </div>
+                        <span class="status active">Active</span>
+                    </div>
+                    <div class="specialties">
+                        <span class="specialty">Cleaning</span>
+                        <span class="specialty">Gardening</span>
+                        <span class="specialty">Moving</span>
+                    </div>
+                    <div class="tasker-stats">
+                        <div class="stat">
+                            <i data-feather="check-circle"></i>
+                            <div>
+                                <label>Completed Tasks</label>
+                                <span>156</span>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <i data-feather="clock"></i>
+                            <div>
+                                <label>Experience</label>
+                                <span>3 years</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tasker-footer">
+                        <div class="location">
+                            <i data-feather="map-pin"></i>
+                            <span>Brooklyn, NY</span>
+                        </div>
+                        <div class="rate">$25/hr</div>
+                    </div>
+                    <div class="tasker-actions">
+                        <button class="btn-view">View Profile</button>
+                        <button class="btn-contact">Contact</button>
+                    </div>
+                </div>
+            </div>
+            <div class="tasker-cards">
+                <div class="tasker-card">
+                    <div class="tasker-header">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=128&h=128&fit=crop&crop=faces" alt="Tasker">
+                        <div class="tasker-info">
+                            <h3>Michael Johnson</h3>
+                            <div class="rating">
+                                <i data-feather="star" class="star-filled"></i>
+                                <span>4.8</span>
+                                <span>#12321</span>
+                            </div>
+                        </div>
+                        <span class="status active">Active</span>
+                    </div>
+                    <div class="specialties">
+                        <span class="specialty">Cleaning</span>
+                        <span class="specialty">Gardening</span>
+                        <span class="specialty">Moving</span>
+                    </div>
+                    <div class="tasker-stats">
+                        <div class="stat">
+                            <i data-feather="check-circle"></i>
+                            <div>
+                                <label>Completed Tasks</label>
+                                <span>156</span>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <i data-feather="clock"></i>
+                            <div>
+                                <label>Experience</label>
+                                <span>3 years</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tasker-footer">
+                        <div class="location">
+                            <i data-feather="map-pin"></i>
+                            <span>Brooklyn, NY</span>
+                        </div>
+                        <div class="rate">$25/hr</div>
+                    </div>
+                    <div class="tasker-actions">
+                        <button class="btn-view">View Profile</button>
+                        <button class="btn-contact">Contact</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        </div>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="/js/adminScript.js"></script>
+</body>
+</html>
