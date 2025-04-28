@@ -105,7 +105,7 @@
             <div class="image-container">
                 <img src="https://placehold.co/600x400/png?text=Worker+Image" alt="Worker in safety gear">
             </div>
-            
+            <form action="/addNewTasker/<%= user_id %>" method="post">
             <div class="login-form">
                 <h2>Gia nhập với chúng tôi</h2>
                 
@@ -122,31 +122,32 @@
                     <label for="service">Chọn lĩnh vực của bạn:</label>
                     <select id="service">
                         <% for (service_group of service_groups){%>
-                            <option value="<%= service_group.group_id %>"><%= service_group.group_name %></option>
+                        <option value="<%= service_group.group_id %>"><%= service_group.group_name %></option>
+                        <% } %>
                         <!-- <option value="transport">Vận chuyển đồ</option>
                         <option value="repair">Sửa chữa</option>
                         <option value="cleaning">Dọn dẹp</option> -->
-                        <% } %>
                     </select>
                 </div>
                 
                 <button class="btn-register">Đăng ký</button>
             </div>
+            </form>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Form submission handler
-            document.querySelector('.btn-register').addEventListener('click', function() {
-                const location = document.getElementById('location').value;
-                const service = document.getElementById('service').value;
+        //document.addEventListener('DOMContentLoaded', function() {
+        //     // Form submission handler
+        //     document.querySelector('.btn-register').addEventListener('click', function() {
+        //         const location = document.getElementById('location').value;
+        //         const service = document.getElementById('service').value;
                 
-                // Here you would typically send this data to a server
-                console.log('Registration submitted:', { location, service });
-                alert('Đăng ký thành công!');
-            });
-        });
+        //         // Here you would typically send this data to a server
+        //         console.log('Registration submitted:', { location, service });
+        //         alert('Đăng ký thành công!');
+        //     });
+        // });
     </script>
 </body>
 </html>

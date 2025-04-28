@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 
 const getHomePage = (req, res) => {
+    //console.log(res.header('auth-token'))
     res.render('HomePage.ejs')
 }
 
