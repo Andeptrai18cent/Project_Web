@@ -24,24 +24,19 @@
         <p>Thuê một tasker đáng tin cậy ngay bây giờ</p>
     </div>
     <div class="task-grid">
-        <% var i = 0 %>
-        <% var j = 0 %>
-        <% var n = services.length %>
-        <% while (i < n) {%>
+        <% for (val of services) {%>
         <div class="task-card">
             <img src="/Img/image 2.png" alt="Task Image">
             <div class="task-info">
-                <h3><%= services[i].group_name %></h3>
+                <h3><%= val.group_name %></h3>
                 <p>Hãy để tasker xử lý danh sách việc cần làm của bạn</p>
                 <dl>
-                    <% while (j < n && services[i].group_name == services[j].group_name) {%>
-                        <a href="/service/<%= services[j].service_id %>"><dt><%= services[j].name %></dt></a>
-                        <% j += 1 %>
+                    <% for (service of val.Services) {%>
+                        <a href="/service/<%= service.service_id %>"><dt><%= service.name %></dt></a>
                     <% } %>
                 </dl>
             </div>
         </div>
-        <% i = j %>
         <% } %>
     </div>
     <footer class="footer">

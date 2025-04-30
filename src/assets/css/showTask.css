@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+:root {
+    --primary-color: #0360D9;
+    --white: #ffffff;
+    --red: #ff4d4d;
+    --yellow: #ffcc00;
+    --blue: #4d94ff;
+    --green: #4caf50;
+    --orange: #ff8c00;
+    --accent-color: #A5CCFF;
+    --text-color: black;
+    --base-color: white;
+    --navbar-color : #E1EEFF;
+}
+
+body {
+    font-family: "IBM Plex Sans", sans-serif;
+    margin: 0;
+    padding-top: 100px;
+    background-color: var(--base-color);
+    color: var(--text-color);
+}
+
+
+/* Thanh navbar */
+.navbar {
+    min-height: 100px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    background-color: var(--navbar-color);
+  }
+.logo{
+    max-width: 10%;
+    flex-shrink: 0;
+    margin-left: 50px;
+}
+.navbar .nav_link{
+    gap: 30px;
+    display: flex;
+    margin-right: 50px;
+}
+.nav_link a{
+    font-size: 18px;
+    color: var(--text-color);
+    font-weight: 500;
+    text-decoration: none;
+    transition:  0.3s;
+}
+.nav_link a:hover{
+    color: #0066d9;
+    text-decoration: underline;
+}
+.banner {
+    position: relative;
+    height: 300px; 
+    color: white; 
+    background: url(/img/taoanhdep_lam_mo_anh_13958.jpeg) center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+  
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Màu đen trong suốt 50% */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+/* Thanh navbar */
+header {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 20px 0;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    margin: 0;
+}
+
+.orders-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.order-card {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: relative;
+}
+
+.order-card h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+.order-info {
+    margin-bottom: 5px;
+}
+
+.order-info strong {
+    display: inline-block;
+    width: 140px;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: white;
+}
+
+.status-canceled {
+    background-color: var(--red);
+}
+
+.status-waiting {
+    background-color: var(--yellow);
+    color: #333;
+}
+
+.status-progress {
+    background-color: var(--blue);
+}
+
+.status-completed {
+    background-color: var(--green);
+}
+
+.report-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.report-btn:hover {
+    background-color: #d32f2f;
+}
+
+.status-legend {
+    background-color: var(--white);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.legend-item {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.legend-color {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 1000;
+    padding-top: 100px;
+}
+
+.modal {
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.modal-header {
+    background-color: #0360D9;
+    color: white;
+    padding: 15px 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    text-align: right;
+    border-top: 1px solid #e0e0e0;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    margin-left: 10px;
+}
+
+.btn-cancel {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.btn-primary {
+    background-color: #0360D9;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}

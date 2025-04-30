@@ -5,7 +5,10 @@ const app = express()
 const getAdminPage = (req, res) => {
     res.render('Admin.ejs')
 }
-
+const getGetTaskPage = (req, res) => {
+    res.render('showTaskForCustomer.ejs')
+}
 module.exports = {
-    getAdminPage
+    getAdminPage,
+    getGetTaskPage
 }
