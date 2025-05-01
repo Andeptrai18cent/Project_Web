@@ -14,3 +14,4 @@ const registerValidator = (data) => {
 }
 
 module.exports.registerValidator = registerValidator;
+

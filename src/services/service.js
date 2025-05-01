@@ -1,4 +1,5 @@
 const connection = require('../config/database')
+const { get } = require('../routes/home')
 
 const getAllService = async () => {
     let {data} = await connection.from('Services').select()
@@ -11,7 +12,16 @@ const getAllServiceGroup = async () => {
     let {data} = await connection.from('ServiceGroup').select()
     return data
 }
-
+const getAllUsers = async () => {
+    //let [result, fields] = await connection.query('select * from users')
+    let {data,error} = await connection.from('Users').select()
+    if (error) {
+        console.error("Supabase error:", error)
+        return []
+    }
+      console.log("Supabase data:", data)
+      return data
+    }
 const getServiceGroupAndService = async () => {
     //let [result, fields] = await connection.query
     // (
@@ -30,5 +40,6 @@ const getServiceGroupAndService = async () => {
 module.exports = {
     getAllService,
     getAllServiceGroup,
-    getServiceGroupAndService
+    getServiceGroupAndService,
+    getAllUsers
 }
