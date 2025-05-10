@@ -12,6 +12,11 @@ const getAllServiceGroup = async () => {
     let {data} = await connection.from('ServiceGroup').select()
     return data
 }
+
+const getServiceGroupFromService = async (service_id) => {
+    const {data} = await connection.from("Services").select("group_id").eq("service_id", service_id)
+    return data[0].group_id
+}
 const getAllUsers = async () => {
     //let [result, fields] = await connection.query('select * from users')
     let {data,error} = await connection.from('Users').select()
@@ -41,5 +46,6 @@ module.exports = {
     getAllService,
     getAllServiceGroup,
     getServiceGroupAndService,
-    getAllUsers
+    getAllUsers,
+    getServiceGroupFromService
 }
