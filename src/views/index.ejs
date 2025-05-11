@@ -85,16 +85,6 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>#112</td>
-                                    <td>4411</td>
-                                    <td>Le Hiep</td>
-                                    <td>171 Yen Xa</td>
-                                    <td>Cooking</td>
-                                    <td>17/2/2025</td>
-                                    <td>156,000</td>
-                                    <td><span class="status done">Done</span></td>
-                                </tr>
-                                <tr>
                                     <td>#221</td>
                                     <td>3412</td>
                                     <td>Thanh Nam</td>
@@ -117,134 +107,96 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="recentUsers">
-                        <div class="cardHeader">
-                            <h2>Online Users</h2>
-                        </div>
-                        <div class="usersList">
-                            <div class="user">
-                                <div class="imgBx">
-                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=faces" alt="User">
-                                </div>
-                                <div class="userInfo">
-                                    <h4>An Vo<br><span>171 Yen Xa</span></h4>
-                                </div>
-                            </div>
-                            <div class="user">
-                                <div class="imgBx">
-                                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=64&h=64&fit=crop&crop=faces" alt="User">
-                                </div>
-                                <div class="userInfo">
-                                    <h4>Thanh Nam<br><span>Phung Khoang</span></h4>
-                                </div>
-                            </div>
-                            <div class="user">
-                                <div class="imgBx">
-                                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=64&h=64&fit=crop&crop=faces" alt="User">
-                                </div>
-                                <div class="userInfo">
-                                    <h4>Le Hiep<br><span>Van Quan</span></h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
             <!-- User Content -->
-            <div class="content hidden" id="user-content">
-                <div class="user-cards">
-                  <% users.forEach(user => { %>
-                    <div class="user-card">
-                      <div class="user-header">
-                        <img src="<%= user.profile_picture || 'default_image_url' %>" alt="User">
-                        <div class="user-info">
-                          <h3><%= user.name %></h3>
-                          <span class="status <%= user.status === 'active' ? 'active' : 'inactive' %>"><%= user.status %></span>
+          <div class="content hidden" id="user-content">
+                <div class="details">
+                    <div class="recentOrders">
+                        <div class="cardHeader">
+                            <h2>User Information</h2>
+                            <a href="#" class="btn">View All</a>
                         </div>
-                      </div>
-                      <div class="user-details">
-                        <div class="detail">
-                          <i data-feather="mail"></i>
-                          <span><%= user.email %></span>
-                        </div>
-                        <div class="detail">
-                          <i data-feather="phone"></i>
-                          <span><%= user.phone_number %></span>
-                        </div>
-                        <div class="detail">
-                          <i data-feather="map-pin"></i>
-                          <span><%= user.address %></span>
-                        </div>
-                      </div>
-                      <div class="user-stats">
-                        <div class="stat">
-                          <label>Join Date</label>
-                          <span><%= user.join_date %></span>
-                        </div>
-                        <div class="stat">
-                          <label>Tasks</label>
-                          <span><%= user.tasks_count %></span>
-                        </div>
-                      </div>
-                      <div class="user-actions">
-                        <button class="btn-edit">Edit</button>
-                        <button class="btn-deactivate">Deactivate</button>
-                      </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>User-name</td>
+                                    <td>Name</td>
+                                    <td>Address</td>
+                                    <td>Phone</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Andeptrai18cent</td>
+                                    <td>Vo Hoang An</td>
+                                    <td>Thanh hoa rau ma</td>
+                                    <td>0987654321</td>
+                                    <td class = "actions">
+                                        <button class="btn-edit">Edit</button>
+                                        <button class="btn-deactivate">Deactivate</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Andeptrai18cent</td>
+                                    <td>Vo Hoang An</td>
+                                    <td>Thanh hoa rau ma</td>
+                                    <td>0987654321</td>
+                                    <td class = "actions">
+                                        <button class="btn-edit">Edit</button>
+                                        <button class="btn-deactivate">Deactivate</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                  <% }) %>
                 </div>
-              </div>
+            </div>
               
 
             <!-- Tasker Content -->
-            <div class="content hidden" id="tasker-content">
-                <div class="tasker-cards">
-                    <div class="tasker-card">
-                        <div class="tasker-header">
-                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=128&h=128&fit=crop&crop=faces" alt="Tasker">
-                            <div class="tasker-info">
-                                <h3>Michael Johnson</h3>
-                                <div class="rating">
-                                    <i data-feather="star" class="star-filled"></i>
-                                    <span>4.8</span>
-                                </div>
-                            </div>
-                            <span class="status active">Active</span>
+             <div class="content hidden" id="tasker-content">
+                <div class="details">
+                    <div class="recentOrders">
+                        <div class="cardHeader">
+                            <h2>User Information</h2>
+                            <a href="#" class="btn">View All</a>
                         </div>
-                        <div class="specialties">
-                            <span class="specialty">Cleaning</span>
-                            <span class="specialty">Gardening</span>
-                            <span class="specialty">Moving</span>
-                        </div>
-                        <div class="tasker-stats">
-                            <div class="stat">
-                                <i data-feather="check-circle"></i>
-                                <div>
-                                    <label>Completed Tasks</label>
-                                    <span>156</span>
-                                </div>
-                            </div>
-                            <div class="stat">
-                                <i data-feather="clock"></i>
-                                <div>
-                                    <label>Experience</label>
-                                    <span>3 years</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tasker-footer">
-                            <div class="location">
-                                <i data-feather="map-pin"></i>
-                                <span>Brooklyn, NY</span>
-                            </div>
-                            <div class="rate">$25/hr</div>
-                        </div>
-                        <div class="tasker-actions">
-                            <button class="btn-view">View Profile</button>
-                            <button class="btn-contact">Contact</button>
-                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>User-name</td>
+                                    <td>Name</td>
+                                    <td>Address</td>
+                                    <td>Phone</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Andeptrai18cent</td>
+                                    <td>Vo Hoang An</td>
+                                    <td>Thanh hoa rau ma</td>
+                                    <td>0987654321</td>
+                                    <td class = "actions">
+                                        <button class="btn-edit">Edit</button>
+                                        <button class="btn-deactivate">Deactivate</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Andeptrai18cent</td>
+                                    <td>Vo Hoang An</td>
+                                    <td>Thanh hoa rau ma</td>
+                                    <td>0987654321</td>
+                                    <td class = "actions">
+                                        <button class="btn-edit">Edit</button>
+                                        <button class="btn-deactivate">Deactivate</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="user-actions">
+                    </div>
                     </div>
                 </div>
             </div>

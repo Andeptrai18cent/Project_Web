@@ -1,7 +1,7 @@
 const express = require('express')
 const admin = express.Router()
-const {getAdminPage, getGetTaskPage, getUserPage} = require('../controllers/adminController')
+const {displayUser, getGetTaskPage, getUserPage} = require('../controllers/adminController')
 
-admin.get('/admin', getAdminPage)
+admin.get('/admin', displayUser)
 admin.get('/test-get-task', getGetTaskPage)
 module.exports = admin

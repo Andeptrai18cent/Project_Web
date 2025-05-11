@@ -3,6 +3,8 @@ const express = require('express')
 const app = express()
 
 const {getAllService,getAllServiceGroup,getServiceGroupAndService} = require('../services/service')
+const { get } = require('../routes/home')
+
 
 const showServiceByServiceGroup = async (req, res) => {
     // const { data, error } = await connection.from('Admin').select('*');
@@ -22,5 +24,5 @@ const showServiceInfo = async (req, res) => {
 }
 module.exports = {
     showServiceByServiceGroup,
-    showServiceInfo
+    showServiceInfo,
 }

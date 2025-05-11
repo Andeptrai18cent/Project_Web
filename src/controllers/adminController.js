@@ -4,7 +4,7 @@ const { get } = require('../routes/home')
 const app = express()
 const {getAllUsers} = require('../services/service')
 
-const getAdminPage = async (req, res) => {
+const displayUser = async (req, res) => {
     try {
         // Lấy dữ liệu từ Supabase hoặc cơ sở dữ liệu
         let result = await getAllUsers(); 
@@ -23,6 +23,6 @@ const getGetTaskPage = (req, res) => {
     res.render('showTaskForCustomer.ejs')
 }
 module.exports = {
-    getAdminPage,
+    displayUser,
     getGetTaskPage,
 }

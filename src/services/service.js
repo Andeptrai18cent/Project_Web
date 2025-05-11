@@ -1,7 +1,7 @@
 const connection = require('../config/database')
 const { get } = require('../routes/home')
 
-const getAllService = async () => {
+const displaySearching = async () => {
     let {data} = await connection.from('Services').select()
     //let [result, fields] = await connection.query('select * from services')
     return data
@@ -38,7 +38,6 @@ const getServiceGroupAndService = async () => {
     return data
 }
 module.exports = {
-    getAllService,
     getAllServiceGroup,
     getServiceGroupAndService,
     getAllUsers

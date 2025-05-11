@@ -1,9 +1,8 @@
 const connection = require('../config/database')
 const express = require('express')
 const app = express()
-
-const getHomePage = (req, res) => {
-    //console.log(res.header('auth-token'))
+const {getAllService} = require('../services/service')
+const getHomePage = async (req, res) => {
     res.render('HomePage.ejs')
 }
 
@@ -22,6 +21,7 @@ const getLoginPage = (req, res) => {
 const getSignUpPage = (req, res) => {
     res.render('signup.ejs')
 }
+
 module.exports = {
     getHomePage,
     getAboutPage,
