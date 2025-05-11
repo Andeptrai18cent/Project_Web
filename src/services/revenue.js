@@ -15,8 +15,8 @@ const create_Revenue = async (req, payment, task) => {
         );
 
         const { data, error } = await connection.from('Revenue').insert(revenue).select()
-
-        if (error) {
+        const update_income_tasker = await connection.from('Taskers').update({actual_income: tasker.data[0].actual_income + taskerEarning}).eq('tasker_id', task.tasker_id)
+        if (error || update_income_tasker.error) {
             console.error("Error creating new Revenue", error)
             return { success: false, error }
         }

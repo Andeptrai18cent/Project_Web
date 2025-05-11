@@ -187,7 +187,7 @@ h1 {
 
 .modal-overlay {
     position: fixed;
-    top: 0;
+    top: 100px;
     left: 0;
     width: 100%;
     height: 100%;
@@ -199,7 +199,7 @@ h1 {
     padding-top: 100px;
 }
 
-.modal {
+#id_modal {
     background-color: white;
     border-radius: 8px;
     width: 90%;
@@ -253,6 +253,7 @@ h1 {
     font-weight: bold;
     border: none;
     margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 .btn-cancel {

@@ -96,8 +96,103 @@ const get_Taskers_With_Ratings = async (
 
   return taskersWithRatings;
 };
+
+const create_New_Tasker = async(req, res) => {
+  const {user_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET)
+  const {data} = await connection.from("ServiceGroup").select().eq('group_id', req.body.service_group_id)
+  if (data)
+  {
+      var existedTasker = await connection.from("Taskers").select("user_id").eq("user_id", user_id)
+      if (existedTasker.data.length)
+          return res.status(402).send("Tài khoản đã đăng ký trở thành Tasker, vui lòng dùng tài khoản khác")
+      const {error} = await connection.from("Taskers").insert({user_id: user_id, bio: "New tasker", hourly_rate: data[0].hourly_wage, actual_income: 0, service_group_id: req.body.service_group_id})
+      if (error)
+      {
+          console.log(error)
+          return res.status(401).send("Không tạo được tasker mới")
+      }
+      res.send("Tạo tasker mới thành công")
+  }
+  else             
+      return res.status(404).send("Nhóm dịch vụ không tồn tại")
+}
+
+const get_Tasker_By_Tasker_ID = async (req, res) => {
+  try {
+    // Verify token
+    const {tasker_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET)
+
+    if (!tasker_id) {
+      return res.status(400).json({ message: 'Token không hợp lệ: tasker_id không tìm thấy' });
+    }
+
+    // Fetch tasker details
+    const { data: tasker, error } = await connection
+      .from('Taskers')
+      .select('*')
+      .eq('tasker_id', tasker_id)
+      .single();
+
+    if (error || !tasker) {
+      return res.status(404).json({ message: 'Không tìm được Tasker', error });
+    }
+
+    return res.status(200).json(tasker);
+  } catch (err) {
+    return res.status(403).json({ message: 'Token lỗi hoặc hết hạn', error: err.message });
+  }
+};
+
+const update_Tasker_Info = async (req, res) => {
+  const {tasker_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET)
+  const { bio, hourly_rate, service_group_id } = req.body;
+
+  try {
+    // Validate tasker existence
+    const { data: existingTasker, error: findError } = await connection
+      .from('Taskers')
+      .select('*')
+      .eq('tasker_id', tasker_id)
+      .single();
+
+    if (findError || !existingTasker) {
+      return res.status(404).json({ message: 'Tasker not found', error: findError });
+    }
+
+    // Prepare update payload
+    const updateData = {
+      ...(bio !== undefined && { bio }),
+      ...(hourly_rate !== undefined && { hourly_rate }),
+      ...(service_group_id !== undefined && { service_group_id }),
+    };
+
+    if (Object.keys(updateData).length === 0) {
+      return res.status(400).json({ message: 'No valid fields to update' });
+    }
+
+    const { error: updateError } = await connection
+      .from('Taskers')
+      .update(updateData)
+      .eq('tasker_id', tasker_id);
+
+    if (updateError) {
+      return res.status(500).json({ message: 'Failed to update Tasker', error: updateError });
+    }
+
+    return res.status(200).json({
+      message: 'Tasker updated successfully',
+      tasker_id,
+      updated_fields: updateData,
+    });
+  } catch (err) {
+    return res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
 module.exports = {
     get_Tasker_by_Service_group_id,
     get_Taskers_By_TaskCount,
-    get_Taskers_With_Ratings
+    get_Taskers_With_Ratings,
+    create_New_Tasker,
+    get_Tasker_By_Tasker_ID,
+    update_Tasker_Info
 }

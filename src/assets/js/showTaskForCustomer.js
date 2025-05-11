@@ -9,6 +9,7 @@ let currentOrderId = null;
 // Add click event to all report buttons
 reportButtons.forEach(button => {
     button.addEventListener('click', function() {
+        console.log("Confirm open report form")
         // Get the order ID from the parent card (you can extract this from the heading)
         const orderCard = this.closest('.order-card');
         const orderHeading = orderCard.querySelector('h3').textContent;
@@ -16,6 +17,7 @@ reportButtons.forEach(button => {
         
         // Show the modal
         reportModal.style.display = 'flex';
+        document.getElementById("id_modal").style.display = 'block';
     });
 });
 
