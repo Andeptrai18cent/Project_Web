@@ -10,13 +10,13 @@ const { getAboutPage,
 const {showServiceByServiceGroup} = require('../controllers/serviceController')
 const {getBecomeTaskerForm} = require('../controllers/taskerController')
 
-const {verifyToken} = require('../middlerware/verifyToken')
+const {verifyTokenUser} = require('../middlerware/verifyToken')
 home.get('/', getHomePage)
 home.get('/about', getAboutPage)
 home.get('/login', getLoginPage)
 home.get('/signup', getSignUpPage)
 
 home.get('/service', showServiceByServiceGroup)
-home.get('/become-tasker', verifyToken, getBecomeTaskerForm)
+home.get('/become-tasker', verifyTokenUser, getBecomeTaskerForm)
 
 module.exports = home

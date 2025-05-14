@@ -64,7 +64,6 @@ const update_Task_Status = async (task_id, status) => {
         console.error("Exception in updateTaskStatus:", err)
         return { success: false, error: err.message }
     }
-        return { success: false, error: "Không có quyền truy cập" }
 }
 
 const get_Tasks_By_UserId = async (user_id) => {
@@ -107,9 +106,90 @@ const get_Tasks_By_TaskerId = async (tasker_id) => {
     }
 }
 
+const post_working_start_at = async(task_id) => {
+    try{
+        const {error} = connection
+            .from("Tasks")
+            .update({work_start_at: new Date().toISOString(), status: "Work_waiting"})
+            .eq("task_id", task_id)
+        if (error){
+            console("Lỗi database khi bắt đầu công việc", error)
+            return {success: false, error}
+        }
+    }
+    catch (error){
+        console("Lỗi code khi bắt đầu công việc", error)
+        return { success: false, error }
+    }
+    return {success: true, message: "Đã bắt đầu công việc"}
+}
+
+const post_working_end_at = async(task_id) => {
+    try{
+        const {error} = connection
+            .from("Tasks")
+            .update({work_end_at: new Date().toISOString(), status: "Payment_waiting"})
+            .eq("task_id", task_id)
+        if (error){
+            console("Lỗi database khi kết thúc công việc", error)
+            return {success: false, error}
+        }
+    }
+    catch (error){
+        console("Lỗi code khi kết thúc công việc", error)
+        return { success: false, error }
+    }
+    return {success: true, message: "Đã kết thúc công việc"}
+}
+
+const get_Tasks_By_TaskerID_And_Status = async (tasker_id, status) => {
+    try {
+        const { data, error } = await connection
+            .from('Tasks')
+            .select()
+            .eq('tasker_id', tasker_id)
+            .eq('status', status)
+            .order('created_at', { ascending: false })
+
+        if (error) {
+            console.error("Error getting tasks by tasker_id:", error)
+            return []
+        }
+
+        return data
+    } catch (err) {
+        console.error("Exception in getTasksByTaskerIDAndStatus:", err)
+        return []
+    }
+}
+
+const get_Tasks_By_UserID_And_Status = async (user_id, status) => {
+    try {
+        const { data, error } = await connection
+            .from('Tasks')
+            .select()
+            .eq('user_id', user_id)
+            .eq('status', status)
+            .order('created_at', { ascending: false })
+
+        if (error) {
+            console.error("Error getting tasks by user_id:", error)
+            return []
+        }
+
+        return data
+    } catch (err) {
+        console.error("Exception in getTasksByUserIDAndStatus:", err)
+        return []
+    }
+}
 module.exports = {
     create_Task,
     update_Task_Status,
     get_Tasks_By_UserId,
     get_Tasks_By_TaskerId,
+    post_working_start_at,
+    post_working_end_at,
+    get_Tasks_By_TaskerID_And_Status,
+    get_Tasks_By_UserID_And_Status
 }

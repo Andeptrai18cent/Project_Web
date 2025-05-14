@@ -8,7 +8,8 @@ const {
     update_Task_Status,
     get_Tasks_By_UserId,
     get_Tasks_By_TaskerId,
-    get_All_Tasks,
+    post_working_start_at,
+    post_working_end_at
 } = require('../services/task')
 const {
     get_Tasker_by_Service_group_id,
@@ -71,8 +72,12 @@ const sortTaskerByRating = async (req, res) => {
     return res.send(await get_Taskers_With_Ratings())
 }
 
-const showPaymentForm = async (req, res) => {
-    return res.render("paymentForm.ejs")
+const startWork = async(req, res) => {
+    return res.send(await post_working_start_at(req.query.task_id))
+}
+
+const endWork = async(req, res) => {
+    return res.send(await post_working_end_at(req.query.task_id))
 }
 module.exports = {
     getStep1OrderTask,
@@ -86,5 +91,6 @@ module.exports = {
     getTaskerByServiceGroupId,
     sortTaskerByTaskDone,
     sortTaskerByRating,
-    showPaymentForm
+    startWork,
+    endWork
 }

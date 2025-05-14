@@ -7,8 +7,6 @@ const create_Payment = async (req, res) => {
         const {user_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET);
         const task_id = req.query.task_id
         const task = await connection.from("Tasks").select().eq("task_id", task_id)
-        if (user_id != task.data[0].user_id)
-            return "Access Denied"
         const tasker_id = task.data[0].tasker_id
         const payment = new Payment(
             req.query.task_id, 

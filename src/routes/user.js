@@ -2,7 +2,6 @@ const express = require('express')
 const user = express.Router()
 
 const {
-    getTasksByUserId,
     showUserInfo,
     showChangeUserInfoForm,
     logOut,
@@ -11,16 +10,22 @@ const {
     showTaskForUser,
     getUserInfo,
     updateUserInfo,
+    getTasksByUserIDAndStatus,
+    cancelTaskPending
 } = require('../controllers/userController')
 
+const {
+    verifyTokenUser,
+    verifyTokenUser_Task
+} = require('../middlerware/verifyToken')
 user.get('/user/task-list', showTaskForUser)
-user.get('/task-list-for-user', getTasksByUserId)
 user.get('/user/info', showUserInfo)
-user.get('/get-user-info', getUserInfo)
+user.get('/get-user-info', verifyTokenUser, getUserInfo)
 user.get('/user/change-info', showChangeUserInfoForm)
-user.post('/user-info-change', updateUserInfo)
+user.post('/user-info-change', verifyTokenUser, updateUserInfo)
 user.get('/logout', logOut)
-user.put('/change-user-password-api', changeUserPassword)
-user.get('/change-user-password', showchangePasswordForm)
-
+user.put('/change-user-password', verifyTokenUser, changeUserPassword)
+user.get('/user/change-password', showchangePasswordForm)
+user.get('user/tasks', verifyTokenUser, getTasksByUserIDAndStatus)
+user.post('/user/cancel-pending-task', verifyTokenUser_Task, cancelTaskPending)
 module.exports = user

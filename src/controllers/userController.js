@@ -4,10 +4,12 @@ const User = require('../models/user');
 const { registerValidator } = require('../validation/auth');
 const connection = require('../config/database')
 require("dotenv").config()
-const cookieParser = require('cookie-parser'); //Thiết lập gói cookie-parser
-const crypto = require('crypto');
-const {get_Tasks_By_UserId} = require('../services/task');
-const { log } = require('console');
+const {
+  get_Tasks_By_UserId,
+  get_Tasks_By_UserID_And_Status,
+  update_Task_Status
+} = require('../services/task');
+const { AuthSessionMissingError } = require('@supabase/supabase-js');
 
 const authenUser = async (req, res) => {
     const validate_error = await registerValidator(req.body);
@@ -112,7 +114,7 @@ const changeUserPassword = async(req, res) => {
         const { data, error } = await connection
         .from('Users')
         .update({ password: hashPassword })
-        .eq('id', user_id)
+        .eq('user_id', user_id)
         .select();
         if (error) {
             return res.status(500).json({ error: 'Thay đổi mật khẩu thất bại', details: error.message });
@@ -130,10 +132,6 @@ const showTaskForUser = async(req, res) => {
 const getUserInfo = async (req, res) => {
   try {
     const {user_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET);
-
-    if (!user_id) {
-      return res.status(400).json({ message: 'Invalid token: user_id missing' });
-    }
 
     const { data: user, error } = await connection
       .from('Users')
@@ -154,9 +152,6 @@ const getUserInfo = async (req, res) => {
 const updateUserInfo = async (req, res) => {
   try {
     const {user_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET);
-    if (!user_id) {
-      return res.status(400).json({ message: 'Invalid token: user_id missing' });
-    }
 
     const { email, name, phone_number, address } = req.body;
 
@@ -191,6 +186,18 @@ const updateUserInfo = async (req, res) => {
   }
 };
 
+const getTasksByUserIDAndStatus = async(req, res) => {
+  const {user_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET);
+  return await get_Tasks_By_UserID_And_Status(user_id, req.query.status)
+}
+
+const cancelTaskPending = async(req, res) => {
+  return await update_Task_Status(req.query.task_id, "Canceled")
+}
+
+const cancelTaskConfirmed = async(req, res) => {
+  
+}
 module.exports = {
     authenUser,
     loginUser,
@@ -202,5 +209,7 @@ module.exports = {
     changeUserPassword,
     showTaskForUser,
     getUserInfo,
-    updateUserInfo
+    updateUserInfo,
+    getTasksByUserIDAndStatus,
+    cancelTaskPending
 };
