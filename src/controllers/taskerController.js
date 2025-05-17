@@ -11,6 +11,10 @@ const {
     get_Tasker_By_Tasker_ID,
     update_Tasker_Info
 } = require('../services/tasker')
+const {
+    create_Payment
+} = require('../services/payment')
+
 const getBecomeTaskerForm = async (req, res) => {
     let result = await getAllServiceGroup()
     const {user_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET);
@@ -36,32 +40,67 @@ const updateTaskerInfo = async(req, res) => {
 
 const receiveTask = async(req, res) => {
     const {tasker_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET);
-    return await update_Task_Status(tasker_id, "Confirmed")
+    return res.send(await update_Task_Status(tasker_id, "Confirmed"))
 }
 
 const getTaskByTaskerIdAndStatus = async(req, res) => {
     const {tasker_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET);
-    return await get_Tasks_By_TaskerID_And_Status(tasker_id, req.query.status)
+    return res.send(await get_Tasks_By_TaskerID_And_Status(tasker_id, req.query.status))
 }
 
 const getPendingTaskbyTaskerId = async(req, res) => {
     const {tasker_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET);
-    return await get_Tasks_By_TaskerID_And_Status(tasker_id, "Pending")
+    return res.send(await get_Tasks_By_TaskerID_And_Status(tasker_id, "Pending"))
 }
 
 const confirmTaskCanceling = async(req, res) => {
     if (req.query.ans == "YES")
-        return await update_Task_Status(req.query.task_id, "Canceled")
+    {
+        const update_task_status = await update_Task_Status(req.query.task_id, "Canceled")
+        if (!update_task_status.success)
+        {
+            return res.send(update_task_status.error)
+        }
+        return res.send({
+            message: "Đã đồng ý hủy task",
+            data: update_task_status
+        })
+    }
     else
-        return await update_Task_Status(req.query.task_id, "Confirmed")
+    {
+        const update_task_status = await update_Task_Status(req.query.task_id, "Confirmed")
+        if (!update_task_status.success)
+        {
+            return res.send(update_task_status.error)
+        }
+        return res.send({
+            message: "Không đồng ý hủy task",
+            data: update_task_status
+        })
+    }
 }
 
 const confirmTaskPayment = async(req, res) => {
     if (req.query.ans == "YES")
-
-        return await update_Task_Status(req.query.task_id, "Completed")
+    {
+        const update_task_status = await update_Task_Status(req.query.task_id, "Completed")
+        console.log("OK")
+        if (!update_task_status.success)
+        {
+            return res.send(update_task_status.error)
+        }
+        const create_payment = await create_Payment(req, res)
+        if (!create_payment.success)
+        {
+            return res.send(create_payment.error)
+        }
+        return res.send({ message: "Xác nhận đã thanh toán thành công",success: true, data: [update_task_status.data, create_payment.data]})
+    }
     else
-        return await update_Task_Status(req.query.task_id, "Payment_wating")
+    {
+        const update_task_status = await update_Task_Status(req.query.task_id, "Payment_wating")
+        return res.send({message: "Xác nhận chưa thanh toán", data: update_task_status})
+    }
 } 
 module.exports = {
     getBecomeTaskerForm,

@@ -2,6 +2,12 @@ const connection = require('../config/database')
 const jwt = require('jsonwebtoken');
 const Task = require('../models/task')
 
+const get_Task_by_TaskId = async(task_id) => {
+    const {data, error} = await connection.from("Tasks").select().eq("task_id", task_id)
+    if (error)
+        return {success: false, error}
+    return data[0]
+}
 const create_Task = async (req, taskData) => {
     try {
         // Extract user_id from cookies
@@ -16,7 +22,7 @@ const create_Task = async (req, taskData) => {
             taskData.tasker_id || null,
             new Date(taskData.task_date).toISOString(),
             user_id_jwt.user_id,
-            'Chờ xác nhận', // Default status for new tasks
+            'Pending', // Default status for new tasks
             new Date().toISOString()
         );
 
@@ -106,7 +112,7 @@ const get_Tasks_By_TaskerId = async (tasker_id) => {
     }
 }
 
-const post_working_start_at = async(task_id) => {
+const post_working_start_at = async(task_id, req) => {
     try{
         const {error} = await connection
             .from("Tasks")
@@ -124,6 +130,34 @@ const post_working_start_at = async(task_id) => {
     return {success: true, message: "Đã bắt đầu công việc"}
 }
 
+const change_task_info = async(task_id, req) => {
+    try{
+        const task = await get_Task_by_TaskId(task_id)
+        if (task.changed)
+            return {success: false, error: "Thông tin task chỉ được thay đổi một lần"}
+        const {error} = await connection
+            .from("Tasks")
+            .update(
+                {
+                    description: req.body.description,
+                    location: req.body.location,
+                    task_date: new Date(req.body.task_date),
+                    changed: true
+                }
+            )
+            .eq("task_id", task_id)
+        if (error){
+            console.log("Lỗi truy vấn khi chỉnh sửa Task", error)
+            return {success: false, error}
+        }
+    }
+    catch (error){
+        console.log("Lỗi code khi chỉnh sửa Task", error)
+        return { success: false, error }
+    }
+    return {success: true, message: "Chỉnh sửa thông tin Task thành công"}
+}
+
 const post_working_end_at = async(task_id) => {
     try{
         const {error} = await connection
@@ -131,15 +165,15 @@ const post_working_end_at = async(task_id) => {
             .update({work_end_at: new Date().toISOString(), status: "Payment_waiting"})
             .eq("task_id", task_id)
         if (error){
-            console("Lỗi database khi kết thúc công việc", error)
+            console("Lỗi truy vấn khi sửa task", error)
             return {success: false, error}
         }
     }
     catch (error){
-        console("Lỗi code khi kết thúc công việc", error)
+        console("Lỗi code khi sửa task", error)
         return { success: false, error }
     }
-    return {success: true, message: "Đã kết thúc công việc"}
+    return {success: true, message: "Đã sửa task"}
 }
 
 const get_Tasks_By_TaskerID_And_Status = async (tasker_id, status) => {
@@ -191,5 +225,6 @@ module.exports = {
     post_working_start_at,
     post_working_end_at,
     get_Tasks_By_TaskerID_And_Status,
-    get_Tasks_By_UserID_And_Status
+    get_Tasks_By_UserID_And_Status,
+    change_task_info
 }

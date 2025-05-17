@@ -3,6 +3,7 @@ const user = express.Router()
 
 const {
     showUserInfo,
+    getTasksByUserId,
     showChangeUserInfoForm,
     logOut,
     showchangePasswordForm,
@@ -11,14 +12,17 @@ const {
     getUserInfo,
     updateUserInfo,
     getTasksByUserIDAndStatus,
-    cancelPendingTask
+    cancelPendingTask,
+    cancelConfirmedTask,
+    requestPaymentConfirm,
+    changeTaskInfo
 } = require('../controllers/userController')
 
 const {
     verifyTokenUser,
     verifyTokenUser_Task
 } = require('../middlerware/verifyToken')
-user.get('/user/task-list', showTaskForUser)
+user.get('/user/task-list', getTasksByUserId)
 user.get('/user/info', showUserInfo)
 user.get('/get-user-info', verifyTokenUser, getUserInfo)
 user.get('/user/change-info', showChangeUserInfoForm)
@@ -26,6 +30,10 @@ user.post('/user-info-change', verifyTokenUser, updateUserInfo)
 user.get('/logout', logOut)
 user.put('/change-user-password', verifyTokenUser, changeUserPassword)
 user.get('/user/change-password', showchangePasswordForm)
-user.get('user/tasks', verifyTokenUser, getTasksByUserIDAndStatus)
+user.get('/user/tasks', verifyTokenUser, getTasksByUserIDAndStatus)
 user.post('/user/cancel-pending-task', verifyTokenUser_Task, cancelPendingTask)
+user.post('/user/payment-confirmation-request', verifyTokenUser_Task, requestPaymentConfirm)
+user.post('/user/cancel-confirmed-task', verifyTokenUser_Task, cancelConfirmedTask)
+user.put('/user/change-task-info', verifyTokenUser_Task, changeTaskInfo)
+
 module.exports = user

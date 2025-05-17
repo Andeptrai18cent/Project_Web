@@ -35,7 +35,7 @@ const verifyTokenUser_Task = async (req, res, next) => {
     try {
         const {user_id} = jwt.verify(token, process.env.TOKEN_SECRET);
         const {data, error} = await connection.from("Tasks").select("user_id").eq("task_id", req.query.task_id)
-        if (error || user_id != data[0].task_id || !user_id)
+        if (error || user_id != data[0].user_id || !user_id)
             return res.status(400).send('Invalid Token')
         next();
     } catch (err) {
@@ -45,7 +45,6 @@ const verifyTokenUser_Task = async (req, res, next) => {
 
 const verifyTokenTasker_Task = async (req, res, next) => {
     const token = req.cookies.token
-    console.log("Tasker_Task token verifiing: .....")
     //console.log(token)
     if (!token) return res.status(401).send('Access Denied');
     try {

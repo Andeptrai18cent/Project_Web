@@ -7,7 +7,8 @@ require("dotenv").config()
 const {
   get_Tasks_By_UserId,
   get_Tasks_By_UserID_And_Status,
-  update_Task_Status
+  update_Task_Status,
+  change_task_info
 } = require('../services/task');
 const { AuthSessionMissingError } = require('@supabase/supabase-js');
 
@@ -188,22 +189,24 @@ const updateUserInfo = async (req, res) => {
 
 const getTasksByUserIDAndStatus = async(req, res) => {
   const {user_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET);
-  return await get_Tasks_By_UserID_And_Status(user_id, req.query.status)
+  return res.send(await get_Tasks_By_UserID_And_Status(user_id, req.query.status))
 }
 
 const cancelPendingTask = async(req, res) => {
-  return await update_Task_Status(req.query.task_id, "Canceled")
+  return res.send(await update_Task_Status(req.query.task_id, "Canceled"))
 }
 
 const cancelConfirmedTask = async(req, res) => {
-  return await update_Task_Status(req.query.task_id, "Cancel_Confirmation_waiting")
+  return res.send(await update_Task_Status(req.query.task_id, "Cancel_Confirmation_waiting"))
 }
 
-const requestPaymentConfirm = async(req, res) => {
-  return await update_Task_Status(req.query.task_id, "Payment_Confirmation_waiting")
+const requestPaymentConfirm = async(req, res) => {  
+  return res.send(await update_Task_Status(req.query.task_id, "Payment_Confirmation_waiting"))
 }
 
-
+const changeTaskInfo = async(req, res) => {
+  return res.send(await change_task_info(req.query.task_id, req))
+}
 module.exports = {
     authenUser,
     loginUser,
@@ -218,5 +221,7 @@ module.exports = {
     updateUserInfo,
     getTasksByUserIDAndStatus,
     cancelPendingTask,
-    cancelConfirmedTask
+    cancelConfirmedTask,
+    requestPaymentConfirm,
+    changeTaskInfo
 };
