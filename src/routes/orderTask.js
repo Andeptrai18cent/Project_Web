@@ -30,7 +30,7 @@ orderTask.put('/user/update-task-status', verifyTokenUser_Task, putTaskStatus)
 orderTask.get('/get_tasker-by-service-group', getTaskerByServiceGroupId)
 orderTask.get('/sort-tasker-by-task-done', sortTaskerByTaskDone)
 orderTask.get('/sort-tasker-by-rating', sortTaskerByRating)
-orderTask.post('/task/start-task', startWork)
-orderTask.post('/task/end-work', endWork)
+orderTask.post('/task/start-task', verifyTokenTasker_Task, startWork)
+orderTask.post('/task/end-work', verifyTokenTasker_Task, endWork)
 
 module.exports = orderTask

@@ -48,6 +48,21 @@ const getPendingTaskbyTaskerId = async(req, res) => {
     const {tasker_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET);
     return await get_Tasks_By_TaskerID_And_Status(tasker_id, "Pending")
 }
+
+const confirmTaskCanceling = async(req, res) => {
+    if (req.query.ans == "YES")
+        return await update_Task_Status(req.query.task_id, "Canceled")
+    else
+        return await update_Task_Status(req.query.task_id, "Confirmed")
+}
+
+const confirmTaskPayment = async(req, res) => {
+    if (req.query.ans == "YES")
+
+        return await update_Task_Status(req.query.task_id, "Completed")
+    else
+        return await update_Task_Status(req.query.task_id, "Payment_wating")
+} 
 module.exports = {
     getBecomeTaskerForm,
     postNewTasker,
@@ -56,5 +71,7 @@ module.exports = {
     updateTaskerInfo,
     receiveTask,
     getTaskByTaskerIdAndStatus,
-    getPendingTaskbyTaskerId
+    getPendingTaskbyTaskerId,
+    confirmTaskCanceling,
+    confirmTaskPayment
 }

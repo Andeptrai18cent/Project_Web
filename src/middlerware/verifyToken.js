@@ -7,7 +7,7 @@ const verifyTokenUser = async (req, res, next) => {
 
     try {
         const {user_id} = jwt.verify(token, process.env.TOKEN_SECRET);
-        if (user_id)
+        if (!user_id)
             return res.status(400).send('Invalid Token')
         next();
     } catch (err) {
@@ -16,13 +16,12 @@ const verifyTokenUser = async (req, res, next) => {
 }
 
 const verifyTokenTasker = async (req, res, next) => {
-    const {token} = req.cookies.token
-    //console.log(token)
+    const token = req.cookies.token
     if (!token) return res.status(401).send('Access Denied');
 
     try {
         const {tasker_id} = jwt.verify(token, process.env.TOKEN_SECRET);
-        if (tasker_id)
+        if (!tasker_id)
             return res.status(400).send('Invalid Token')
         next();
     } catch (err) {
@@ -30,13 +29,13 @@ const verifyTokenTasker = async (req, res, next) => {
     }
 }
 const verifyTokenUser_Task = async (req, res, next) => {
-    const {token} = req.cookies.token
+    const token = req.cookies.token
     //console.log(token)
     if (!token) return res.status(401).send('Access Denied');
     try {
         const {user_id} = jwt.verify(token, process.env.TOKEN_SECRET);
-        const {data, error} = connection.from("Tasks").select("user_id").eq("task_id", req.query.task_id)
-        if (error || user_id != data[0].task_id || user_id)
+        const {data, error} = await connection.from("Tasks").select("user_id").eq("task_id", req.query.task_id)
+        if (error || user_id != data[0].task_id || !user_id)
             return res.status(400).send('Invalid Token')
         next();
     } catch (err) {
@@ -45,13 +44,14 @@ const verifyTokenUser_Task = async (req, res, next) => {
 }
 
 const verifyTokenTasker_Task = async (req, res, next) => {
-    const {token} = req.cookies.token
+    const token = req.cookies.token
+    console.log("Tasker_Task token verifiing: .....")
     //console.log(token)
     if (!token) return res.status(401).send('Access Denied');
     try {
         const {tasker_id} = jwt.verify(token, process.env.TOKEN_SECRET);
-        const {data, error} = connection.from("Tasks").select("tasker_id").eq("task_id", req.query.task_id)
-        if (error || tasker_id != data[0].task_id || tasker_id)
+        const {data, error} = await connection.from("Tasks").select("tasker_id").eq("task_id", req.query.task_id)
+        if (error || tasker_id != data[0].tasker_id || !tasker_id)
             return res.status(400).send('Invalid Token')
         next();
     } catch (err) {

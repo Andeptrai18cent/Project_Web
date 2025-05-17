@@ -108,7 +108,7 @@ const get_Tasks_By_TaskerId = async (tasker_id) => {
 
 const post_working_start_at = async(task_id) => {
     try{
-        const {error} = connection
+        const {error} = await connection
             .from("Tasks")
             .update({work_start_at: new Date().toISOString(), status: "Work_waiting"})
             .eq("task_id", task_id)
@@ -126,7 +126,7 @@ const post_working_start_at = async(task_id) => {
 
 const post_working_end_at = async(task_id) => {
     try{
-        const {error} = connection
+        const {error} = await connection
             .from("Tasks")
             .update({work_end_at: new Date().toISOString(), status: "Payment_waiting"})
             .eq("task_id", task_id)

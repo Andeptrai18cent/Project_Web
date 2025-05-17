@@ -11,7 +11,7 @@ const {
     getUserInfo,
     updateUserInfo,
     getTasksByUserIDAndStatus,
-    cancelTaskPending
+    cancelPendingTask
 } = require('../controllers/userController')
 
 const {
@@ -27,5 +27,5 @@ user.get('/logout', logOut)
 user.put('/change-user-password', verifyTokenUser, changeUserPassword)
 user.get('/user/change-password', showchangePasswordForm)
 user.get('user/tasks', verifyTokenUser, getTasksByUserIDAndStatus)
-user.post('/user/cancel-pending-task', verifyTokenUser_Task, cancelTaskPending)
+user.post('/user/cancel-pending-task', verifyTokenUser_Task, cancelPendingTask)
 module.exports = user

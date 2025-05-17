@@ -191,13 +191,19 @@ const getTasksByUserIDAndStatus = async(req, res) => {
   return await get_Tasks_By_UserID_And_Status(user_id, req.query.status)
 }
 
-const cancelTaskPending = async(req, res) => {
+const cancelPendingTask = async(req, res) => {
   return await update_Task_Status(req.query.task_id, "Canceled")
 }
 
-const cancelTaskConfirmed = async(req, res) => {
-  
+const cancelConfirmedTask = async(req, res) => {
+  return await update_Task_Status(req.query.task_id, "Cancel_Confirmation_waiting")
 }
+
+const requestPaymentConfirm = async(req, res) => {
+  return await update_Task_Status(req.query.task_id, "Payment_Confirmation_waiting")
+}
+
+
 module.exports = {
     authenUser,
     loginUser,
@@ -211,5 +217,6 @@ module.exports = {
     getUserInfo,
     updateUserInfo,
     getTasksByUserIDAndStatus,
-    cancelTaskPending
+    cancelPendingTask,
+    cancelConfirmedTask
 };
