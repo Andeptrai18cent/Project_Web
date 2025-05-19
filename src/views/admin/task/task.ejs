@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
+    <meta name="author" content="Hỏi Dân IT" />
+    <title>Dashboard</title>
+    <link href="/Admin/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <%- include('../layout/header') -%>
+    <div id="layoutSidenav">
+        <%-include('../layout/sidenav') -%>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Manage Tasks</h1>
+                    <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Task</li>
+                    </ol>
+                    <div>
+                         <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <td>Task-id</td>
+                                    <td>Tasker-id</td>
+                                    <td>User-id</td>
+                                    <td>Address</td>
+                                    <td>Task</td>
+                                    <td>Date</td>
+                                    <td>Status</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% tasks.forEach(task => { %>
+                                    <tr>
+                                        <td><%= task.task_id %></td>
+                                        <td><%= task.tasker_id %></td>
+                                        <td><%= task.user_id %></td>
+                                        <td><%= task.location %></td>
+                                        <td><%= task.description %></td>
+                                        <td><%= task.task_date %></td>
+                                        <td>
+                                            <span class="status <%= task.status.toLowerCase() %>">
+                                                <%= task.status %>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </main>
+            <%- include('../layout/footer') -%>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="/Admin/js/scripts.js"></script>
+</body>
+
+</html>

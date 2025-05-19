@@ -1,0 +1,11 @@
+<h1>Thêm dịch vụ</h1>
+<form action="/admin/service/add" method="POST">
+    <input type="text" name="name" placeholder="Tên dịch vụ" required><br>
+    <textarea name="description" placeholder="Mô tả"></textarea><br>
+    <select name="group_id" required>
+        <% groups.forEach(group => { %>
+            <option value="<%= group.group_id %>"><%= group.group_name %></option>
+        <% }) %>
+    </select><br>
+    <button type="submit">Thêm</button>
+</form>

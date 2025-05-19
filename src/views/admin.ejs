@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/styleForAdmin.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="/admin/tasks" data-section="task" class="active">
+                        <span class="icon"><i data-feather="code"></i></span>
+                        <span class="title">Task</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/users" data-section="user">
+                        <span class="icon"><i data-feather="user"></i></span>
+                        <span class="title">User</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin/taskers" data-section="tasker">
+                        <span class="icon"><i data-feather="users"></i></span>
+                        <span class="title">Tasker</span>
+                    </a>
+                </li>
+                 <!-- <li>
+                    <a href="/admin/reports" data-section="report">
+                        <span class="icon"><i data-feather="reports"></i></span>
+                        <span class="title">Report</span>
+                    </a>
+                </li> -->
+            </ul>
+        </div>
+
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <i data-feather="menu"></i>
+                </div>
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Search here">
+                        <i data-feather="search"></i>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="content" id="dashboard-content">
+                <div class="details">
+                    <div class="recentOrders">
+                        <div class="cardHeader">
+                            <h2>Recent Order Tasks</h2>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Task-id</td>
+                                    <td>Tasker-id</td>
+                                    <td>User-id</td>
+                                    <td>Address</td>
+                                    <td>Task</td>
+                                    <td>Date</td>
+                                    <td>Status</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% tasks.forEach(task => { %>
+                                    <tr>
+                                        <td><%= task.task_id %></td>
+                                        <td><%= task.tasker_id %></td>
+                                        <td><%= task.user_id %></td>
+                                        <td><%= task.location %></td>
+                                        <td><%= task.description %></td>
+                                        <td><%= task.task_date %></td>
+                                        <td>
+                                            <span class="status <%= task.status.toLowerCase() %>">
+                                                <%= task.status %>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Content -->
+          <div class="content hidden" id="user-content">
+                <div class="details">
+                    <div class="recentOrders">
+                        <div class="cardHeader">
+                            <h2>User</h2>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Id</td>
+                                    <td>Username</td>
+                                    <td>Name</td>
+                                    <td>Address</td>
+                                    <td>Phone</td>
+                                </tr>
+                            </thead>
+                           <tbody>
+                                <% users.forEach(user => { %>
+                                    <tr>
+                                        <td><%= user.user_id %></td>
+                                        <td><%= user.username %></td>
+                                        <td><%= user.name %></td>
+                                        <td><%= user.address %></td>
+                                        <td><%= user.phone_number %></td>
+                                        <td class="actions">
+                                            <button class="btn-edit">Edit</button>
+                                            <button class="btn-deactivate">Deactive</button>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+              
+
+            <!-- Tasker Content -->
+             <div class="content hidden" id="tasker-content">
+                <div class="details">
+                    <div class="recentOrders">
+                        <div class="cardHeader">
+                            <h2>Taskers</h2>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Id</td>
+                                    <td>Username</td>
+                                    <td>Name</td>
+                                    <td>Address</td>
+                                    <td>Phone</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% taskers.forEach(tasker => { %>
+                                    <tr>
+                                        <td><%= tasker.tasker_id %></td>
+                                        <td><%= tasker.Users.username %></td>
+                                        <td><%= tasker.Users.name %></td>
+                                        <td><%= tasker.Users.address %></td>
+                                        <td><%= tasker.Users.phone_number %></td>
+                                        <td class="actions">
+                                            <button class="btn-edit">Edit</button>
+                                            <button class="btn-deactivate">Deactivate</button>
+                                        </td>
+                                    <% }) %>
+                                    </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <script src ="/css/script.js"></script> -->
+    <script src="https://unpkg.com/feather-icons"></script>
+</body>
+</html>

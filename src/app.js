@@ -20,7 +20,7 @@ app.use(express.urlencoded({extended: false}))
 app.use('', home)
 app.use('', service)
 app.use('', orderTask)
-app.use('', admin)
+app.use('/admin', admin)
 app.use('', auth)
 app.use('', tasker)
 

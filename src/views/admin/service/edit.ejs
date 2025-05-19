@@ -1,0 +1,11 @@
+<h1>Sửa dịch vụ</h1>
+<form action="/admin/service/edit/<%= service.service_id %>" method="POST">
+    <input type="text" name="name" value="<%= service.name %>" required><br>
+    <textarea name="description"><%= service.description %></textarea><br>
+    <select name="group_id">
+        <% groups.forEach(group => { %>
+            <option value="<%= group.group_id %>" <%= group.group_id === service.group_id ? 'selected' : '' %>><%= group.group_name %></option>
+        <% }) %>
+    </select><br>
+    <button type="submit">Cập nhật</button>
+</form>

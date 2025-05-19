@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Sửa User</title>
+</head>
+<body>
+    <h1>Sửa thông tin User</h1>
+    <form action="/admin/user/edit/<%= user.user_id %>" method="POST">
+        <label for="username">Username:</label><br/>
+        <input type="text" id="username" name="username" value="<%= user.username %>" required /><br/><br/>
+
+        <label for="name">Họ và tên:</label><br/>
+        <input type="text" id="name" name="name" value="<%= user.name %>" required /><br/><br/>
+
+        <label for="email">Email:</label><br/>
+        <input type="email" id="email" name="email" value="<%= user.email %>" required /><br/><br/>
+
+        <label for="phone_number">Số điện thoại:</label><br/>
+        <input type="text" id="phone_number" name="phone_number" value="<%= user.phone_number %>" /><br/><br/>
+
+        <label for="address">Địa chỉ:</label><br/>
+        <textarea id="address" name="address" rows="3"><%= user.address %></textarea><br/><br/>
+
+        <button type="submit">Lưu thay đổi</button>
+    </form>
+    <br/>
+    <a href="/admin/user">Quay lại danh sách User</a>
+</body>
+</html>

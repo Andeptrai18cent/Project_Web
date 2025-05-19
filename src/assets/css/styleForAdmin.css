@@ -203,7 +203,8 @@ body {
 
 .details {
     position: relative;
-    width: 100%;
+    width: 150%;
+    align-items: center;
     padding: 20px;
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -215,7 +216,7 @@ body {
     display: grid;
     min-height: 500px;
     background: var(--white);
-    padding: 20px;
+    padding: 50px;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
     border-radius: 20px;
 }
@@ -419,23 +420,41 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 10px;
 }
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+    margin-top: 25px;
+  white-space: nowrap; /* Không xuống dòng */
+}
 
 .btn-edit, .btn-deactivate {
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 500;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.75rem;
+  transition: background 0.2s ease;
 }
 
 .btn-edit {
-    background: var(--blue);
-    color: white;
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #2563eb;
 }
 
 .btn-deactivate {
-    background: #ef4444;
-    color: white;
+  background-color: #f87171;
+  color: white;
+}
+
+.btn-deactivate:hover {
+  background-color: #dc2626;
 }
 
 /* Tasker Cards */
@@ -642,4 +661,7 @@ body {
         right: 0;
         left: initial;
     }
+}
+.hidden {
+  display: none;
 }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
+    <meta name="author" content="Hỏi Dân IT" />
+    <title>Dashboard</title>
+    <link href="/Admin/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <%- include('../layout/header') -%>
+    <div id="layoutSidenav">
+        <%-include('../layout/sidenav') -%>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Manage Services</h1>
+                    <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Service</li>
+                    </ol>
+                    <div>
+                        <h1>Danh sách dịch vụ</h1>
+<a href="/admin/service/add">Thêm dịch vụ</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Tên dịch vụ</th>
+            <th>Mô tả</th>
+            <th>Nhóm</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% services.forEach(service => { %>
+            <tr>
+                <td><%= service.service_id%></td>
+                <td><%= service.name %></td>
+                <td><%= service.description %></td>
+                <td><%= service.ServiceGroup.group_name %></td>
+                <td>
+                    <a href="/admin/service/edit/<%= service.service_id %>" class="btn btn-primary">Sửa</a>
+                   <form action="/admin/service/delete/<%= service.service_id %>" method="POST" style="display:inline;">
+                        <button class="btn btn-primary" type="submit" onclick="return confirm('Bạn có chắc muốn xóa không?')">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+                    </div>
+                </div>
+
+            </main>
+            <%- include('../layout/footer') -%>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="/Admin/js/scripts.js"></script>
+</body>
+
+</html>

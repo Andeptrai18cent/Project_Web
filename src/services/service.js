@@ -12,16 +12,6 @@ const getAllServiceGroup = async () => {
     let {data} = await connection.from('ServiceGroup').select()
     return data
 }
-const getAllUsers = async () => {
-    //let [result, fields] = await connection.query('select * from users')
-    let {data,error} = await connection.from('Users').select()
-    if (error) {
-        console.error("Supabase error:", error)
-        return []
-    }
-      console.log("Supabase data:", data)
-      return data
-    }
 const getServiceGroupAndService = async () => {
     //let [result, fields] = await connection.query
     // (
@@ -41,5 +31,4 @@ module.exports = {
     getAllService,
     getAllServiceGroup,
     getServiceGroupAndService,
-    getAllUsers
 }
