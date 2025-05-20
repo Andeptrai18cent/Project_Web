@@ -3,7 +3,8 @@ const connection = require('../config/database')
 const verifyTokenUser = async (req, res, next) => {
     const token = req.cookies.token
     //console.log(token)
-    if (!token) return res.status(401).send('Access Denied');
+    if (!token)
+        res.redirect('/login')
 
     try {
         const {user_id} = jwt.verify(token, process.env.TOKEN_SECRET);

@@ -19,8 +19,15 @@ const {
 } = require('../services/review')
 const getBecomeTaskerForm = async (req, res) => {
     let result = await getAllServiceGroup()
+    try
+    {
     const {user_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET);
     res.render('DkyTasker.ejs', {service_groups: result, user_id: user_id})
+    }
+    catch (err)
+    {
+        res.redirect('/login')
+    }
 }
 
 const postNewTasker = async(req, res) => {

@@ -10,14 +10,25 @@
 <body>
     <nav class="navbar .navbar-expand-lg fixed-top">
         <img class="logo" src="/Img/Group 30.svg" alt="Logo">
-        <div class="nav_link">
-            <a href="/">Home</a>
-            <a href="/about">About</a>
-            <a href="/service">Service</a>
-            <a href=/login>Login</a>
-            <a href="/signup">Signup</a>
-            <button class="btn btn-primary"><a href="/become-tasker" class="text-light text-decoration-none">Become Tasker</a></button>
-        </div>
+            <div class="nav_link">
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/service">Service</a>
+                <a href=/login>Login</a>
+                <a href="/signup">Signup</a>
+                <button class="btn btn-primary"><a href="/become-tasker" class="text-light text-decoration-none">Become Tasker</a></button>
+                <!-- class="dropdown"-->
+                <div>
+                    <button onclick="myFunction()" class="user-button">Tùy chọn▼</button>
+                    <div id="myDropdown" class="dropdown-content-user">
+                      <a href="/user/info">Xem thông tin cá nhân</a>
+                      <a href="/user/change-info">Thay đổi thông tin cá nhân</a>
+                      <a href="/user/change-password">Thay đổi mật khẩu</a>
+                      <a href="/user/task-list">Xem các task đã đặt</a>
+                      <a href="/logout">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
     </nav>
     <!-- Banner Section -->
     <div class="banner">
@@ -75,6 +86,9 @@
         </div>
         <hr>
         <p class="footer-text">2025 All Right Reserved</p>
-    </footer> 
+    </footer>
+    <script src="/js/about.js";> </script>
+    <script>
+    </script> 
 </body>
 </html>

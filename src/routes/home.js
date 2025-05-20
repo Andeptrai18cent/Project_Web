@@ -17,6 +17,6 @@ home.get('/login', getLoginPage)
 home.get('/signup', getSignUpPage)
 
 home.get('/service', showServiceByServiceGroup)
-home.get('/become-tasker', verifyTokenUser, getBecomeTaskerForm)
+home.get('/become-tasker', getBecomeTaskerForm)
 
 module.exports = home
