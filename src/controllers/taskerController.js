@@ -14,7 +14,9 @@ const {
 const {
     create_Payment
 } = require('../services/payment')
-
+const {
+    get_Review_by_TaskId
+} = require('../services/review')
 const getBecomeTaskerForm = async (req, res) => {
     let result = await getAllServiceGroup()
     const {user_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET);
@@ -101,7 +103,11 @@ const confirmTaskPayment = async(req, res) => {
         const update_task_status = await update_Task_Status(req.query.task_id, "Payment_wating")
         return res.send({message: "Xác nhận chưa thanh toán", data: update_task_status})
     }
-} 
+}
+
+const getReviewByTask = async(req, res) => {
+    return res.send(await get_Review_by_TaskId(req.query.task_id))
+}
 module.exports = {
     getBecomeTaskerForm,
     postNewTasker,
@@ -112,5 +118,6 @@ module.exports = {
     getTaskByTaskerIdAndStatus,
     getPendingTaskbyTaskerId,
     confirmTaskCanceling,
-    confirmTaskPayment
+    confirmTaskPayment,
+    getReviewByTask
 }

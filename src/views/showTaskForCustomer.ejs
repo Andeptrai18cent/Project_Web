@@ -22,10 +22,10 @@
     </nav>
     <div class="container">
         <h1>Thông tin các Task đã đặt</h1>
-        <div class="status-legend">
+        <!--<div class="status-legend">
             <h3>Thông tin về trạng thái</h3>
             <div class="legend-item">
-                <span class="legend-color" style="background-color: var(--red);"></span>
+                <span class="legend-color" style="background-color: var(--Canceled);"></span>
                 <span>Đã hủy</span>
             </div>
             <div class="legend-item">
@@ -34,17 +34,17 @@
             </div>
             <div class="legend-item">
                 <span class="legend-color" style="background-color: var(--blue);"></span>
-                <span>Đang đợi Task được xử lý</span>
+                <span>Đang đợi Task làm việc</span>
             </div>
             <div class="legend-item">
                 <span class="legend-color" style="background-color: var(--orange);"></span>
                 <span>Chưa thanh toán</span>
             </div>
             <div class="legend-item">
-                <span class="legend-color" style="background-color: var(--green);"></span>
+                <span class="legend-color" style="background-color: var(--Completed);"></span>
                 <span>Hoàn thành</span>
             </div>
-        </div>
+        </div> -->
         
         <div class="orders-container">
             <div class="order-card">
@@ -68,10 +68,11 @@
                     <strong>Ngày tạo Task</strong> 20 Apr 2025, 10:30 AM
                 </div>
                 <div class="order-info">
-                    <strong>Trạng thái</strong> <span class="status status-waiting">Đợi xác nhận</span>
+                    <strong>Trạng thái</strong> <span class="status" style="background-color: var(--Pending);">Đợi xác nhận</span>
                 </div>
                 <button class="report-btn">Hủy Task</button>
-                <button class="payment-btn" onclick="location.href = '/payment/create'">Thanh toán</button>
+                <!-- <button class="payment-btn" onclick="location.href = '/payment/create'">Thanh toán</button> -->
+
             </div>
             
             <div class="order-card">
@@ -95,10 +96,10 @@
                     <strong>Ngày tạo Task</strong> 20 Apr 2025, 11:45 AM
                 </div>
                 <div class="order-info">
-                    <strong>Trạng thái</strong> <span class="status status-progress">Đang xử lý công việc</span>
+                    <strong>Trạng thái</strong> <span class="status" style="background-color: var(--Work_waiting);">Đang xử lý công việc</span>
                 </div>
-                <button class="report-btn">Hủy Task</button>
-                <button class="payment-btn" onclick="location.href = '/payment/create'">Thanh toán</button>
+                <!-- <button class="report-btn">Hủy Task</button>
+                <button class="payment-btn" onclick="location.href = '/payment/create'">Thanh toán</button> -->
             </div>
             
             <div class="order-card">
@@ -122,9 +123,9 @@
                     <strong>Ngày tạo Task</strong> 20 Apr 2025, 09:15 AM
                 </div>
                 <div class="order-info">
-                    <strong>Trạng thái</strong> <span class="status status-completed">Hoàn thành</span>
+                    <strong>Trạng thái</strong> <span class="status" style="background-color: var(--Payment_waiting);">Chờ thanh toán</span>
                 </div>
-                <button class="report-btn">Hủy Task</button>
+                <!--<button class="report-btn">Hủy Task</button> -->
                 <button class="payment-btn" onclick="location.href = '/payment/create'">Thanh toán</button>
             </div>
             
@@ -150,10 +151,10 @@
                     <strong>Ngày tạo Task</strong> 20 Apr 2025, 10:00 AM
                 </div>
                 <div class="order-info">
-                    <strong>Trạng thái</strong> <span class="status status-canceled">Đã hủy</span>
+                    <strong>Trạng thái</strong> <span class="status" style="background-color: var(--Canceled);">Đã hủy</span>
                 </div>
-                <button class="report-btn">Hủy Task</button>
-                <button class="payment-btn" onclick="location.href = '/payment/create'">Thanh toán</button>
+                <!-- <button class="report-btn">Hủy Task</button> 
+                <button class="payment-btn" onclick="location.href = '/payment/create'">Thanh toán</button> -->
             </div>
         </div>
     </div>

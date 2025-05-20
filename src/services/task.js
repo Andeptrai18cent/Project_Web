@@ -72,13 +72,16 @@ const update_Task_Status = async (task_id, status) => {
     }
 }
 
-const get_Tasks_By_UserId = async (user_id) => {
+const get_Tasks_By_UserId = async (user_id, limit = 10, page = 0) => {
     try {
+        const offset = page * limit;
         const { data, error } = await connection
             .from('Tasks')
             .select()
             .eq('user_id', user_id)
             .order('created_at', { ascending: false })
+            .limit(limit)
+            .range(offset, offset + limit - 1);
 
         if (error) {
             console.error("Error getting tasks by user_id:", error)
@@ -92,13 +95,16 @@ const get_Tasks_By_UserId = async (user_id) => {
     }
 }
 
-const get_Tasks_By_TaskerId = async (tasker_id) => {
+const get_Tasks_By_TaskerId = async (tasker_id, limit = 10, page = 0) => {
     try {
+        const offset = page * limit;
         const { data, error } = await connection
             .from('Tasks')
             .select()
             .eq('tasker_id', tasker_id)
             .order('task_date', { ascending: true })
+            .limit(limit)
+            .range(offset, offset + limit - 1);
 
         if (error) {
             console.error("Error getting tasks by tasker_id:", error)
@@ -176,14 +182,17 @@ const post_working_end_at = async(task_id) => {
     return {success: true, message: "Đã sửa task"}
 }
 
-const get_Tasks_By_TaskerID_And_Status = async (tasker_id, status) => {
+const get_Tasks_By_TaskerID_And_Status = async (tasker_id, status, limit = 10, page = 0) => {
     try {
+        const offset = page * limit;
         const { data, error } = await connection
             .from('Tasks')
             .select()
             .eq('tasker_id', tasker_id)
             .eq('status', status)
             .order('created_at', { ascending: false })
+            .limit(limit)
+            .range(offset, offset + limit - 1);
 
         if (error) {
             console.error("Error getting tasks by tasker_id:", error)
@@ -197,15 +206,17 @@ const get_Tasks_By_TaskerID_And_Status = async (tasker_id, status) => {
     }
 }
 
-const get_Tasks_By_UserID_And_Status = async (user_id, status) => {
+const get_Tasks_By_UserID_And_Status = async (user_id, status, limit = 10, page = 0) => {
     try {
+        const offset = page * limit;
         const { data, error } = await connection
             .from('Tasks')
             .select()
             .eq('user_id', user_id)
             .eq('status', status)
             .order('created_at', { ascending: false })
-
+            .limit(limit)
+            .range(offset, offset + limit - 1);
         if (error) {
             console.error("Error getting tasks by user_id:", error)
             return []

@@ -15,14 +15,16 @@ const {
     cancelPendingTask,
     cancelConfirmedTask,
     requestPaymentConfirm,
-    changeTaskInfo
+    changeTaskInfo,
+    reviewTask,
+    testGetSession
 } = require('../controllers/userController')
 
 const {
     verifyTokenUser,
     verifyTokenUser_Task
 } = require('../middlerware/verifyToken')
-user.get('/user/task-list', getTasksByUserId)
+//user.get('/user/task-list', getTasksByUserId)
 user.get('/user/info', showUserInfo)
 user.get('/get-user-info', verifyTokenUser, getUserInfo)
 user.get('/user/change-info', showChangeUserInfoForm)
@@ -35,5 +37,8 @@ user.post('/user/cancel-pending-task', verifyTokenUser_Task, cancelPendingTask)
 user.post('/user/payment-confirmation-request', verifyTokenUser_Task, requestPaymentConfirm)
 user.post('/user/cancel-confirmed-task', verifyTokenUser_Task, cancelConfirmedTask)
 user.put('/user/change-task-info', verifyTokenUser_Task, changeTaskInfo)
+user.get('/user/task-list', showTaskForUser)
+user.post('/user/task/review', verifyTokenUser_Task, reviewTask)
+user.get('/test-get-session', testGetSession)
 
 module.exports = user

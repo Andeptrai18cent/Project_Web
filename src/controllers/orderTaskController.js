@@ -12,7 +12,7 @@ const {
     post_working_end_at
 } = require('../services/task')
 const {
-    get_Tasker_by_Service_group_id,
+    get_Taskers_by_Service_group_id,
     get_Taskers_By_TaskCount,
     get_Taskers_With_Ratings
 } = require("../services/tasker")
@@ -38,7 +38,7 @@ const finishStep1OrderTask = async (req, res) => {
       task_description,
       service_id
     };
-    await req.session.save();
+    req.session.save();
     return res.send(JSON.stringify(req.session.step1Data))
 }
 const postNewTask = async (req, res) => {
@@ -60,16 +60,16 @@ const getTasksByUserId = async (req, res) => {
 }
 
 const getTaskerByServiceGroupId = async (req, res) => {
-    const service_group_id = await getServiceGroupFromService(req.session.step1Data.service_id)
-    return res.send(await get_Tasker_by_Service_group_id(service_group_id))
+    // Van co session o day
+    return res.send(await get_Taskers_by_Service_group_id(req))
 }
 
 const sortTaskerByTaskDone = async (req, res) => {
-    return res.send(await get_Taskers_By_TaskCount())
+    return res.send(await get_Taskers_By_TaskCount(req))
 }
 
 const sortTaskerByRating = async (req, res) => {
-    return res.send(await get_Taskers_With_Ratings())
+    return res.send(await get_Taskers_With_Ratings(req))
 }
 
 const startWork = async(req, res) => {

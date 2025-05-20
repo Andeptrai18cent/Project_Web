@@ -10,8 +10,8 @@ const viewConfig = (app) =>{
         saveUninitialized: true,
         cookie: { 
             secure: false, 
-            httpOnly: false,
-            maxAge: 1000 * 60 * 60
+            httpOnly: true,
+            maxAge: 1000 * 60 * 30
         },
     }))
     // đường dẫn đến folder có các view

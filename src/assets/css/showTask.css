@@ -1,16 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 :root {
     --primary-color: #0360D9;
-    --white: #ffffff;
-    --red: #ff4d4d;
-    --yellow: #ffcc00;
-    --blue: #4d94ff;
-    --green: #4caf50;
-    --orange: #ff8c00;
     --accent-color: #A5CCFF;
     --text-color: black;
     --base-color: white;
     --navbar-color : #E1EEFF;
+    --Pending : #f7f72d;
+    --Confirmed: #a1e872 ;
+    --Cancel_Confirmation_waiting: #ff7803;
+    --Work_waiting: #3983fa;
+    --Payment_waiting: #0adafa;
+    --Payment_Confirmation_waiting: #00f7ca;
+    --Completed: #07e659;
+    --Canceled: #f51f02;
 }
 
 body {
@@ -129,24 +131,6 @@ h1 {
     font-weight: bold;
     color: white;
 }
-
-.status-canceled {
-    background-color: var(--red);
-}
-
-.status-waiting {
-    background-color: var(--yellow);
-    color: #333;
-}
-
-.status-progress {
-    background-color: var(--blue);
-}
-
-.status-completed {
-    background-color: var(--green);
-}
-
 .report-btn {
     background-color: #f44336;
     color: white;

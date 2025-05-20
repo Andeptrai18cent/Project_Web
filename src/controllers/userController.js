@@ -10,6 +10,12 @@ const {
   update_Task_Status,
   change_task_info
 } = require('../services/task');
+const {
+  get_user_info
+} = require('../services/user')
+const {
+  create_Review
+} = require('../services/review')
 const { AuthSessionMissingError } = require('@supabase/supabase-js');
 
 const authenUser = async (req, res) => {
@@ -76,7 +82,8 @@ const getTasksByUserId = async(req, res) => {
 }
 
 const showUserInfo = async(req, res) => {
-    res.render('showUserInfo.ejs')
+    const {data} = await get_user_info(req)
+    res.render('showUserInfo.ejs', {user_info: data})
 }
 
 const showChangeUserInfoForm = async(req, res) => {
@@ -207,6 +214,14 @@ const requestPaymentConfirm = async(req, res) => {
 const changeTaskInfo = async(req, res) => {
   return res.send(await change_task_info(req.query.task_id, req))
 }
+
+const reviewTask = async(req, res) => {
+  return res.send(await create_Review(req))
+}
+
+const testGetSession = async(req, res) => {
+  return res.send(req.session.step1Data)
+}
 module.exports = {
     authenUser,
     loginUser,
@@ -223,5 +238,7 @@ module.exports = {
     cancelPendingTask,
     cancelConfirmedTask,
     requestPaymentConfirm,
-    changeTaskInfo
+    changeTaskInfo,
+    reviewTask,
+    testGetSession
 };

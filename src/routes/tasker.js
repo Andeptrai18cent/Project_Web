@@ -11,7 +11,7 @@ const {
     getPendingTaskbyTaskerId,
     confirmTaskPayment,
     confirmTaskCanceling,
-    ca
+    getReviewByTask
 } = require('../controllers/taskerController')
 const {
     verifyTokenTasker_Task,
@@ -28,5 +28,6 @@ tasker.get('/tasker/tasks', verifyTokenTasker, getTaskByTaskerIdAndStatus)
 tasker.get('/tasker/pending-tasks', verifyTokenTasker, getPendingTaskbyTaskerId)
 tasker.post('/tasker/task-payment-confirm', verifyTokenTasker_Task, confirmTaskPayment)
 tasker.post('/tasker/task-cancel-confirm', verifyTokenTasker_Task, confirmTaskCanceling)
+tasker.get('/tasker/task/review', verifyTokenTasker_Task, getReviewByTask)
 
 module.exports = tasker
