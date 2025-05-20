@@ -271,3 +271,40 @@ h1 {
     margin: 0 auto;
     padding: 20px;
 }
+
+/* Navbar chọn Task theo trạng thái Start*/
+.taskbar {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  border-bottom: 2px solid #ccc;
+  overflow-x: auto;
+}
+
+.task-tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.task-tab:hover {
+  background-color: #0360D9;
+  color: white;
+}
+
+.task-tab.active {
+  color: #0360D9;
+  font-weight: bold;
+}
+
+.task-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  background-color: #0360D9;
+}
+/* Navbar chọn Task theo trạng thái End*/

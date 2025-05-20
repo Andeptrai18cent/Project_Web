@@ -20,4 +20,11 @@ async function loadTaskers(sortType) {
     }
 
     // Gọi mặc định khi trang load
-    window.onload = () => loadTaskers('default');
+window.onload = () => loadTaskers('default');
+
+document.querySelectorAll('.task-tab').forEach(tab => {
+  tab.addEventListener('click', function () {
+    document.querySelectorAll('.task-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
