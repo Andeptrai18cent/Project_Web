@@ -22,15 +22,22 @@ const authenUser = async (req, res) => {
     const validate_error = await registerValidator(req.body);
 
     //console.log(validate_error)
-    if (validate_error.error) return res.status(422).send(validate_error.error.details[0].message);
+    if (validate_error.error) 
+      return res.status(422).send({
+                status: 422,
+                message: validate_error.error.details[0].message
+            });
+    const checkEmailExist = await connection
+            .from('Users')
+            .select('email')
+            .eq('email', req.body.email);
 
-    const checkEmailExist = await connection.from('Users').select('email').eq('email', req.body.email)
-
-    //console.log(checkEmailExist)
-
-    //if (checkEmailExist.data.length) return res.status(422).send('Email is exist');
-
-    
+    if (checkEmailExist.data.length) {
+            return res.status(422).send({
+                status: 422,
+                message: 'Email already exists'
+            });
+    }
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(req.body.password, salt);
 
@@ -46,9 +53,16 @@ const authenUser = async (req, res) => {
     try {
         //const newUser = await user.save();
         const {data, error} = await connection.from("Users").insert(user).select()
-        await res.send(data);
+        return res.status(200).send({
+            status: 200,
+            message: "Success",
+            data: data
+        })          
     } catch (err) {
-        await res.status(400).send(err);
+        return res.status(500).send({
+            status: 500,
+            message: "Internal server error"
+        });
     }
 }
 
@@ -59,7 +73,11 @@ const loginUser = async(req, res) => {
         const user_info = checkUsername.data[0]
         const checkPassword = await bcrypt.compare(req.body.password, user_info.password);
 
-        if (!checkPassword) return res.status(422).send('Email or Password is not correct');
+        if (!checkPassword) return res.status(422).send(
+          {
+            status: 401,
+            message:'Email or Password is not correct'}
+        );
         const {data} = await connection.from('Taskers').select('tasker_id').eq('user_id', user_info.user_id)
         var tasker_id = undefined
         if (Array.isArray(data) && data.length)
@@ -67,13 +85,14 @@ const loginUser = async(req, res) => {
         token = jwt.sign({user_id: user_info.user_id, tasker_id: tasker_id}, process.env.TOKEN_SECRET, { expiresIn: "1h" });
         res.cookie('token', token)
         res.send({
-            token: token,
-            user_id: user_info.user_id,
-            tasker_id: tasker_id
-        })
+            status: 200,
+            message:'Đăng nhập thành công'}
+        )
         //res.redirect('/')
     }
-    else return res.status(422).send('Tên đăng nhập hoặc mật khẩu sai')
+    else return res.status(422).send({
+            status: 401,
+            message:'Email or Password is not correct'})
 }
 
 const getTasksByUserId = async(req, res) => {
@@ -91,13 +110,10 @@ const showChangeUserInfoForm = async(req, res) => {
 }
 
 const logOut = async(req, res) => {
-    // console.log("Cookies before",req.cookies.token)
-    // console.log("Session before:", req.session.step1Data)
+
     await req.session.destroy(err => {
         res.clearCookie('token')
-        // console.log("Cookies logout ", req.cookies.token)
-        // console.log("Session logout:", req.session)
-        return res.send({status: "OK", message: "Đăng xuất thành công"})
+        res.redirect('/')
     })
 }
 

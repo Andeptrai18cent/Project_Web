@@ -1,3 +1,31 @@
+document.addEventListener('DOMContentLoaded', () => {
+  getToken();
+});
+
+async function getToken(){
+  const response = await fetch("http://localhost:8080/token-check", {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  });
+
+  const result = await response.json()
+  if (result.user_id)
+  {
+    document.getElementById("Login_Link").style.display = "none"
+    document.getElementById("Sign_up_Link").style.display = "none"
+    if (result.tasker_id)
+    {
+      document.getElementById("Become_Tasker").style.display = "none"
+    }
+  }
+  else
+  {
+    document.getElementById("user_dropdown_only").style.display = "none"
+  }
+}
+
 function directPage(){
     window.location.href = "/html/step1.html";
     console.log("Hello");

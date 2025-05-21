@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', () => {
+  getToken();
+});
+
 const menuBtn = document.getElementById('menu-btn');
 const navLinks = document.getElementById('nav-links');
 const menuBtnIcon = menuBtn.querySelector('i');
@@ -47,5 +51,29 @@ window.onclick = function(event) {
         openDropdown.classList.remove('show');
       }
     }
+  }
+}
+
+async function getToken(){
+  const response = await fetch("http://localhost:8080/token-check", {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  });
+
+  const result = await response.json()
+  if (result.user_id)
+  {
+    document.getElementById("Login_Link").style.display = "none"
+    document.getElementById("Sign_up_Link").style.display = "none"
+    if (result.tasker_id)
+    {
+      document.getElementById("Become_Tasker").style.display = "none"
+    }
+  }
+  else
+  {
+    document.getElementById("user_dropdown_only").style.display = "none"
   }
 }

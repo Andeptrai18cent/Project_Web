@@ -58,9 +58,32 @@ const verifyTokenTasker_Task = async (req, res, next) => {
         return res.status(400).send('Invalid Token');
     }
 }
+const getToken = async (req, res, next) => {
+    const token = req.cookies.token
+    //console.log(token)
+    if (!token)
+        return res.send({
+            user_id: undefined,
+            tasker_id: undefined
+        })
+
+    try {
+        const {user_id, tasker_id} = jwt.verify(token, process.env.TOKEN_SECRET);
+        return res.send({
+            user_id: user_id,
+            tasker_id: tasker_id
+        })
+    } catch (err) {
+        return res.send({
+            user_id: undefined,
+            tasker_id: undefined
+        })
+    }
+}
 module.exports = {
     verifyTokenUser,
     verifyTokenTasker,
     verifyTokenUser_Task,
-    verifyTokenTasker_Task
+    verifyTokenTasker_Task,
+    getToken
 }

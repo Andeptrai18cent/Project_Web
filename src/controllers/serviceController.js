@@ -6,7 +6,6 @@ const {getAllService,getAllServiceGroup,getServiceGroupAndService} = require('..
 
 const showServiceByServiceGroup = async (req, res) => {
     let result = await getServiceGroupAndService()
-    console.log(result)
     res.render('servicepage.ejs', {services: result})
 }
 
