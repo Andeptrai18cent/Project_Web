@@ -43,6 +43,9 @@ const getTaskbyTaskerId = async(req, res) => {
     return await get_Tasker_By_Tasker_ID(req, res)
 }
 
+const getTaskbyTaskerId_NoToken = async(req, res) => {
+    return await get_Tasker_By_Tasker_ID(req, res, req.params.id)
+}
 const updateTaskerInfo = async(req, res) => {
     return await update_Tasker_Info(req, res)
 }
@@ -115,6 +118,10 @@ const confirmTaskPayment = async(req, res) => {
 const getReviewByTask = async(req, res) => {
     return res.send(await get_Review_by_TaskId(req.query.task_id))
 }
+
+const showTaskForTaskerView = async(req, res) => {
+    return res.render("showTaskForTasker.ejs")
+}
 module.exports = {
     getBecomeTaskerForm,
     postNewTasker,
@@ -126,5 +133,7 @@ module.exports = {
     getPendingTaskbyTaskerId,
     confirmTaskCanceling,
     confirmTaskPayment,
-    getReviewByTask
+    getReviewByTask,
+    getTaskbyTaskerId_NoToken,
+    showTaskForTaskerView
 }

@@ -11,7 +11,8 @@ const {
   change_task_info
 } = require('../services/task');
 const {
-  get_user_info
+  get_user_info,
+  get_user_info_NoToken
 } = require('../services/user')
 const {
   create_Review
@@ -238,6 +239,10 @@ const reviewTask = async(req, res) => {
 const testGetSession = async(req, res) => {
   return res.send(req.session.step1Data)
 }
+
+const getUserNoToken = async(req, res) => {
+  return res.send(await get_user_info_NoToken(req.params.id))
+}
 module.exports = {
     authenUser,
     loginUser,
@@ -256,5 +261,6 @@ module.exports = {
     requestPaymentConfirm,
     changeTaskInfo,
     reviewTask,
-    testGetSession
+    testGetSession,
+    getUserNoToken
 };

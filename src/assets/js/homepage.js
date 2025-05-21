@@ -1,3 +1,5 @@
+const user_link_dropdown = document.querySelector("#myDropdown")
+
 const menuBtn = document.getElementById('menu-btn');
 const navLinks = document.getElementById('nav-links');
 
@@ -56,6 +58,8 @@ async function getToken(){
     document.getElementById("Sign_up_Link").style.display = "none"
     if (result.tasker_id)
     {
+      const user_link_dropdown = document.querySelector("#myDropdown").querySelectorAll("a")
+      user_link_dropdown[3].href="/tasker/task-list"
       document.getElementById("Become_Tasker").style.display = "none"
     }
   }

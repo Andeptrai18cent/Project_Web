@@ -85,10 +85,27 @@ const create_New_Tasker = async(req, res) => {
       return res.status(404).send("Nhóm dịch vụ không tồn tại")
 }
 
-const get_Tasker_By_Tasker_ID = async (req, res) => {
+const get_Tasker_By_Tasker_ID = async (req, res, id) => {
+  if (id)
+  {
+      try {
+        const { data: tasker, error } = await connection
+          .from('Taskers')
+          .select('*')
+          .eq('tasker_id', id)
+          .single();
+
+        if (error || !tasker) {
+          return res.status(404).json({ message: 'Không tìm được Tasker', error });
+        }
+
+        return res.status(200).json(tasker);
+      } catch (err) {
+        return res.status(403).json({ message: 'Token lỗi hoặc hết hạn', error: err.message });
+      }
+  }
   try {
-    // Verify token
-    const {tasker_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET)
+      const {tasker_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET)
 
     if (!tasker_id) {
       return res.status(400).json({ message: 'Token không hợp lệ: tasker_id không tìm thấy' });

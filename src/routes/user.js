@@ -17,7 +17,8 @@ const {
     requestPaymentConfirm,
     changeTaskInfo,
     reviewTask,
-    testGetSession
+    testGetSession,
+    getUserNoToken
 } = require('../controllers/userController')
 
 const {
@@ -40,5 +41,6 @@ user.put('/user/change-task-info', verifyTokenUser_Task, changeTaskInfo)
 user.get('/user/task-list', showTaskForUser)
 user.post('/user/task/review', verifyTokenUser_Task, reviewTask)
 user.get('/test-get-session', testGetSession)
+user.get('/user/user-info/:id', getUserNoToken)
 
 module.exports = user

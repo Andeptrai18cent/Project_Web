@@ -6,6 +6,10 @@ const getAllServiceGroup = async () => {
     return data
 }
 
+const getServiceByID = async(service_id) => {
+    let {data} = await connection.from("Services").select().eq("service_id", service_id).single()
+    return data
+}
 const getServiceGroupFromService = async (service_id) => {
     const {data} = await connection.from("Services").select("group_id").eq("service_id", service_id)
     return data[0].group_id
@@ -29,5 +33,6 @@ const getServiceGroupAndService = async () => {
 module.exports = {
     getAllServiceGroup,
     getServiceGroupAndService,
-    getServiceGroupFromService
+    getServiceGroupFromService,
+    getServiceByID
 }

@@ -11,180 +11,63 @@
 <body>
     <nav class="navbar .navbar-expand-lg fixed-top">
         <img class="logo" src="/Img/Group 30.svg" alt="Logo">
-        <div class="nav_link">
-            <a href="/">Home</a>
-            <a href="/about">About</a>
-            <a href="/service">Service</a>
-            <a href=/login>Login</a>
-            <a href="/signup">Signup</a>
-            <button class="btn btn-primary"><a href="/become-tasker" class="text-light text-decoration-none">Become Tasker</a></button>
-        </div>
+            <div class="nav_link">
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/service">Service</a>
+                <a href=/login id="Login_Link">Login</a>
+                <a href="/signup" id="Sign_up_Link">Signup</a>
+                <button class="btn btn-primary" id="Become_Tasker"><a href="/become-tasker" class="text-light text-decoration-none">Become Tasker</a></button>
+                <!-- class="dropdown"-->
+                <div id="user_dropdown_only">
+                    <button onclick="myFunction()" id="Tuy_Chon_Button">Tùy chọn▼</button>
+                    <div id="myDropdown" class="dropdown-content" >
+                      <a href="/user/info">Xem thông tin cá nhân</a>
+                      <a href="/user/change-info">Thay đổi thông tin cá nhân</a>
+                      <a href="/user/change-password">Thay đổi mật khẩu</a>
+                      <a href="/user/task-list">Xem các task đã đặt</a>
+                      <a href="/logout">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
     </nav>
     <div class="container">
-            <div class="taskbar">
-            <div class="task-tab active">Chưa nhận</div>
-            <div class="task-tab">Đã nhận</div>
-            <div class="task-tab">Đợi xác nhận hủy</div>
-            <div class="task-tab">Đang làm việc</div>
-            <div class="task-tab">Đợi thanh toán</div>
-            <div class="task-tab">Đợi xác thực thanh toán</div>
-            <div class="task-tab">Hoàn thành</div>
-            <div class="task-tab">Đã hủy</div>
+        <div class="taskbar">
+            <div class="task-tab active" id="Pending">Chưa nhận</div>
+            <div class="task-tab" id="Confirmed">Đã nhận</div>
+            <div class="task-tab" id="Cancel_Confirmation_waiting">Đợi xác nhận hủy</div>
+            <div class="task-tab" id="Work_waiting">Đang làm việc</div>
+            <div class="task-tab" id="Payment_wating">Đợi thanh toán</div>
+            <div class="task-tab" id="Payment_Confirmation_waiting">Đợi xác thực thanh toán</div>
+            <div class="task-tab" id="Completed">Hoàn thành</div>
+            <div class="task-tab" id="Canceled">Đã hủy</div>
         </div>
         <h1>Thông tin các Task đã đặt</h1>
-        <!--<div class="status-legend">
-            <h3>Thông tin về trạng thái</h3>
-            <div class="legend-item">
-                <span class="legend-color" style="background-color: var(--Canceled);"></span>
-                <span>Đã hủy</span>
-            </div>
-            <div class="legend-item">
-                <span class="legend-color" style="background-color: var(--yellow);"></span>
-                <span>Đợi xác nhận từ Tasker</span>
-            </div>
-            <div class="legend-item">
-                <span class="legend-color" style="background-color: var(--blue);"></span>
-                <span>Đang đợi Task làm việc</span>
-            </div>
-            <div class="legend-item">
-                <span class="legend-color" style="background-color: var(--orange);"></span>
-                <span>Chưa thanh toán</span>
-            </div>
-            <div class="legend-item">
-                <span class="legend-color" style="background-color: var(--Completed);"></span>
-                <span>Hoàn thành</span>
-            </div>
-        </div> -->
-        
-        <div class="orders-container">
-            <div class="order-card">
-                <h3>Task #1234</h3>
-                <div class="order-info">
-                    <strong>Tên dịch vụ</strong>Dọn đồ chuyển nhà 
-                </div>
-                <div class="order-info">
-                    <strong>Tên Tasker</strong> John Smith
-                </div>
-                <div class="order-info">
-                    <strong>SĐT Tasker</strong> (555) 123-4567
-                </div>
-                <div class="order-info">
-                    <strong>Địa điểm</strong> 123 Main St, Apt 4B
-                </div>
-                <div class="order-info">
-                    <strong>Miêu tả công việc</strong>Tôi cần dọn đồ để chuyển nhà, tôi cần 1 xe tải nhỏ để chở đồ và cần xong trong lâu nhất 6 giờ
-                </div>
-                <div class="order-info">
-                    <strong>Ngày tạo Task</strong> 20 Apr 2025, 10:30 AM
-                </div>
-                <div class="order-info">
-                    <strong>Trạng thái</strong> <span class="status" style="background-color: var(--Pending);">Đợi xác nhận</span>
-                </div>
-                <button class="report-btn">Hủy Task</button>
-                <!-- <button class="payment-btn" onclick="location.href = '/payment/create'">Thanh toán</button> -->
-
-            </div>
-            
-            <div class="order-card">
-                <h3>Task#1235</h3>
-                <div class="order-info">
-                    <strong>Tên dịch vụ</strong>Cắt cỏ
-                </div>
-                <div class="order-info">
-                    <strong>Tên Tasker</strong> Maria Rodriguez
-                </div>
-                <div class="order-info">
-                    <strong>SĐT Tasker</strong> (555) 987-6543
-                </div>
-                <div class="order-info">
-                    <strong>Địa điểm</strong> 456 Oak Avenue
-                </div>
-                <div class="order-info">
-                    <strong>Miêu tả công việc</strong>Tôi có bãi cỏ 200m2 cần được dọn bớt cỏ, nhà tôi chưa có sẵn máy cắt cỏ
-                </div>
-                <div class="order-info">
-                    <strong>Ngày tạo Task</strong> 20 Apr 2025, 11:45 AM
-                </div>
-                <div class="order-info">
-                    <strong>Trạng thái</strong> <span class="status" style="background-color: var(--Work_waiting);">Đang xử lý công việc</span>
-                </div>
-                <!-- <button class="report-btn">Hủy Task</button>
-                <button class="payment-btn" onclick="location.href = '/payment/create'">Thanh toán</button> -->
-            </div>
-            
-            <div class="order-card">
-                <h3>Task#1236</h3>
-                <div class="order-info">
-                    <strong>Tên dịch vụ</strong>Sửa chữa cửa, tủ và đồ nội thất
-                </div>
-                <div class="order-info">
-                    <strong>Tên Tasker</strong> David Wilson
-                </div>
-                <div class="order-info">
-                    <strong>SĐT Tasker</strong> (555) 222-3333
-                </div>
-                <div class="order-info">
-                    <strong>Địa điểm</strong> 789 Pine Street
-                </div>
-                <div class="order-info">
-                    <strong>Miêu tả công việc</strong>Tôi cần sửa cánh tủ đựng bát đĩa và sửa lại cửa phòng bị tung ra
-                </div>
-                <div class="order-info">
-                    <strong>Ngày tạo Task</strong> 20 Apr 2025, 09:15 AM
-                </div>
-                <div class="order-info">
-                    <strong>Trạng thái</strong> <span class="status" style="background-color: var(--Payment_waiting);">Chờ thanh toán</span>
-                </div>
-                <!--<button class="report-btn">Hủy Task</button> -->
-                <button class="payment-btn" onclick="location.href = '/payment/create'">Thanh toán</button>
-            </div>
-            
-            <!-- Task4 -->
-            <div class="order-card">
-                <h3>Task#1237</h3>
-                <div class="order-info">
-                    <strong>Tên dịch vụ</strong>Dịch vụ khử trùng
-                </div>
-                <div class="order-info">
-                    <strong>Tên Tasker</strong> Sarah Johnson
-                </div>
-                <div class="order-info">
-                    <strong>SĐT Tasker</strong> (555) 444-5555
-                </div>
-                <div class="order-info">
-                    <strong>Địa điểm</strong> 321 Maple Drive
-                </div>
-                <div class="order-info">
-                    <strong>Miêu tả công việc</strong>Tôi cần dọn căn nhà này trước khi bán lại.
-                </div>
-                <div class="order-info">
-                    <strong>Ngày tạo Task</strong> 20 Apr 2025, 10:00 AM
-                </div>
-                <div class="order-info">
-                    <strong>Trạng thái</strong> <span class="status" style="background-color: var(--Canceled);">Đã hủy</span>
-                </div>
-                <!-- <button class="report-btn">Hủy Task</button> 
-                <button class="payment-btn" onclick="location.href = '/payment/create'">Thanh toán</button> -->
-            </div>
+        <div class="orders-container" id="task_container">
         </div>
     </div>
-    <!-- Add this at the end of your body tag but before closing </body> -->
-<div class="modal-overlay" id="reportModal">
-    <div id="id_modal">
-        <div class="modal-header">
-            Hủy đơn
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-                <label for="reportReason">Lý do muốn hủy đơn</label>
-                <textarea class="form-control" id="reportReason" rows="4" placeholder="Nêu lý do bạn muốn hủy đơn"></textarea>
+    <!-- template task-info-->
+    <template>
+        <div class="order-card">
+            <div class = "order-info"> 
+                <strong>Tên dịch vụ </strong>
+            </div> 
+            <div class = "order-info"> 
+                <strong>Tên Tasker</strong>
+            </div> 
+            <div class = "order-info"> 
+                <strong>SĐT Tasker</strong>
+            </div> 
+            <div class = "order-info" > 
+                <strong> Địa điểm </strong>
+            </div> 
+            <div class = "order-info" > 
+                <strong> Miêu tả công việc</strong>
+            </div> 
+            <div class = "order-info" > 
+                <strong> Ngày tạo Task </strong>
             </div>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-cancel" id="cancelReport">Bỏ yêu cầu hủy</button>
-            <button class="btn btn-primary" id="sendReport">Gửi yêu cầu hủy</button>
-        </div>
-</div>
-</div>
+    </template>
 </body>
 </html>
