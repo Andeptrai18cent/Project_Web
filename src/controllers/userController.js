@@ -15,7 +15,8 @@ const {
   get_user_info_NoToken
 } = require('../services/user')
 const {
-  create_Review
+  create_Review,
+  get_Review_by_TaskId
 } = require('../services/review')
 const { AuthSessionMissingError } = require('@supabase/supabase-js');
 
@@ -243,6 +244,10 @@ const testGetSession = async(req, res) => {
 const getUserNoToken = async(req, res) => {
   return res.send(await get_user_info_NoToken(req.params.id))
 }
+
+const checkReview = async(req, res) => {
+  return res.send(await get_Review_by_TaskId(req.params.task_id))
+}
 module.exports = {
     authenUser,
     loginUser,
@@ -262,5 +267,6 @@ module.exports = {
     changeTaskInfo,
     reviewTask,
     testGetSession,
-    getUserNoToken
+    getUserNoToken,
+    checkReview
 };

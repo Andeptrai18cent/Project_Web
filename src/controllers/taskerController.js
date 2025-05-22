@@ -51,8 +51,10 @@ const updateTaskerInfo = async(req, res) => {
 }
 
 const receiveTask = async(req, res) => {
-    const {tasker_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET);
-    return res.send(await update_Task_Status(tasker_id, "Confirmed"))
+    if (req.query.ans=='YES')
+        return res.send(await update_Task_Status(req.query.task_id, "Confirmed"))
+    else
+        return res.send(await update_Task_Status(req.query.task_id, "Pending"))
 }
 
 const getTaskByTaskerIdAndStatus = async(req, res) => {
@@ -74,8 +76,8 @@ const confirmTaskCanceling = async(req, res) => {
             return res.send(update_task_status.error)
         }
         return res.send({
+            success: true,
             message: "Đã đồng ý hủy task",
-            data: update_task_status
         })
     }
     else
@@ -86,8 +88,8 @@ const confirmTaskCanceling = async(req, res) => {
             return res.send(update_task_status.error)
         }
         return res.send({
+            success: true,
             message: "Không đồng ý hủy task",
-            data: update_task_status
         })
     }
 }

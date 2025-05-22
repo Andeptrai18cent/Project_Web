@@ -37,7 +37,7 @@
             <div class="task-tab" id="Confirmed">Đã nhận</div>
             <div class="task-tab" id="Cancel_Confirmation_waiting">Đợi xác nhận hủy</div>
             <div class="task-tab" id="Work_waiting">Đang làm việc</div>
-            <div class="task-tab" id="Payment_wating">Đợi thanh toán</div>
+            <div class="task-tab" id="Payment_waiting">Đợi thanh toán</div>
             <div class="task-tab" id="Payment_Confirmation_waiting">Đợi xác thực thanh toán</div>
             <div class="task-tab" id="Completed">Hoàn thành</div>
             <div class="task-tab" id="Canceled">Đã hủy</div>
@@ -69,5 +69,27 @@
             </div>
         </div>
     </template>
+    <!--pop up after button in task template-->
+    <div class="pop_up_btn_task_overlay">
+            <div class="pop_up_btn_task_modal">
+                <span class="pop_up_btn_task_close">&times;</span>
+                <h2 id="title_pop_up">Đánh giá Tasker</h2>
+                <!-- Star rating -->
+                <div class="pop_up_btn_task_stars">
+                    <span data-value="1">&#9733;</span>
+                    <span data-value="2">&#9733;</span>
+                    <span data-value="3">&#9733;</span>
+                    <span data-value="4">&#9733;</span>
+                    <span data-value="5">&#9733;</span>
+                </div>
+                <div class="pop_up_btn_task_text"></div>
+                <!-- Input comment -->
+                <input type="text" class="pop_up_btn_task_comment" placeholder="Nhập nhận xét...">
+                <div class="pop_up_btn_task_buttons">
+                    <button class="pop_up_btn_task_confirm">OK</button>
+                    <button class="pop_up_btn_task_cancel">Hủy</button>
+                </div>
+            </div>
+    </div>
 </body>
 </html>
