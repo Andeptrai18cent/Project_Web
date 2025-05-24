@@ -14,21 +14,20 @@ const {
 const {
     get_Taskers_by_Service_group_id,
     get_Taskers_By_TaskCount,
-    get_Taskers_With_Ratings
+    get_Taskers_With_Ratings,
+    get_Taskers_by_Wage
 } = require("../services/tasker")
 
 const getStep1OrderTask = (req, res) => {
-    res.render('step1.ejs')
-}
-
-const getStep2OrderTask = async (req, res) => {
-    console.log('Step 1 info', req.body)
-    res.render('step2.ejs')
+    res.render('step1.ejs', {service_id: req.params.service_id})
 }
 const getStep3OrderTask = async (req, res) => {
     res.render('step3.ejs')
 }
 
+const getStep2OrderTask = async (req, res) => {
+    res.render('step2.ejs')
+}
 const finishStep1OrderTask = async (req, res) => {
     const { address, workload, task_description } = req.body;
     const service_id = req.params.service_id
@@ -72,6 +71,9 @@ const sortTaskerByRating = async (req, res) => {
     return res.send(await get_Taskers_With_Ratings(req))
 }
 
+const sortTaskerByWage = async (req, res) => {
+    return res.send(await get_Taskers_by_Wage(req))
+}
 const startWork = async(req, res) => {
     return res.send(await post_working_start_at(req.query.task_id))
 }
@@ -81,7 +83,6 @@ const endWork = async(req, res) => {
 }
 module.exports = {
     getStep1OrderTask,
-    getStep2OrderTask,
     getStep3OrderTask,
     postNewTask,
     putTaskStatus,
@@ -92,5 +93,7 @@ module.exports = {
     sortTaskerByTaskDone,
     sortTaskerByRating,
     startWork,
-    endWork
+    endWork,
+    getStep2OrderTask,
+    sortTaskerByWage
 }

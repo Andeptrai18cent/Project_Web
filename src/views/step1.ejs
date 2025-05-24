@@ -12,7 +12,7 @@
   <div class="intro_title">Vui lòng cung cấp thông tin về địa chỉ và công việc bạn cần</div>
    <div class="task_title">Tên công việc</div>
     <div class="box">
-      <form action="/order-task/step2" method="post">
+      <form class="<%=service_id%>" id="form">
         <label for="address" class="form_label">Nhập địa chỉ của bạn</label>
           <br>
             <input type="text" id="address" placeholder="Địa chỉ" required name="address">
@@ -29,5 +29,6 @@
           <button type="submit">Tiếp tục</button>
        </form>
     </div>
+    <script src="/js/book-tasker-step-1.js"></script>
 </body>
 </html>

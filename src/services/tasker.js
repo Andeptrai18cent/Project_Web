@@ -18,10 +18,10 @@ const calculateTaskerStats = (tasker) => {
     tasker_id: tasker.tasker_id,
     user_id: tasker.user_id,
     bio: tasker.bio,
-    hourly_rate: tasker.hourly_rate,
+    hourly_rate: Number(tasker.hourly_rate),
     actual_income: tasker.actual_income,
     service_group_id: tasker.service_group_id,
-    task_count: tasker.Tasks.length,
+    task_count: Number(tasker.Tasks.length),
     average_rating: Number(averageRating.toFixed(1)),
     review_count: ratings.length
   };
@@ -64,6 +64,14 @@ const get_Taskers_With_Ratings = async (req, limit = 10, page = 0) => {
   const taskers = await get_Taskers_by_Service_group_id(req, limit, page);
   return taskers.sort((a, b) => b.average_rating - a.average_rating);
 };
+
+const get_Taskers_by_Wage = async (req, limit = 10, page = 0) => {
+  const taskers = await get_Taskers_by_Service_group_id(req, limit, page);
+  if (req.query.order=="ascend")
+    return taskers.sort((a, b) => a.hourly_rate - b.hourly_rate);
+  else
+    return taskers.sort((a, b) => b.hourly_rate - a.hourly_rate);
+}
 
 const create_New_Tasker = async(req, res) => {
   const {user_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET)
@@ -179,5 +187,6 @@ module.exports = {
     get_Taskers_With_Ratings,
     create_New_Tasker,
     get_Tasker_By_Tasker_ID,
-    update_Tasker_Info
+    update_Tasker_Info,
+    get_Taskers_by_Wage
 }
