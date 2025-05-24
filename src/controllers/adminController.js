@@ -285,26 +285,34 @@ async showEditTaskerForm(req, res) {
     async getAdminRevenuePage(req, res) {
         try {
             const page = parseInt(req.query.page) || 1;
-            const limit = 10; // Hiển thị 10 revenues mỗi trang
+            const limit = 10;
             
             const { revenues, total } = await Revenue.getAllRevenues(page, limit);
+            
             const totalPages = Math.ceil(total / limit);
             
-            const pagination = {
-                currentPage: page,
-                totalPages: totalPages,
-                totalRevenues: total,
-                hasNext: page < totalPages,
-                hasPrev: page > 1,
-                nextPage: page + 1,
-                prevPage: page - 1,
-                limit: limit
-            };
-            
-            res.render('admin/revenue/revenue.ejs', { revenues, pagination });
+            res.render('admin/revenue/revenue.ejs', {
+                revenues,
+                pagination: {
+                    currentPage: page,
+                    totalPages,
+                    totalRevenues: total,
+                    hasNext: page < totalPages,
+                    hasPrev: page > 1,
+                    nextPage: page + 1,
+                    prevPage: page - 1,
+                    limit: limit
+                }
+            });
         } catch (error) {
-            console.error("Error loading revenues page:", error);
-            res.status(500).send("Lỗi server");
+            console.error("Error in getAdminRevenuePage:", error);
+            res.status(500).send(`
+                <div style="text-align: center; padding: 50px;">
+                    <h2>Lỗi khi tải trang quản lý doanh thu</h2>
+                    <p>${error.message}</p>
+                    <a href="/admin" class="btn btn-primary">Quay lại Dashboard</a>
+                </div>
+            `);
         }
     }
 
@@ -314,34 +322,75 @@ async showEditTaskerForm(req, res) {
             const page = parseInt(req.query.page) || 1;
             const limit = 10;
             
+            console.log(`Fetching revenue for tasker ${taskerId}, page ${page}`);
+            
             const { revenues, total } = await Revenue.getRevenueByTaskerId(taskerId, page, limit);
+            
             const totalPages = Math.ceil(total / limit);
             
-            const pagination = {
-                currentPage: page,
-                totalPages: totalPages,
-                totalRevenues: total,
-                hasNext: page < totalPages,
-                hasPrev: page > 1,
-                nextPage: page + 1,
-                prevPage: page - 1,
-                limit: limit
-            };
-            
-            res.render('admin/revenue/tasker-revenue.ejs', { revenues, pagination, taskerId });
+            // Render view thay vì return JSON
+            res.render('admin/revenue/tasker-revenue.ejs', {
+                revenues,
+                taskerId,
+                pagination: {
+                    currentPage: page,
+                    totalPages,
+                    totalRevenues: total,
+                    hasNext: page < totalPages,
+                    hasPrev: page > 1,
+                    nextPage: page + 1,
+                    prevPage: page - 1,
+                    limit: limit
+                }
+            });
         } catch (error) {
-            console.error("Error loading tasker revenues:", error);
-            res.status(500).send("Lỗi server");
+            console.error("Error in getRevenueByTasker:", error);
+            res.render('admin/revenue/tasker-revenue.ejs', {
+                revenues: [],
+                taskerId: req.params.id,
+                pagination: {
+                    currentPage: 1,
+                    totalPages: 0,
+                    totalRevenues: 0,
+                    hasNext: false,
+                    hasPrev: false,
+                    nextPage: 1,
+                    prevPage: 1,
+                    limit: 10
+                },
+                error: 'Không thể tải dữ liệu doanh thu của tasker'
+            });
         }
     }
 
     async getRevenueSummary(req, res) {
         try {
-            const summaryData = await Revenue.getTotalRevenueByTasker();
-            res.render('admin/revenue/summary.ejs', { summaryData });
+            console.log("Fetching revenue summary...");
+            
+            const summary = await Revenue.getRevenueSummary();
+            const taskerSummary = await Revenue.getTotalRevenueByTasker();
+            
+            console.log("Summary:", summary);
+            console.log("Tasker summary:", taskerSummary);
+            
+            res.render('admin/revenue/summary.ejs', {
+                summary,
+                summaryData: taskerSummary,
+                taskerSummary
+            });
         } catch (error) {
-            console.error("Error loading revenue summary:", error);
-            res.status(500).send("Lỗi server");
+            console.error("Error in getRevenueSummary:", error);
+            res.render('admin/revenue/summary.ejs', {
+                summary: {
+                    total_tasker_earnings: 0,
+                    total_company_revenue: 0,
+                    total_revenue: 0,
+                    task_count: 0
+                },
+                summaryData: [],
+                taskerSummary: [],
+                error: 'Không thể tải dữ liệu tổng quan'
+            });
         }
     }
 
@@ -373,6 +422,93 @@ async showEditTaskerForm(req, res) {
         } catch (error) {
             console.error("Error getting all taskers:", error);
             res.status(500).json({ error: "Internal Server Error" });
+        }
+    }
+
+    async getTasksByUser(req, res) {
+        try {
+            const userId = req.params.id;
+            const page = parseInt(req.query.page) || 1;
+            const limit = 10;
+            
+            console.log(`Fetching tasks for user ${userId}, page ${page}`);
+            
+            const { tasks, total } = await Task.getTasksByUserId(userId, page, limit);
+            
+            const totalPages = Math.ceil(total / limit);
+            
+            res.render('admin/task/user-tasks.ejs', {
+                tasks,
+                userId,
+                pagination: {
+                    currentPage: page,
+                    totalPages,
+                    totalTasks: total,
+                    hasNext: page < totalPages,
+                    hasPrev: page > 1,
+                    nextPage: page + 1,
+                    prevPage: page - 1,
+                    limit: limit
+                }
+            });
+        } catch (error) {
+            console.error("Error in getTasksByUser:", error);
+            res.render('admin/task/user-tasks.ejs', {
+                tasks: [],
+                userId: req.params.id,
+                pagination: {
+                    currentPage: 1,
+                    totalPages: 0,
+                    totalTasks: 0,
+                    hasNext: false,
+                    hasPrev: false,
+                    nextPage: 1,
+                    prevPage: 1,
+                    limit: 10
+                },
+                error: 'Không thể tải danh sách task của user'
+            });
+        }
+    }
+
+    async getAllUsersWithTaskCount(req, res) {
+        try {
+            const page = parseInt(req.query.page) || 1;
+            const limit = 10;
+            
+            const { users, total } = await Task.getAllUsersWithTaskCount(page, limit);
+            
+            const totalPages = Math.ceil(total / limit);
+            
+            res.render('admin/task/users-task-summary.ejs', {
+                users,
+                pagination: {
+                    currentPage: page,
+                    totalPages,
+                    totalUsers: total,
+                    hasNext: page < totalPages,
+                    hasPrev: page > 1,
+                    nextPage: page + 1,
+                    prevPage: page - 1,
+                    limit: limit
+                }
+            });
+        } catch (error) {
+            console.error("Error in getAllUsersWithTaskCount:", error);
+            res.render('admin/task/users-task-summary.ejs', {
+                users: [],
+                pagination: {
+                    currentPage: 1,
+                    totalPages: 0,
+                    totalUsers: 0,
+                    hasNext: false,
+                    hasPrev: false,
+                    nextPage: 1,
+                    prevPage: 1,
+                    limit: 10
+                },
+                error: 'Không thể tải danh sách user'
+            });
         }
     }
 }

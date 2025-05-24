@@ -20,6 +20,8 @@ router.post('/tasker/delete/:id', adminController.deleteTasker);
 
 //Tasks
 router.get('/task', adminController.getAdminTaskPage);
+router.get('/task/users', adminController.getAllUsersWithTaskCount); // Danh sách user với task count
+router.get('/task/user/:id', adminController.getTasksByUser); // Task theo user ID
 
 //Service
 router.get('/service', adminController.getAdminServicePage);

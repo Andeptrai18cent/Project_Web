@@ -33,7 +33,7 @@
                                 <a href="/admin/revenue/summary" class="btn btn-info">
                                     <i class="fas fa-chart-pie"></i> Tổng quan doanh thu
                                 </a>
-                                <button type="button" class="btn btn-outline-secondary dropdown-toggle" 
+                                <!-- <button type="button" class="btn btn-outline-secondary dropdown-toggle" 
                                         data-bs-toggle="dropdown">
                                     <i class="fas fa-filter"></i> Lọc dữ liệu
                                 </button>
@@ -41,7 +41,7 @@
                                     <li><a class="dropdown-item" href="/admin/revenue?sort=date">Theo ngày</a></li>
                                     <li><a class="dropdown-item" href="/admin/revenue?sort=amount">Theo số tiền</a></li>
                                     <li><a class="dropdown-item" href="/admin/revenue?sort=tasker">Theo Tasker</a></li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
                         <div class="col-md-4 text-end">
@@ -55,7 +55,7 @@
                     </div>
 
                     <!-- Statistics Cards -->
-                    <% if (revenues && revenues.length > 0) { %>
+                    <!-- <% if (revenues && revenues.length > 0) { %>
                         <div class="row mb-4">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
@@ -75,9 +75,14 @@
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between">
                                             <div>
-                                                <div class="small text-white-50">Tổng giờ làm</div>
+                                                <div class="small text-white-50">Tổng thời gian làm việc</div>
                                                 <div class="h5">
-                                                    <%= revenues.reduce((sum, r) => sum + r.hours_worked, 0).toFixed(1) %>h
+                                                    <% 
+                                                        const totalMinutes = revenues.reduce((sum, r) => sum + (r.total_minutes || 0), 0);
+                                                        const totalHours = Math.floor(totalMinutes / 60);
+                                                        const remainingMinutes = totalMinutes % 60;
+                                                    %>
+                                                    <%= totalHours.toString().padStart(2, '0') %>:<%= remainingMinutes.toString().padStart(2, '0') %>
                                                 </div>
                                             </div>
                                             <div><i class="fas fa-clock fa-2x"></i></div>
@@ -92,7 +97,7 @@
                                             <div>
                                                 <div class="small text-white-50">Tổng doanh thu trang này</div>
                                                 <div class="h5">
-                                                    <%= revenues.reduce((sum, r) => sum + r.total_revenue, 0).toLocaleString() %>đ
+                                                    <%= revenues.reduce((sum, r) => sum + (r.total_revenue || 0), 0).toLocaleString() %>đ
                                                 </div>
                                             </div>
                                             <div><i class="fas fa-money-bill-wave fa-2x"></i></div>
@@ -101,7 +106,7 @@
                                 </div>
                             </div>
                         </div>
-                    <% } %>
+                    <% } %> -->
 
                     <!-- Main Table -->
                     <div class="card">
@@ -120,8 +125,7 @@
                                             <th><i class="fas fa-calendar-alt"></i> Thời gian làm</th>
                                             <th><i class="fas fa-clock"></i> Số giờ</th>
                                             <th><i class="fas fa-money-bill"></i> Lương/giờ</th>
-                                            <th><i class="fas fa-calculator"></i> Tổng lương</th>
-                                            <th><i class="fas fa-cog"></i> Actions</th>
+                                            <th><i class="fas fa-calculator"></i>Thành tiền</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -134,46 +138,47 @@
                                                     <td>
                                                         <div class="d-flex align-items-center">
                                                             <i class="fas fa-user-circle text-primary me-2"></i>
-                                                            <strong><%= revenue.tasker_name %></strong>
+                                                            <strong><%= revenue.tasker_name || 'Unknown' %></strong>
                                                         </div>
                                                     </td>
-                                                    <td><%= revenue.client_name %></td>
+                                                    <td><%= revenue.client_name || 'Unknown' %></td>
                                                     <td>
-                                                        <span class="badge bg-secondary"><%= revenue.service_name %></span>
+                                                        <span class="badge bg-secondary"><%= revenue.service_name || 'Unknown' %></span>
                                                     </td>
                                                     <td>
-                                                        <small>
-                                                            <i class="fas fa-play text-success"></i> 
-                                                            <%= new Date(revenue.work_start_at).toLocaleString() %><br>
-                                                            <i class="fas fa-stop text-danger"></i> 
-                                                            <%= new Date(revenue.work_end_at).toLocaleString() %>
+                                                        <% if (revenue.work_start_at && revenue.work_end_at) { %>
+                                                            <small>
+                                                                <i class="fas fa-play text-success"></i> 
+                                                                <%= new Date(revenue.work_start_at).toLocaleString('vi-VN') %><br>
+                                                                <i class="fas fa-stop text-danger"></i> 
+                                                                <%= new Date(revenue.work_end_at).toLocaleString('vi-VN') %>
+                                                            </small>
+                                                        <% } else { %>
+                                                            <span class="text-muted">N/A</span>
+                                                        <% } %>
+                                                    </td>
+                                                    <td>
+                                                        <!-- HIỂN THỊ THEO ĐỊNH DẠNG hh:mm -->
+                                                        <span class="badge bg-info fs-6">
+                                                            <%= revenue.work_duration_formatted || '00:00' %>
+                                                        </span>
+                                                        <br>
+                                                        <small class="text-muted">
+                                                            (<%= revenue.total_minutes || 0 %> phút)
                                                         </small>
                                                     </td>
                                                     <td>
-                                                        <span class="badge bg-info"><%= revenue.hours_worked %>h</span>
-                                                    </td>
-                                                    <td>
-                                                        <span class="text-primary"><%= revenue.hourly_rate.toLocaleString() %>đ</span>
+                                                        <span class="text-primary"><%= (revenue.hourly_rate || 0).toLocaleString() %>đ/h</span>
                                                     </td>
                                                     <td>
                                                         <strong class="text-success">
-                                                            <%= revenue.total_revenue.toLocaleString() %>đ
+                                                            <%= (revenue.total_revenue || 0).toLocaleString() %>đ
                                                         </strong>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group btn-group-sm" role="group">
-                                                            <a href="/admin/revenue/tasker/<%= revenue.tasker_id %>" 
-                                                               class="btn btn-outline-primary"
-                                                               data-bs-toggle="tooltip" 
-                                                               title="Xem chi tiết doanh thu của tasker">
-                                                                <i class="fas fa-eye"></i>
-                                                            </a>
-                                                            <button type="button" class="btn btn-outline-info"
-                                                                    data-bs-toggle="tooltip" 
-                                                                    title="Task #<%= revenue.task_id %>">
-                                                                <i class="fas fa-info-circle"></i>
-                                                            </button>
-                                                        </div>
+                                                        <br>
+                                                        <small class="text-muted">
+                                                            Tasker: <%= (revenue.tasker_earning || 0).toLocaleString() %>đ<br>
+                                                            Công ty: <%= (revenue.company_revenue || 0).toLocaleString() %>đ
+                                                        </small>
                                                     </td>
                                                 </tr>
                                             <% }) %>

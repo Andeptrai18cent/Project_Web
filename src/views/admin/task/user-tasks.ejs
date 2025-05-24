@@ -1,0 +1,298 @@
+Users\Lenovo\Downloads\Project_Web-Vo_Hoang_An\HomeTask1\src\views\admin\task\user-tasks.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="User Tasks" />
+    <title>User Tasks</title>
+    <link href="/Admin/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <%- include('../layout/header') -%>
+    <div id="layoutSidenav">
+        <%-include('../layout/sidenav') -%>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">
+                        <i class="fas fa-tasks"></i> Tasks của User
+                    </h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="/admin/task">Tasks</a></li>
+                        <li class="breadcrumb-item"><a href="/admin/task/users">Users Summary</a></li>
+                        <li class="breadcrumb-item active">User #<%= userId %></li>
+                    </ol>
+                    
+                    <!-- Navigation buttons -->
+                    <div class="mb-3">
+                        <a href="/admin/task/users" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Quay lại danh sách User
+                        </a>
+                        <a href="/admin/task" class="btn btn-info">
+                            <i class="fas fa-tasks"></i> Tất cả Tasks
+                        </a>
+                    </div>
+
+                    <!-- Error message -->
+                    <% if (typeof error !== 'undefined' && error) { %>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <i class="fas fa-exclamation-triangle"></i> <%= error %>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    <% } %>
+
+                    <!-- User info card -->
+                    <% if (tasks && tasks.length > 0) { %>
+                        <div class="card border-primary mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-user"></i> Thông tin User: 
+                                    <strong><%= tasks[0].Users.name %></strong>
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="mb-2">
+                                            <i class="fas fa-id-badge text-primary"></i>
+                                            <strong>User ID:</strong> #<%= userId %>
+                                        </p>
+                                        <p class="mb-2">
+                                            <i class="fas fa-user text-info"></i>
+                                            <strong>Username:</strong> @<%= tasks[0].Users.username %>
+                                        </p>
+                                        <p class="mb-2">
+                                            <i class="fas fa-envelope text-success"></i>
+                                            <strong>Email:</strong> <%= tasks[0].Users.email %>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="mb-2">
+                                            <i class="fas fa-phone text-warning"></i>
+                                            <strong>Phone:</strong> <%= tasks[0].Users.phone_number || 'N/A' %>
+                                        </p>
+                                        <p class="mb-2">
+                                            <i class="fas fa-tasks text-primary"></i>
+                                            <strong>Tổng tasks:</strong> 
+                                            <span class="badge bg-primary"><%= pagination.totalTasks %></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Statistics for this user -->
+                        <!-- <% 
+                            const completedCount = tasks.filter(task => task.status === 'Completed').length;
+                            const inProgressCount = tasks.filter(task => task.status === 'In_Progress').length;
+                            const pendingCount = tasks.filter(task => task.status === 'Pending').length;
+                        %>
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <div class="card bg-success text-white">
+                                    <div class="card-body text-center">
+                                        <h3><%= completedCount %></h3>
+                                        <p class="mb-0">Completed</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-warning text-white">
+                                    <div class="card-body text-center">
+                                        <h3><%= inProgressCount %></h3>
+                                        <p class="mb-0">In Progress</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-secondary text-white">
+                                    <div class="card-body text-center">
+                                        <h3><%= pendingCount %></h3>
+                                        <p class="mb-0">Pending</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %> -->
+
+                    <!-- User Tasks Table -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            Chi tiết Tasks của User #<%= userId %>
+                            <% if (pagination && pagination.totalTasks > 0) { %>
+                                (<%= pagination.totalTasks %> tasks)
+                            <% } %>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Task ID</th>
+                                        <th>Dịch vụ</th>
+                                        <th>Mô tả</th>
+                                        <th>Địa điểm</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Tasker</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thời gian làm việc</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if (tasks && tasks.length > 0) { %>
+                                        <% tasks.forEach(task => { %>
+                                            <tr>
+                                                <td>
+                                                    <span class="badge bg-primary">#<%= task.task_id %></span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-secondary">
+                                                        <%= task.Services?.name || 'Unknown' %>
+                                                    </span>
+                                                    <% if (task.Services?.description) { %>
+                                                        <br><small class="text-muted">
+                                                            <%= task.Services.description.length > 30 ? task.Services.description.substring(0, 30) + '...' : task.Services.description %>
+                                                        </small>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <small class="text-muted">
+                                                        <%= task.description ? (task.description.length > 50 ? task.description.substring(0, 50) + '...' : task.description) : 'No description' %>
+                                                    </small>
+                                                </td>
+                                                <td>
+                                                    <small>
+                                                        <i class="fas fa-map-marker-alt text-danger"></i> 
+                                                        <%= task.location || 'Unknown' %>
+                                                    </small>
+                                                </td>
+                                                <td>
+                                                    <small>
+                                                        <i class="fas fa-calendar text-info"></i>
+                                                        <%= new Date(task.task_date).toLocaleDateString('vi-VN') %>
+                                                    </small>
+                                                </td>
+                                                <td>
+                                                    <% if (task.Taskers && task.Taskers.Users) { %>
+                                                        <div class="d-flex align-items-center">
+                                                            <i class="fas fa-user-tie text-primary me-1"></i>
+                                                            <div>
+                                                                <strong><%= task.Taskers.Users.name %></strong>
+                                                                <br><small class="text-muted">@<%= task.Taskers.Users.username %></small>
+                                                            </div>
+                                                        </div>
+                                                    <% } else { %>
+                                                        <span class="text-muted">
+                                                            <i class="fas fa-user-slash"></i> Chưa có tasker
+                                                        </span>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <% 
+                                                        let statusClass = 'secondary';
+                                                        let statusIcon = 'question-circle';
+                                                        if (task.status === 'Completed') {
+                                                            statusClass = 'success';
+                                                            statusIcon = 'check-circle';
+                                                        } else if (task.status === 'In_Progress') {
+                                                            statusClass = 'warning';
+                                                            statusIcon = 'spinner';
+                                                        } else if (task.status === 'Pending') {
+                                                            statusClass = 'info';
+                                                            statusIcon = 'clock';
+                                                        }
+                                                    %>
+                                                    <span class="badge bg-<%= statusClass %>">
+                                                        <i class="fas fa-<%= statusIcon %>"></i> <%= task.status %>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <% if (task.work_start_at && task.work_end_at) { %>
+                                                        <small>
+                                                            <i class="fas fa-play text-success"></i> 
+                                                            <%= new Date(task.work_start_at).toLocaleString('vi-VN', {timeStyle: 'short'}) %><br>
+                                                            <i class="fas fa-stop text-danger"></i> 
+                                                            <%= new Date(task.work_end_at).toLocaleString('vi-VN', {timeStyle: 'short'}) %>
+                                                        </small>
+                                                    <% } else { %>
+                                                        <span class="text-muted">
+                                                            <i class="fas fa-hourglass-start"></i> Chưa bắt đầu
+                                                        </span>
+                                                    <% } %>
+                                                </td>
+                                            </tr>
+                                        <% }) %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="8" class="text-center py-4">
+                                                <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                                                <h5 class="text-muted">User này chưa có task nào</h5>
+                                                <p class="text-muted">Chưa có công việc nào được tạo bởi user này</p>
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <% if (pagination && pagination.totalPages > 1) { %>
+                        <nav aria-label="Tasks pagination">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item <%= !pagination.hasPrev ? 'disabled' : '' %>">
+                                    <a class="page-link" href="/admin/task/user/<%= userId %>?page=<%= pagination.prevPage %>">
+                                        <i class="fas fa-chevron-left"></i> Previous
+                                    </a>
+                                </li>
+                                
+                                <% for(let i = Math.max(1, pagination.currentPage - 2); i <= Math.min(pagination.totalPages, pagination.currentPage + 2); i++) { %>
+                                    <li class="page-item <%= i === pagination.currentPage ? 'active' : '' %>">
+                                        <a class="page-link" href="/admin/task/user/<%= userId %>?page=<%= i %>">
+                                            <%= i %>
+                                        </a>
+                                    </li>
+                                <% } %>
+                                
+                                <li class="page-item <%= !pagination.hasNext ? 'disabled' : '' %>">
+                                    <a class="page-link" href="/admin/task/user/<%= userId %>?page=<%= pagination.nextPage %>">
+                                        Next <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        
+                        <!-- Page info -->
+                        <div class="text-center mt-3">
+                            <small class="text-muted">
+                                Hiển thị <%= ((pagination.currentPage - 1) * pagination.limit) + 1 %> - 
+                                <%= Math.min(pagination.currentPage * pagination.limit, pagination.totalTasks) %> 
+                                trong tổng số <%= pagination.totalTasks %> tasks của user này
+                            </small>
+                        </div>
+                    <% } %>
+                </div>
+            </main>
+            <%- include('../layout/footer') -%>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="/Admin/js/scripts.js"></script>
+    
+    <!-- Enable tooltips -->
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+</body>
+
+</html>

@@ -32,11 +32,6 @@
                         <a href="/admin/revenue/summary" class="btn btn-info">
                             <i class="fas fa-chart-pie"></i> Tổng quan
                         </a>
-                        <% if (revenues && revenues.length > 0) { %>
-                            <a href="/admin/tasker/edit/<%= revenues[0].tasker_id %>" class="btn btn-warning">
-                                <i class="fas fa-edit"></i> Sửa thông tin Tasker
-                            </a>
-                        <% } %>
                     </div>
 
                     <!-- Thông tin phân trang -->
@@ -65,7 +60,6 @@
                                     <th>Số giờ</th>
                                     <th>Lương/giờ</th>
                                     <th>Tổng lương</th>
-                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -97,20 +91,13 @@
                                             <td class="text-success font-weight-bold">
                                                 <strong><%= revenue.total_revenue.toLocaleString() %>đ</strong>
                                             </td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-info" 
-                                                        data-bs-toggle="tooltip" 
-                                                        title="Task ID: <%= revenue.task_id %>">
-                                                    <i class="fas fa-info-circle"></i>
-                                                </button>
-                                            </td>
                                         </tr>
                                     <% }) %>
                                     
                                     <!-- Tổng kết cho trang hiện tại -->
                                     <tr class="table-success font-weight-bold">
                                         <td colspan="5" class="text-right">
-                                            <strong><i class="fas fa-calculator"></i> Tổng trang này:</strong>
+                                            <strong>Tổng trang này:</strong>
                                         </td>
                                         <td>
                                             <strong><span class="badge bg-success"><%= totalHours.toFixed(2) %>h</span></strong>
