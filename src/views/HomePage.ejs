@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <nav class="navbar .navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <img class="logo" src="/Img/Group 30.svg" alt="Logo">
             <div class="nav_link">
                 <a href="/">Home</a>
@@ -25,8 +25,8 @@
                 <a href="/signup" id="Sign_up_Link">Signup</a>
                 <button class="btn btn-primary" id="Become_Tasker"><a href="/become-tasker" class="text-light text-decoration-none">Become Tasker</a></button>
                 <!-- class="dropdown"-->
-                <div id="user_dropdown_only">
-                    <button onclick="myFunction()">Tùy chọn▼</button>
+                <div class= "dropdown" id="user_dropdown_only">
+                    <button class="dropbtn" onclick="myFunction()">Tùy chọn▼</button>
                     <div id="myDropdown" class="dropdown-content">
                       <a href="/user/info">Xem thông tin cá nhân</a>
                       <a href="/user/change-info">Thay đổi thông tin cá nhân</a>
@@ -43,15 +43,24 @@
         <h1>Tìm kiếm và tham gia </h1>
         <img src = "/Img/Group 30.svg" alt = "Logo" class="logo-image">
     </div>
-    <form action = "/">
-        <div role = "search" class = "search-bar-wrapper">
-            <div class = "search-bar">
-                <input type="text" class="search-input" placeholder="Tìm kiếm công việc">
-                <button class="search-button">
-                    <img src = "/Img/Vector.png" alt = "search">
-                </button>
-            </div>
-    </from>
+    <form action="/service/search" method="GET">
+    <div role="search" class="search-bar-wrapper">
+        <div class="search-bar">
+            <input 
+                type="text" 
+                name="q" 
+                id="search-input" 
+                class="search-input" 
+                placeholder="Bạn cần giúp đỡ điều gì?"
+                autocomplete="off"
+            >
+            <button type="submit" class="search-button">
+                <img src="/Img/Vector.png" alt="search">
+            </button>
+        </div>
+        <div id="search-suggestions" class="search-suggestions"></div>
+    </div>
+    </form>
 </header>
 <section class = "category" id = "category">
     <div class = "category__container" category__container>
@@ -83,37 +92,72 @@
         </div>
     </div>
 </section>
-<section class ="category__display" id = "category__display">
-   <div class = "category__display__container" id ="display-laprap" >
-       <img src = "/Img/istockphoto-490077888-612x612.svg" alt = "category_img" class = "category__display__image">
-           <div class = "category__display__content">
-              <h3>Lắp ráp</h3>
-                <ul>
-                    <li> - Lắp ráp tháo rời các món đồ nội thất, bao gồm tủ quần áo, giường kề TV và nhiều hơn thế</li>
-                    <li> - Xu hướng: Lắp ráp ghế, bàn máy tính, vật liệu</li>
-                </ul>
-            </div>
+<section class="category__display" id="category__display">
+    <div class="category__display__container" id="display-vanchuyen">
+        <img src="/Img/istockphoto-490077888-612x612.svg" alt="category_img" class="category__display__image">
+        <div class="category__display__content">
+            <h3>Vận chuyển</h3>
+            <ul>
+                <li>Hỗ trợ di chuyển như đóng gói tháo dỡ, chất hàng và nâng vật nặng.</li>
+                <li>Xu hướng hiện nay: Di chuyển từng món đồ, di chuyển căn hộ và dọn rác.</li>
+            </ul>
+        </div>
     </div>
-    <div class = "category__display__container" id = "display-vanchuyen">
-        <img src = "/Img/istockphoto-490077888-612x612.svg" alt = "category_img" class = "category__display__image">
-            <div class = "category__display__content">
-               <h3>Vận chuyển</h3>
-                 <ul>
-                     <li> - Hỗ trợ di chuyển như đóng gói tháo dỡ, chất hàng và nâng vật nặng.</li>
-                     <li> - Xu hướng hiện nay: Di chuyển từng món đồ, di chuyển căn hộ và dọn rác.</li>
-                 </ul>
-             </div>
-     </div>
-     <div class = "category__display__container" id = "display-sonnha">
-        <img src = "/Img/istockphoto-490077888-612x612.svg" alt = "category_img" class = "category__display__image">
-            <div class = "category__display__content">
-               <h3>Sơn nhà</h3>
-                 <ul>
-                     <li> Sơn tường, trần nhà, khuôn và cửa; bao gồm cả khâu chuẩn bị và dọn dẹp.</li>
-                     <li> Xu hướng hiện nay: Khối màu, chi tiết sọc và màu sắc nổi bật.</li>
-                 </ul>
-             </div>
-     </div>
+    
+    <div class="category__display__container" id="display-laprap">
+        <img src="/Img/istockphoto-490077888-612x612.svg" alt="category_img" class="category__display__image">
+        <div class="category__display__content">
+            <h3>Lắp ráp</h3>
+            <ul>
+                <li>Lắp ráp tháo rời các món đồ nội thất, bao gồm tủ quần áo, giường kề TV và nhiều hơn thế</li>
+                <li>Xu hướng: Lắp ráp ghế, bàn máy tính, vật liệu</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="category__display__container" id="display-sonnha">
+        <img src="/Img/istockphoto-490077888-612x612.svg" alt="category_img" class="category__display__image">
+        <div class="category__display__content">
+            <h3>Sơn nhà</h3>
+            <ul>
+                <li>Sơn tường, trần nhà, khuôn và cửa; bao gồm cả khâu chuẩn bị và dọn dẹp.</li>
+                <li>Xu hướng hiện nay: Khối màu, chi tiết sọc và màu sắc nổi bật.</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="category__display__container" id="display-caycanh">
+        <img src="/Img/istockphoto-490077888-612x612.svg" alt="category_img" class="category__display__image">
+        <div class="category__display__content">
+            <h3>Cây cảnh</h3>
+            <ul>
+                <li>Chăm sóc cây trong nhà và ngoài trời, tưới nước, cắt tỉa.</li>
+                <li>Xu hướng hiện nay: Cây nội thất mini và vườn tường.</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="category__display__container" id="display-khoanduc">
+        <img src="/Img/istockphoto-490077888-612x612.svg" alt="category_img" class="category__display__image">
+        <div class="category__display__content">
+            <h3>Khoan đục</h3>
+            <ul>
+                <li>Dịch vụ khoan đục tường, trần nhà để lắp đặt thiết bị.</li>
+                <li>Xu hướng hiện nay: Khoan đục cho hệ thống thông minh.</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="category__display__container" id="display-dondep">
+        <img src="/Img/istockphoto-490077888-612x612.svg" alt="category_img" class="category__display__image">
+        <div class="category__display__content">
+            <h3>Dọn dẹp</h3>
+            <ul>
+                <li>Dịch vụ vệ sinh nhà cửa, văn phòng.</li>
+                <li>Xu hướng hiện nay: Vệ sinh thân thiện với môi trường.</li>
+            </ul>
+        </div>
+    </div>
 </section>
 <section id = "product1" class = "section-p1">
     <i class="ri-star-fill"></i>
@@ -210,7 +254,10 @@
     <hr>
     <p class="footer-text">2025 All Right Reserved</p>
 </footer>  
-<script  src = "/JS/homepage.js";> </script>
 <script src="https://unpkg.com/scrollreveal"></script>
+
+<!-- Sau đó tải các file JavaScript của bạn -->
+<script src="/js/sever.js"></script>
+<script src="/js/dropdown.js"></script>
 </body>
 </html>
