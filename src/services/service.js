@@ -28,7 +28,6 @@ const getServiceGroupAndService = async () => {
     return data
 }
 module.exports = {
-    getAllService,
     getAllServiceGroup,
     getServiceGroupAndService,
 }

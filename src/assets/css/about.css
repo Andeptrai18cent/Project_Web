@@ -79,6 +79,7 @@ body {
     min-height: 200px;
     display: flex;
 }
+
 /* Footer */
 .footer {
     background-color: #0066d9;
@@ -162,3 +163,42 @@ body {
         flex-direction: row;
     }
 }
+
+/*User Dropdown*/
+.user-button{
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  color: var(--text-color);
+  font-weight: 500;
+  text-decoration: none;
+  transition:  0.3s;
+}
+
+.dropdown {
+    /*float: right;*/
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content-user {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    right: 0;
+    z-index: 1;
+}
+
+.dropdown-content-user a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}

@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');
+const {getAdminPage, getGetTaskPage} = require('../controllers/adminController')
 
 router.get('/', adminController.getAdminPage);
 

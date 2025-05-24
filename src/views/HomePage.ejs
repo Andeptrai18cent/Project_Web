@@ -15,15 +15,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-<nav class="navbar .navbar-expand-lg fixed-top">
+    <nav class="navbar .navbar-expand-lg fixed-top">
         <img class="logo" src="/Img/Group 30.svg" alt="Logo">
             <div class="nav_link">
                 <a href="/">Home</a>
                 <a href="/about">About</a>
                 <a href="/service">Service</a>
-                <a href=/login>Login</a>
-                <a href="/signup">Signup</a>
-                <button class="btn btn-primary"><a href="/become-tasker" class="text-light text-decoration-none">Become Tasker</a></button>
+                <a href=/login id="Login_Link">Login</a>
+                <a href="/signup" id="Sign_up_Link">Signup</a>
+                <button class="btn btn-primary" id="Become_Tasker"><a href="/become-tasker" class="text-light text-decoration-none">Become Tasker</a></button>
+                <!-- class="dropdown"-->
+                <div id="user_dropdown_only">
+                    <button onclick="myFunction()">Tùy chọn▼</button>
+                    <div id="myDropdown" class="dropdown-content">
+                      <a href="/user/info">Xem thông tin cá nhân</a>
+                      <a href="/user/change-info">Thay đổi thông tin cá nhân</a>
+                      <a href="/user/change-password">Thay đổi mật khẩu</a>
+                      <a href="/user/task-list">Xem các task đã đặt</a>
+                      <a href="/logout">Đăng xuất</a>
+                    </div>
+                </div>
             </div>
     </nav>
 <header id = "header">
@@ -199,7 +210,7 @@
     <hr>
     <p class="footer-text">2025 All Right Reserved</p>
 </footer>  
-<script  src = "/JS/sever.js";> </script>
+<script  src = "/JS/homepage.js";> </script>
 <script src="https://unpkg.com/scrollreveal"></script>
 </body>
 </html>
