@@ -1,3 +1,4 @@
+_Web\src\views\admin\tasker\tasker.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,9 +22,19 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Manage Taskers</h1>
                     <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Taskers</li>
+                        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Taskers</li>
                     </ol>
+                    
+                    <!-- Thông tin phân trang -->
+                    <div class="mb-3">
+                        <p class="text-muted">
+                            Hiển thị <%= ((pagination.currentPage - 1) * pagination.limit) + 1 %> - 
+                            <%= Math.min(pagination.currentPage * pagination.limit, pagination.totalTaskers) %> 
+                            trong tổng số <%= pagination.totalTaskers %> taskers
+                        </p>
+                    </div>
+
                     <div>
                         <table class="table table-bordered table-hover table-striped">
                             <thead>
@@ -39,26 +50,63 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <% taskers.forEach(tasker => { %>
-                                <tr>
-                                    <td><%= tasker.tasker_id %></td>
-                                    <td><%= tasker.Users.username %></td>
-                                    <td><%= tasker.Users.name %></td>
-                                    <td><%= tasker.ServiceGroup.group_name %></td>
-                                    <td><%= tasker.hourly_rate %></td>
-                                    <td><%= tasker.Users.address %></td>
-                                    <td><%= tasker.Users.phone_number %></td>
-                                    <td class="actions">
-                                        <a href="/admin/tasker/edit/<%= tasker.tasker_id %>" class="btn btn-primary">Sửa</a>
-                                        <form action="/admin/taskers/delete/<%= tasker.tasker_id %>" method="POST" style="display:inline;">
-                                            <button type="submit" class="btn btn-primary">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                        <% }) %>
-                        </tbody>
-
+                                <% if (taskers && taskers.length > 0) { %>
+                                    <% taskers.forEach(tasker => { %>
+                                        <tr>
+                                            <td><%= tasker.tasker_id %></td>
+                                            <td><%= tasker.Users.username %></td>
+                                            <td><%= tasker.Users.name %></td>
+                                            <td><%= tasker.ServiceGroup.group_name %></td>
+                                            <td><%= tasker.hourly_rate %></td>
+                                            <td><%= tasker.Users.address %></td>
+                                            <td><%= tasker.Users.phone_number %></td>
+                                            <td class="actions">
+                                                <a href="/admin/tasker/edit/<%= tasker.tasker_id %>" class="btn btn-primary btn-sm">Sửa</a>
+                                                <form action="/admin/tasker/delete/<%= tasker.tasker_id %>" method="POST" style="display:inline;">
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa tasker này?')">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="8" class="text-center">Không có tasker nào</td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
                         </table>
+
+                        <!-- Phân trang -->
+                        <% if (pagination.totalPages > 1) { %>
+                            <nav aria-label="Tasker pagination">
+                                <ul class="pagination justify-content-center">
+                                    <!-- Previous button -->
+                                    <li class="page-item <%= !pagination.hasPrev ? 'disabled' : '' %>">
+                                        <% if (pagination.hasPrev) { %>
+                                            <a class="page-link" href="/admin/tasker?page=<%= pagination.prevPage %>">Previous</a>
+                                        <% } else { %>
+                                            <span class="page-link">Previous</span>
+                                        <% } %>
+                                    </li>
+
+                                    <!-- Page numbers -->
+                                    <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+                                        <li class="page-item <%= i === pagination.currentPage ? 'active' : '' %>">
+                                            <a class="page-link" href="/admin/tasker?page=<%= i %>"><%= i %></a>
+                                        </li>
+                                    <% } %>
+
+                                    <!-- Next button -->
+                                    <li class="page-item <%= !pagination.hasNext ? 'disabled' : '' %>">
+                                        <% if (pagination.hasNext) { %>
+                                            <a class="page-link" href="/admin/tasker?page=<%= pagination.nextPage %>">Next</a>
+                                        <% } else { %>
+                                            <span class="page-link">Next</span>
+                                        <% } %>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <% } %>
                     </div>
                 </div>
 

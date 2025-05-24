@@ -1,14 +1,34 @@
 const connection = require('../config/database')
 
 class Task {
-    // Lấy tất cả các công việc
-    static async getAllTasks() {
-        const { data, error } = await connection.from('Tasks').select()
-        if (error) {
-            console.error("Error fetching tasks:", error)
-            return []
+    // Lấy tất cả các công việc với phân trang
+    static async getAllTasks(page = 1, limit = 10) {
+        // Tính offset
+        const offset = (page - 1) * limit;
+        
+        // Lấy tổng số tasks
+        const { count, error: countError } = await connection
+            .from('Tasks')
+            .select('*', { count: 'exact' });
+        
+        if (countError) {
+            console.error("Error counting tasks:", countError);
+            return { tasks: [], total: 0 };
         }
-        return data
+
+        // Lấy tasks với phân trang
+        const { data, error } = await connection
+            .from('Tasks')
+            .select('*')
+            .range(offset, offset + limit - 1)
+            .order('task_id', { ascending: true });
+        
+        if (error) {
+            console.error("Error fetching tasks:", error);
+            return { tasks: [], total: 0 };
+        }
+        
+        return { tasks: data || [], total: count };
     }
 
     // Thêm công việc mới

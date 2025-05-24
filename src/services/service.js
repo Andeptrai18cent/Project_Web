@@ -1,5 +1,5 @@
 const connection = require('../config/database')
-const { get } = require('../routes/home')
+
 
 const getAllService = async () => {
     let {data} = await connection.from('Services').select()

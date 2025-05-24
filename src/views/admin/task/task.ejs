@@ -21,9 +21,19 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Manage Tasks</h1>
                     <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Task</li>
+                        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Task</li>
                     </ol>
+                    
+                    <!-- Thông tin phân trang -->
+                    <div class="mb-3">
+                        <p class="text-muted">
+                            Hiển thị <%= ((pagination.currentPage - 1) * pagination.limit) + 1 %> - 
+                            <%= Math.min(pagination.currentPage * pagination.limit, pagination.totalTasks) %> 
+                            trong tổng số <%= pagination.totalTasks %> tasks
+                        </p>
+                    </div>
+
                     <div>
                          <table class="table table-bordered table-hover table-striped">
                             <thead>
@@ -38,23 +48,61 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% tasks.forEach(task => { %>
+                                <% if (tasks && tasks.length > 0) { %>
+                                    <% tasks.forEach(task => { %>
+                                        <tr>
+                                            <td><%= task.task_id %></td>
+                                            <td><%= task.tasker_id %></td>
+                                            <td><%= task.user_id %></td>
+                                            <td><%= task.location %></td>
+                                            <td><%= task.description %></td>
+                                            <td><%= task.task_date %></td>
+                                            <td>
+                                                <span class="status <%= task.status.toLowerCase() %>">
+                                                    <%= task.status %>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                <% } else { %>
                                     <tr>
-                                        <td><%= task.task_id %></td>
-                                        <td><%= task.tasker_id %></td>
-                                        <td><%= task.user_id %></td>
-                                        <td><%= task.location %></td>
-                                        <td><%= task.description %></td>
-                                        <td><%= task.task_date %></td>
-                                        <td>
-                                            <span class="status <%= task.status.toLowerCase() %>">
-                                                <%= task.status %>
-                                            </span>
-                                        </td>
+                                        <td colspan="7" class="text-center">Không có task nào</td>
                                     </tr>
-                                <% }) %>
+                                <% } %>
                             </tbody>
                         </table>
+
+                        <!-- Phân trang -->
+                        <% if (pagination.totalPages > 1) { %>
+                            <nav aria-label="Task pagination">
+                                <ul class="pagination justify-content-center">
+                                    <!-- Previous button -->
+                                    <li class="page-item <%= !pagination.hasPrev ? 'disabled' : '' %>">
+                                        <% if (pagination.hasPrev) { %>
+                                            <a class="page-link" href="/admin/task?page=<%= pagination.prevPage %>">Previous</a>
+                                        <% } else { %>
+                                            <span class="page-link">Previous</span>
+                                        <% } %>
+                                    </li>
+
+                                    <!-- Page numbers -->
+                                    <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+                                        <li class="page-item <%= i === pagination.currentPage ? 'active' : '' %>">
+                                            <a class="page-link" href="/admin/task?page=<%= i %>"><%= i %></a>
+                                        </li>
+                                    <% } %>
+
+                                    <!-- Next button -->
+                                    <li class="page-item <%= !pagination.hasNext ? 'disabled' : '' %>">
+                                        <% if (pagination.hasNext) { %>
+                                            <a class="page-link" href="/admin/task?page=<%= pagination.nextPage %>">Next</a>
+                                        <% } else { %>
+                                            <span class="page-link">Next</span>
+                                        <% } %>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <% } %>
                     </div>
                 </div>
 

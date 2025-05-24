@@ -1,13 +1,33 @@
 const connection = require('../config/database')
 
 class User {
-    static async getAllUsers() {
-        const { data, error } = await connection.from('Users').select()
-        if (error) {
-            console.error("Error fetching users:", error)
-            return []
+    static async getAllUsers(page = 1, limit = 10) {
+        // Tính offset
+        const offset = (page - 1) * limit;
+        
+        // Lấy tổng số users
+        const { count, error: countError } = await connection
+            .from('Users')
+            .select('*', { count: 'exact' });
+        
+        if (countError) {
+            console.error("Error counting users:", countError);
+            return { users: [], total: 0 };
         }
-        return data
+
+        // Lấy users với phân trang
+        const { data, error } = await connection
+            .from('Users')
+            .select('*')
+            .range(offset, offset + limit - 1)
+            .order('user_id', { ascending: true });
+        
+        if (error) {
+            console.error("Error fetching users:", error);
+            return { users: [], total: 0 };
+        }
+        
+        return { users: data || [], total: count };
     }
 
     static async getById(userId) {

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Revenue Management" />
+    <title>Revenue Management</title>
+    <link href="/Admin/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <%- include('../layout/header') -%>
+    <div id="layoutSidenav">
+        <%-include('../layout/sidenav') -%>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">
+                        <i class="fas fa-chart-line"></i> Quản lý Doanh thu
+                    </h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Revenue</li>
+                    </ol>
+                    
+                    <!-- Navigation buttons -->
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <div class="btn-group" role="group">
+                                <a href="/admin/revenue/summary" class="btn btn-info">
+                                    <i class="fas fa-chart-pie"></i> Tổng quan doanh thu
+                                </a>
+                                <button type="button" class="btn btn-outline-secondary dropdown-toggle" 
+                                        data-bs-toggle="dropdown">
+                                    <i class="fas fa-filter"></i> Lọc dữ liệu
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/admin/revenue?sort=date">Theo ngày</a></li>
+                                    <li><a class="dropdown-item" href="/admin/revenue?sort=amount">Theo số tiền</a></li>
+                                    <li><a class="dropdown-item" href="/admin/revenue?sort=tasker">Theo Tasker</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <!-- Thông tin phân trang -->
+                            <small class="text-muted">
+                                Hiển thị <%= ((pagination.currentPage - 1) * pagination.limit) + 1 %> - 
+                                <%= Math.min(pagination.currentPage * pagination.limit, pagination.totalRevenues) %> 
+                                trong tổng số <%= pagination.totalRevenues %> records
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Cards -->
+                    <% if (revenues && revenues.length > 0) { %>
+                        <div class="row mb-4">
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-primary text-white mb-4">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="small text-white-50">Tổng Tasks</div>
+                                                <div class="h5"><%= revenues.length %></div>
+                                            </div>
+                                            <div><i class="fas fa-tasks fa-2x"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-success text-white mb-4">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="small text-white-50">Tổng giờ làm</div>
+                                                <div class="h5">
+                                                    <%= revenues.reduce((sum, r) => sum + r.hours_worked, 0).toFixed(1) %>h
+                                                </div>
+                                            </div>
+                                            <div><i class="fas fa-clock fa-2x"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-12">
+                                <div class="card bg-warning text-white mb-4">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <div class="small text-white-50">Tổng doanh thu trang này</div>
+                                                <div class="h5">
+                                                    <%= revenues.reduce((sum, r) => sum + r.total_revenue, 0).toLocaleString() %>đ
+                                                </div>
+                                            </div>
+                                            <div><i class="fas fa-money-bill-wave fa-2x"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+
+                    <!-- Main Table -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-table"></i> Chi tiết doanh thu</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th><i class="fas fa-hashtag"></i> Task ID</th>
+                                            <th><i class="fas fa-user-tie"></i> Tasker</th>
+                                            <th><i class="fas fa-user"></i> Client</th>
+                                            <th><i class="fas fa-cogs"></i> Service</th>
+                                            <th><i class="fas fa-calendar-alt"></i> Thời gian làm</th>
+                                            <th><i class="fas fa-clock"></i> Số giờ</th>
+                                            <th><i class="fas fa-money-bill"></i> Lương/giờ</th>
+                                            <th><i class="fas fa-calculator"></i> Tổng lương</th>
+                                            <th><i class="fas fa-cog"></i> Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if (revenues && revenues.length > 0) { %>
+                                            <% revenues.forEach(revenue => { %>
+                                                <tr>
+                                                    <td>
+                                                        <span class="badge bg-primary">#<%= revenue.task_id %></span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex align-items-center">
+                                                            <i class="fas fa-user-circle text-primary me-2"></i>
+                                                            <strong><%= revenue.tasker_name %></strong>
+                                                        </div>
+                                                    </td>
+                                                    <td><%= revenue.client_name %></td>
+                                                    <td>
+                                                        <span class="badge bg-secondary"><%= revenue.service_name %></span>
+                                                    </td>
+                                                    <td>
+                                                        <small>
+                                                            <i class="fas fa-play text-success"></i> 
+                                                            <%= new Date(revenue.work_start_at).toLocaleString() %><br>
+                                                            <i class="fas fa-stop text-danger"></i> 
+                                                            <%= new Date(revenue.work_end_at).toLocaleString() %>
+                                                        </small>
+                                                    </td>
+                                                    <td>
+                                                        <span class="badge bg-info"><%= revenue.hours_worked %>h</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="text-primary"><%= revenue.hourly_rate.toLocaleString() %>đ</span>
+                                                    </td>
+                                                    <td>
+                                                        <strong class="text-success">
+                                                            <%= revenue.total_revenue.toLocaleString() %>đ
+                                                        </strong>
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-sm" role="group">
+                                                            <a href="/admin/revenue/tasker/<%= revenue.tasker_id %>" 
+                                                               class="btn btn-outline-primary"
+                                                               data-bs-toggle="tooltip" 
+                                                               title="Xem chi tiết doanh thu của tasker">
+                                                                <i class="fas fa-eye"></i>
+                                                            </a>
+                                                            <button type="button" class="btn btn-outline-info"
+                                                                    data-bs-toggle="tooltip" 
+                                                                    title="Task #<%= revenue.task_id %>">
+                                                                <i class="fas fa-info-circle"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <% }) %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td colspan="9" class="text-center py-4">
+                                                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                                                    <h5 class="text-muted">Không có dữ liệu doanh thu</h5>
+                                                    <p class="text-muted">Chưa có task nào được hoàn thành</p>
+                                                </td>
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phân trang -->
+                    <% if (pagination.totalPages > 1) { %>
+                        <nav aria-label="Revenue pagination" class="mt-4">
+                            <ul class="pagination justify-content-center">
+                                <!-- Previous button -->
+                                <li class="page-item <%= !pagination.hasPrev ? 'disabled' : '' %>">
+                                    <% if (pagination.hasPrev) { %>
+                                        <a class="page-link" href="/admin/revenue?page=<%= pagination.prevPage %>">
+                                            <i class="fas fa-chevron-left"></i> Previous
+                                        </a>
+                                    <% } else { %>
+                                        <span class="page-link">
+                                            <i class="fas fa-chevron-left"></i> Previous
+                                        </span>
+                                    <% } %>
+                                </li>
+
+                                <!-- Page numbers -->
+                                <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+                                    <li class="page-item <%= i === pagination.currentPage ? 'active' : '' %>">
+                                        <a class="page-link" href="/admin/revenue?page=<%= i %>"><%= i %></a>
+                                    </li>
+                                <% } %>
+
+                                <!-- Next button -->
+                                <li class="page-item <%= !pagination.hasNext ? 'disabled' : '' %>">
+                                    <% if (pagination.hasNext) { %>
+                                        <a class="page-link" href="/admin/revenue?page=<%= pagination.nextPage %>">
+                                            Next <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    <% } else { %>
+                                        <span class="page-link">
+                                            Next <i class="fas fa-chevron-right"></i>
+                                        </span>
+                                    <% } %>
+                                </li>
+                            </ul>
+                        </nav>
+                    <% } %>
+                </div>
+            </main>
+            <%- include('../layout/footer') -%>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="/Admin/js/scripts.js"></script>
+    
+    <!-- Enable tooltips -->
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+</body>
+
+</html>

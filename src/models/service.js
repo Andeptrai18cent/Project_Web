@@ -1,7 +1,21 @@
 const connection = require('../config/database');
 
 class Service {
-    static async getAll() {
+    static async getAll(page = 1, limit = 10) {
+        // Tính offset
+        const offset = (page - 1) * limit;
+        
+        // Lấy tổng số services
+        const { count, error: countError } = await connection
+            .from('Services')
+            .select('*', { count: 'exact' });
+        
+        if (countError) {
+            console.error("Error counting services:", countError);
+            return { services: [], total: 0 };
+        }
+
+        // Lấy services với phân trang
         const { data, error } = await connection
             .from('Services')
             .select(`
@@ -12,12 +26,16 @@ class Service {
                 ServiceGroup (
                     group_name
                 )
-            `);
+            `)
+            .range(offset, offset + limit - 1)
+            .order('service_id', { ascending: true });
+            
         if (error) {
             console.error("Lỗi khi lấy danh sách service:", error);
-            return [];
+            return { services: [], total: 0 };
         }
-        return data;
+        
+        return { services: data || [], total: count };
     }
 
     static async getById(id) {
