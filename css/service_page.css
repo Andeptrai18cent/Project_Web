@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+body{
+    margin: 0;
+    font-family: "IBM Plex Sans", sans-serif;
+    background-color: #ffffff;
+}
+/* narbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  background-color: #e6f0ff;
+}
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+.logo span {
+  color: #007bff;
+}
+.nav-links {
+  padding-left: 60%;
+  display: flex;
+  gap: 20px;
+}
+.nav-links a {
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
+}
+.nav-links a:hover {
+  color: #007bff;
+}
+.nav-links a.active {
+  color: #007bff;
+  text-decoration: underline;
+}
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+.auth-buttons button {
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: 1px solid #007bff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+.login {
+  background-color: transparent;
+  color: #007bff;
+}
+.signup {
+  background-color: #007bff;
+  color: white;
+}
+/* narbar */
+
+/* Header-img */
+.header-img {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: url('/image/service_page/background_service_main.png') no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+#simple-title{
+  width: 100%;
+  font-size: 24px;
+  text-align: center;
+}
+/* Header-img/ */
+
+/* Task card */
+.task-card {
+  width: 80%;
+  height: 800px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.task-card img {
+  width: 100%;
+  display: block;
+}
+.task-info {
+  background-color: #e6f0ff;
+  padding: 15px;
+  height: 100%;
+}
+.task-info h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+.task-info p {
+  font-size: 14px;
+  color: #555;
+  height: 10%;
+  border-bottom: 1px solid black;
+}
+.task-info dl dt {
+  margin: 10px 0 0;
+  font-size: 14px;
+  padding: 5px 0;
+}
+.task-info dl dt a:link{
+  color: black;
+  border-bottom:1px solid hsla(0, 0%, 0%, 0);
+  text-decoration:none;
+}
+.task-info dl dt a:visited{
+  color: black;
+  border-bottom-color:hsla(0, 0%, 0%, 0);
+}
+.task-info dl dt a:hover{
+  color: blue;
+}
+
+
+/* Task card /*/
+
+/* Task-grid */
+.task-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 100%;
+  justify-items: center;
+  margin-top: 100px;
+}
+/* Task-grid/ */
+
+/* Footer */
+.footer {
+  background-color: #0066d9;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: left;
+  max-height: fit-content;
+}
+
+.footer-address {
+  flex: 2;
+  margin: 10px;
+}
+.footer-social-app-link{
+  flex: 1;
+  min-width: fit-content;
+  padding-left: 100px;
+}
+
+.social-icons {
+  display: inline-block;
+}
+.social-icons a{
+  display: inline-block;
+}
+.social-icons a img {
+  width: 40px;
+  height: 40px;
+  margin: 0 15px;
+}
+
+.app-links a img {
+  width: 250px;
+  margin-right: 5px;
+}
+
+.footer-address{
+  flex: 2;
+  height: fit-content;
+  padding-left: 300px;
+  margin: 0;
+}
+.footer-address a {
+  color: white;
+}
+
+.footer-address a:hover{
+  color: black;
+}
+hr {
+  border: 0;
+  height: 1px;
+  background-color: white;
+  width: 80%;
+  margin: 20px auto;
+}
+
+.footer-text {
+  font-size: 14px;
+}
+/* Footer /*/
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+  .task-grid {
+    display: block;
+    max-width: 100%;
+    justify-items: center;
+    margin-top: 100px;
+  }
+  .task-card {
+    margin: 0 auto;
+    margin-bottom: 100px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .footer-address{
+    flex: 2;
+    height: fit-content;
+    padding-left: 100px;
+    margin: 0;
+  }
+}
