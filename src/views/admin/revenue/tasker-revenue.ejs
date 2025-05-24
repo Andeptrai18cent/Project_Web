@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Tasker Revenue" />
+    <title>Tasker Revenue</title>
+    <link href="/Admin/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <%- include('../layout/header') -%>
+    <div id="layoutSidenav">
+        <%-include('../layout/sidenav') -%>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Doanh thu của Tasker</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="/admin/revenue">Revenue</a></li>
+                        <li class="breadcrumb-item active">Tasker Revenue</li>
+                    </ol>
+                    
+                    <div class="mb-3">
+                        <a href="/admin/revenue" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                        </a>
+                        <a href="/admin/revenue/summary" class="btn btn-info">
+                            <i class="fas fa-chart-pie"></i> Tổng quan
+                        </a>
+                        <% if (revenues && revenues.length > 0) { %>
+                            <a href="/admin/tasker/edit/<%= revenues[0].tasker_id %>" class="btn btn-warning">
+                                <i class="fas fa-edit"></i> Sửa thông tin Tasker
+                            </a>
+                        <% } %>
+                    </div>
+
+                    <!-- Thông tin phân trang -->
+                    <div class="mb-3">
+                        <% if (revenues && revenues.length > 0) { %>
+                            <div class="alert alert-info">
+                                <h5><i class="fas fa-user"></i> Tasker: <strong><%= revenues[0].tasker_name %></strong></h5>
+                                <p class="mb-0">
+                                    Hiển thị <%= ((pagination.currentPage - 1) * pagination.limit) + 1 %> - 
+                                    <%= Math.min(pagination.currentPage * pagination.limit, pagination.totalRevenues) %> 
+                                    trong tổng số <%= pagination.totalRevenues %> records
+                                </p>
+                            </div>
+                        <% } %>
+                    </div>
+
+                    <div>
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Task ID</th>
+                                    <th>Client</th>
+                                    <th>Service</th>
+                                    <th>Địa điểm</th>
+                                    <th>Thời gian làm</th>
+                                    <th>Số giờ</th>
+                                    <th>Lương/giờ</th>
+                                    <th>Tổng lương</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (revenues && revenues.length > 0) { %>
+                                    <% let totalRevenue = 0; %>
+                                    <% let totalHours = 0; %>
+                                    <% revenues.forEach(revenue => { %>
+                                        <% totalRevenue += revenue.total_revenue; %>
+                                        <% totalHours += revenue.hours_worked; %>
+                                        <tr>
+                                            <td>
+                                                <span class="badge bg-primary">#<%= revenue.task_id %></span>
+                                            </td>
+                                            <td><%= revenue.client_name %></td>
+                                            <td>
+                                                <span class="badge bg-secondary"><%= revenue.service_name %></span>
+                                            </td>
+                                            <td><%= revenue.location %></td>
+                                            <td>
+                                                <small>
+                                                    <i class="fas fa-play text-success"></i> <%= new Date(revenue.work_start_at).toLocaleString() %><br>
+                                                    <i class="fas fa-stop text-danger"></i> <%= new Date(revenue.work_end_at).toLocaleString() %>
+                                                </small>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-info"><%= revenue.hours_worked %>h</span>
+                                            </td>
+                                            <td><%= revenue.hourly_rate.toLocaleString() %>đ</td>
+                                            <td class="text-success font-weight-bold">
+                                                <strong><%= revenue.total_revenue.toLocaleString() %>đ</strong>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-info" 
+                                                        data-bs-toggle="tooltip" 
+                                                        title="Task ID: <%= revenue.task_id %>">
+                                                    <i class="fas fa-info-circle"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                    
+                                    <!-- Tổng kết cho trang hiện tại -->
+                                    <tr class="table-success font-weight-bold">
+                                        <td colspan="5" class="text-right">
+                                            <strong><i class="fas fa-calculator"></i> Tổng trang này:</strong>
+                                        </td>
+                                        <td>
+                                            <strong><span class="badge bg-success"><%= totalHours.toFixed(2) %>h</span></strong>
+                                        </td>
+                                        <td></td>
+                                        <td class="text-success">
+                                            <strong><%= totalRevenue.toLocaleString() %>đ</strong>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="9" class="text-center">
+                                            <i class="fas fa-exclamation-triangle text-warning"></i>
+                                            Tasker này chưa có doanh thu nào
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+
+                        <!-- Phân trang -->
+                        <% if (pagination.totalPages > 1) { %>
+                            <nav aria-label="Tasker Revenue pagination">
+                                <ul class="pagination justify-content-center">
+                                    <!-- Previous button -->
+                                    <li class="page-item <%= !pagination.hasPrev ? 'disabled' : '' %>">
+                                        <% if (pagination.hasPrev) { %>
+                                            <a class="page-link" href="/admin/revenue/tasker/<%= taskerId %>?page=<%= pagination.prevPage %>">
+                                                <i class="fas fa-chevron-left"></i> Previous
+                                            </a>
+                                        <% } else { %>
+                                            <span class="page-link">
+                                                <i class="fas fa-chevron-left"></i> Previous
+                                            </span>
+                                        <% } %>
+                                    </li>
+
+                                    <!-- Page numbers -->
+                                    <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+                                        <li class="page-item <%= i === pagination.currentPage ? 'active' : '' %>">
+                                            <a class="page-link" href="/admin/revenue/tasker/<%= taskerId %>?page=<%= i %>"><%= i %></a>
+                                        </li>
+                                    <% } %>
+
+                                    <!-- Next button -->
+                                    <li class="page-item <%= !pagination.hasNext ? 'disabled' : '' %>">
+                                        <% if (pagination.hasNext) { %>
+                                            <a class="page-link" href="/admin/revenue/tasker/<%= taskerId %>?page=<%= pagination.nextPage %>">
+                                                Next <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                        <% } else { %>
+                                            <span class="page-link">
+                                                Next <i class="fas fa-chevron-right"></i>
+                                            </span>
+                                        <% } %>
+                                    </li>
+                                </ul>
+                            </nav>
+                        <% } %>
+                    </div>
+                </div>
+            </main>
+            <%- include('../layout/footer') -%>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="/Admin/js/scripts.js"></script>
+    
+    <!-- Enable tooltips -->
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+</body>
+
+</html>

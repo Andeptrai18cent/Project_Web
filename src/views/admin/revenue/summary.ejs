@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Revenue Summary" />
+    <title>Revenue Summary</title>
+    <link href="/Admin/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <%- include('../layout/header') -%>
+    <div id="layoutSidenav">
+        <%-include('../layout/sidenav') -%>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Tổng quan doanh thu theo Tasker</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="/admin/revenue">Revenue</a></li>
+                        <li class="breadcrumb-item active">Summary</li>
+                    </ol>
+                    
+                    <div class="mb-3">
+                        <a href="/admin/revenue" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                        </a>
+                    </div>
+
+                    <div>
+                        <table class="table table-bordered table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tasker</th>
+                                    <th>Username</th>
+                                    <th>Số task hoàn thành</th>
+                                    <th>Tổng giờ làm</th>
+                                    <th>Tổng doanh thu</th>
+                                    <th>Trung bình/task</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (summaryData && summaryData.length > 0) { %>
+                                    <% summaryData.forEach(item => { %>
+                                        <tr>
+                                            <td><%= item.tasker_name %></td>
+                                            <td><%= item.tasker_username %></td>
+                                            <td>
+                                                <span class="badge bg-info"><%= item.task_count %></span>
+                                            </td>
+                                            <td><%= item.total_hours %>h</td>
+                                            <td class="text-success font-weight-bold">
+                                                <%= item.total_revenue.toLocaleString() %>đ
+                                            </td>
+                                            <td>
+                                                <%= (item.total_revenue / item.task_count).toLocaleString() %>đ
+                                            </td>
+                                            <td>
+                                                <a href="/admin/revenue/tasker/<%= item.tasker_id %>" 
+                                                   class="btn btn-primary btn-sm">
+                                                    <i class="fas fa-eye"></i> Xem chi tiết
+                                                </a>
+                                                <a href="/admin/tasker/edit/<%= item.tasker_id %>" 
+                                                   class="btn btn-warning btn-sm">
+                                                    <i class="fas fa-edit"></i> Sửa
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <% }) %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="7" class="text-center">Không có dữ liệu</td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                            <!-- Thêm tổng kết -->
+                            <% if (summaryData && summaryData.length > 0) { %>
+                                <tfoot class="table-dark">
+                                    <tr>
+                                        <td colspan="2"><strong>TỔNG CỘNG</strong></td>
+                                        <td>
+                                            <strong>
+                                                <%= summaryData.reduce((sum, item) => sum + item.task_count, 0) %> tasks
+                                            </strong>
+                                        </td>
+                                        <td>
+                                            <strong>
+                                                <%= summaryData.reduce((sum, item) => sum + item.total_hours, 0).toFixed(2) %>h
+                                            </strong>
+                                        </td>
+                                        <td class="text-success">
+                                            <strong>
+                                                <%= summaryData.reduce((sum, item) => sum + item.total_revenue, 0).toLocaleString() %>đ
+                                            </strong>
+                                        </td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                </tfoot>
+                            <% } %>
+                        </table>
+                    </div>
+                </div>
+            </main>
+            <%- include('../layout/footer') -%>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="/Admin/js/scripts.js"></script>
+</body>
+
+</html>

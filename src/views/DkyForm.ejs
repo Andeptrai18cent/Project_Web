@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký Home-Task</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: blue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .registration-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .header {
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            color: #051b2e;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .form-notice {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        
+        .name-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .name-group .form-group {
+            flex: 1;
+        }
+        
+        .phone-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .country-code {
+            flex: 0 0 100px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0 10px;
+            background-color: white;
+        }
+        
+        .country-code img {
+            width: 20px;
+            height: 15px;
+            margin-right: 5px;
+        }
+        
+        .phone-input {
+            flex: 1;
+        }
+        
+        .checkbox-group {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .checkbox-group input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        
+        .checkbox-group label {
+            font-size: 12px;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        .terms-link {
+            color: #333;
+            text-decoration: underline;
+        }
+        
+        .create-button {
+            width: 100%;
+            padding: 15px;
+            background-color: #505a6b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .create-button:hover {
+            background-color: #3d4553;
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-container">
+        <div class="header">
+            <h1>Đăng ký</h1>
+            <p>Nhập các thông tin cá nhân, số điện thoại, email, để tham gia cộng đồng Home-Task</p>
+        </div>
+        
+        <div class="form-notice">
+            Standard call, messaging, or data rates apply.
+        </div>
+        
+        <form id="registrationForm">
+            <div class="form-group">
+                <input type="email" class="form-control" placeholder="Email" required>
+            </div>
+            
+            <div class="name-group">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Họ" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Tên" required>
+                </div>
+            </div>
+            
+            <div class="phone-group">
+                <div class="country-code">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAYAAAB24g05AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAb0lEQVR4nGNgAIL/////R8dMDDQC6IZgw2ib4HQ6HUwzka2GqQfdEDCfhYEGgIWBRgDDAFyAkYFG4D8OzESuISgG0MJwvAag+5mFgUYAwwB0ALRBT4f4jGCdiUYDY0NDAxOGAcRqxqaOhYFGAMMAAEdXZ3QFZ/4HAAAAAElFTkSuQmCC" alt="Vietnam flag">
+                </div>
+                <div class="form-group phone-input">
+                    <input type="tel" class="form-control" placeholder="Số điện thoại" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Mật khẩu" required>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">Tôi đồng ý những điều khoản TaskRabbit's <a href="#" class="terms-link">Terms of Service and Privacy Policy</a>.</label>
+            </div>
+            
+            <button type="submit" class="create-button">Create account</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Close button functionality
+            document.querySelector('.close-button').addEventListener('click', function() {
+                alert('Closing registration form');
+                // In a real application, this would redirect or close the modal
+            });
+            
+            // Form submission
+            document.getElementById('registrationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Form submitted successfully!');
+                // In a real application, this would submit the data to the server
+            });
+        });
+    </script>
+</body>
+</html>
