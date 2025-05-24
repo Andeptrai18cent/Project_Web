@@ -17,7 +17,7 @@ const create_Task = async (req, taskData) => {
         // Prepare task object with data from cookies and passed taskData
         const task = new Task(
             step1Data.service_id, 
-            step1Data.description + '\n' + step1Data.workload,
+            step1Data.task_description + '\n' + step1Data.workload,
             step1Data.address,
             taskData.tasker_id || null,
             new Date(taskData.task_date).toISOString(),

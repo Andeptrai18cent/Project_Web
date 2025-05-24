@@ -14,12 +14,15 @@ function turnOffPopUp(){
     selectedDate.setHours(hour_min / 100)
     selectedDate.setMinutes(hour_min % 100)
     console.log(selectedDate);
+    console.log(selected_tasker_id)
     const response = await fetch("http://localhost:8080/post-new-task",{
       method: "POST",
       headers: {
           'Content-Type': 'application/json'
       },
-      body: JSON.stringify({task_date: selectedDate})
+      body: JSON.stringify({
+        task_date: selectedDate,
+        tasker_id: selected_tasker_id})
     })
     const data = await response.json()
     if (data.success)
@@ -32,11 +35,16 @@ function turnOffPopUp(){
       alert("Tạo Task mới không thành công, xin vui lòng thử lại sau")
     }
   }
-  function onClickButtonSelectTasker(e){
+  function onClickButtonSelectTasker(e, tasker_id){
     let buttons = e.querySelectorAll(".select-tasker-button");
     for (b of buttons)
     {
-      b.setAttribute("onclick","turnOnPopUp()")
+      b.id = tasker_id
+      //b.setAttribute("onclick","turnOnPopUp()")
+      b.addEventListener('click', () => {
+        selected_tasker_id = tasker_id
+        turnOnPopUp()
+      })
       // b.onclick=turnOnPopUp();
     } 
   }
@@ -176,6 +184,7 @@ function turnOffPopUp(){
 
 // Xử lý hiện thông tin Tasker
 var prev_mode = 0
+var selected_tasker_id = 0
 const task_info_box = document.querySelector(".tasker-info-box")
 document.addEventListener('DOMContentLoaded', async function() {
   let response = await fetch("http://localhost:8080/get_tasker-by-service-group")
@@ -185,14 +194,18 @@ document.addEventListener('DOMContentLoaded', async function() {
   let temp_list = document.getElementsByTagName("template")
   let temp = temp_list[0];
   let clon = temp.content.cloneNode(true);
-  let response = await fetch(`http://localhost:8080/user/user-info/${tasker.user_id}`)
-  let user_info = await response.json()
+  let response_user = await fetch(`http://localhost:8080/user/user-info/${tasker.user_id}`)
+  let user_info = await response_user.json()
+  let response_session = await fetch('http://localhost:8080/test-get-session')
+  let session_data = await response_session.json()
+  const response_service = await fetch(`http://localhost:8080/service-info/${session_data.service_id}`)
+  const service_data = await response_service.json()
   clon.querySelector(".tasker-name").innerHTML = user_info.name
-  clon.querySelector(".tasker-wage").innerHTML = tasker.hourly_rate
+  clon.querySelector(".tasker-wage").innerHTML = `${tasker.hourly_rate} đồng/ giờ`
   clon.querySelector(".star_count").innerHTML = tasker.average_rating
-  clon.querySelector(".specific-task-count").innerHTML = tasker.task_count
+  clon.querySelector(".specific-task-count").innerHTML = `Đã làm ${tasker.task_count} Task về ${service_data.name}`
   clon.querySelector(".introduction-info").innerHTML = tasker.bio
-  onClickButtonSelectTasker(clon);
+  onClickButtonSelectTasker(clon, tasker.tasker_id);
   task_info_box.appendChild(clon)
   });
 }, false);
@@ -232,14 +245,18 @@ select_sort_mode.addEventListener('click', async() => {
     let temp_list = document.getElementsByTagName("template")
     let temp = temp_list[0];
     let clon = temp.content.cloneNode(true);
-    let response = await fetch(`http://localhost:8080/user/user-info/${tasker.user_id}`)
-    let user_info = await response.json()
+    let response_user = await fetch(`http://localhost:8080/user/user-info/${tasker.user_id}`)
+    let user_info = await response_user.json()
+    let response_session = await fetch('http://localhost:8080/test-get-session')
+    let session_data = await response_session.json()
+    const response_service = await fetch(`http://localhost:8080/service-info/${session_data.service_id}`)
+    const service_data = await response_service.json()
     clon.querySelector(".tasker-name").innerHTML = user_info.name
-    clon.querySelector(".tasker-wage").innerHTML = tasker.hourly_rate
+    clon.querySelector(".tasker-wage").innerHTML = `${tasker.hourly_rate} đồng/ giờ`
     clon.querySelector(".star_count").innerHTML = tasker.average_rating
-    clon.querySelector(".specific-task-count").innerHTML = tasker.task_count
+    clon.querySelector(".specific-task-count").innerHTML = `Đã làm ${tasker.task_count} Task về ${service_data.name}`
     clon.querySelector(".introduction-info").innerHTML = tasker.bio
-    onClickButtonSelectTasker(clon);
+    onClickButtonSelectTasker(clon, tasker.tasker_id);
     task_info_box.appendChild(clon)
   };
   console.log("Something snap...", data)
