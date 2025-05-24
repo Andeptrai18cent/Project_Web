@@ -2,7 +2,6 @@ const connection = require('../config/database')
 const express = require('express')
 const app = express()
 const serviceService = require('../services/service');
-const {getAllService,getAllServiceGroup,getServiceGroupAndService} = require('../services/service')
 
 const getAllServiceGroup = async () => {
     //let [result, fields] = await connection.query('select * from servicegroup')
@@ -103,9 +102,11 @@ const getServiceGroupAndService = async () => {
     return data
 }
 module.exports = {
+    getServiceGroupFromService,
+    getServiceByID,
     searchServices,
     suggestServices,
     getAllServiceGroup,
-    getServiceGroupAndService,
+    getServiceGroupAndService
 
 }

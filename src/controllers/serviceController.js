@@ -1,20 +1,21 @@
 const connection = require('../config/database')
 const express = require('express')
 const app = express()
-const {getServiceGroupAndService, getServiceByID} = require('../services/service')
 const serviceService = require('../services/service');
-const {getAllServiceGroup,getServiceGroupAndService} = require('../services/service')
+const {getServiceGroupAndService,getServiceByID} = require('../services/service')
 
-const showServiceByServiceGroup = async (req, res) => {
-    let result = await getServiceGroupAndService()
-    res.render('servicepage.ejs', {services: result})
+const getService = async(req, res) => {
+    res.send(await getServiceByID(req.params.service_id))
 }
-
 const showServiceInfo = async (req, res) => {
     let result = await serviceService.getAllServiceGroup();
     res.render('service_info.ejs', {service_id: req.params.id})
 }
 
+const showServiceByServiceGroup = async (req, res) => {
+    let result = await getServiceGroupAndService()
+    res.render('servicepage.ejs', {services: result})
+}
 // Controller tìm kiếm dịch vụ
 const searchServicesController = async (req, res) => {
     try {
@@ -70,6 +71,7 @@ const suggestServices = async (req, res) => {
   }
 };
 module.exports = {
+    getService,
     showServiceByServiceGroup,
     showServiceInfo,
     searchServicesController,

@@ -148,7 +148,7 @@ function initSearchFunctionality() {
       data.services.forEach(service => {
         html += `
           <div class="suggestion-service">
-            <a href="/service/:id/${service.service_id}" class="suggestion-item">
+            <a href="/order-task/step1/${service.service_id}" class="suggestion-item">
               ${service.name}
             </a>
           </div>

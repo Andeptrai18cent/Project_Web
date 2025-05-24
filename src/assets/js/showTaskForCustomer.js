@@ -7,6 +7,12 @@ const stars = document.querySelectorAll('.pop_up_btn_task_stars span');
 
 let selectedRating = 0;
 
+// THÊM BIẾN PHÂN TRANG - KHÔNG ẢH HƯỞNG LOGIC CŨ
+let currentPage = 1;
+let itemsPerPage = 6; // Số task hiển thị mỗi trang
+let allTasks = []; // Lưu toàn bộ tasks được fetch
+let currentStatus = 'Pending'; // Track status hiện tại
+
 // Đóng popup
 closeBtn.addEventListener('click', () => {
   overlay.style.display = 'none';
@@ -130,54 +136,188 @@ function changePopUp(status, task_id) {
   }
 }
 
+// FUNCTION MỚI: TẠO PAGINATION CONTROLS
+function createPaginationControls(totalItems, currentPage, itemsPerPage) {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    
+    // Tìm hoặc tạo pagination container
+    let paginationContainer = document.getElementById('pagination-container');
+    if (!paginationContainer) {
+        paginationContainer = document.createElement('div');
+        paginationContainer.id = 'pagination-container';
+        paginationContainer.className = 'pagination-container';
+        
+        // Thêm sau orders-container
+        const ordersContainer = document.getElementById('task_container');
+        ordersContainer.parentNode.insertBefore(paginationContainer, ordersContainer.nextSibling);
+    }
+    
+    // Clear existing pagination
+    paginationContainer.innerHTML = '';
+    
+    if (totalPages <= 1) return; // Không hiển thị pagination nếu chỉ có 1 trang
+    
+    // Create pagination HTML
+    const paginationHTML = `
+        <div class="pagination-info">
+            <span>Hiển thị ${Math.min((currentPage - 1) * itemsPerPage + 1, totalItems)}-${Math.min(currentPage * itemsPerPage, totalItems)} của ${totalItems} tasks</span>
+        </div>
+        <div class="pagination-controls">
+            <button class="pagination-btn" id="prev-btn" ${currentPage === 1 ? 'disabled' : ''}>
+                <i class="fas fa-chevron-left"></i>
+                Trước
+            </button>
+            <div class="pagination-pages" id="pagination-pages"></div>
+            <button class="pagination-btn" id="next-btn" ${currentPage === totalPages ? 'disabled' : ''}>
+                Sau
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    `;
+    
+    paginationContainer.innerHTML = paginationHTML;
+    
+    // Create page numbers
+    const pagesContainer = document.getElementById('pagination-pages');
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    
+    // Adjust start if we're near the end
+    if (endPage - startPage + 1 < maxVisiblePages) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    
+    // First page button
+    if (startPage > 1) {
+        pagesContainer.innerHTML += `<button class="pagination-number" data-page="1">1</button>`;
+        if (startPage > 2) {
+            pagesContainer.innerHTML += `<span class="pagination-ellipsis">...</span>`;
+        }
+    }
+    
+    // Page numbers
+    for (let i = startPage; i <= endPage; i++) {
+        pagesContainer.innerHTML += `
+            <button class="pagination-number ${i === currentPage ? 'active' : ''}" data-page="${i}">
+                ${i}
+            </button>
+        `;
+    }
+    
+    // Last page button
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            pagesContainer.innerHTML += `<span class="pagination-ellipsis">...</span>`;
+        }
+        pagesContainer.innerHTML += `<button class="pagination-number" data-page="${totalPages}">${totalPages}</button>`;
+    }
+    
+    // Add event listeners
+    document.getElementById('prev-btn').addEventListener('click', () => {
+        if (currentPage > 1) {
+            goToPage(currentPage - 1);
+        }
+    });
+    
+    document.getElementById('next-btn').addEventListener('click', () => {
+        if (currentPage < totalPages) {
+            goToPage(currentPage + 1);
+        }
+    });
+    
+    document.querySelectorAll('.pagination-number').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const page = parseInt(e.target.dataset.page);
+            goToPage(page);
+        });
+    });
+}
 
-//Xử lý hiển thị Task
-async function loadTaskers(sortType) {
-      try {
-        const response = await fetch(`http://localhost:8080/user/tasks?status=${sortType}`);
-        const data = await response.json();
-        const list = document.getElementById("task_container")
-        list.innerHTML = ''; // Xóa danh sách cũ
-        data.forEach(async task => {
-          let temp_list = document.getElementsByTagName("template")
-          let temp = temp_list[0];
-          let clon = temp.content.cloneNode(true);
-          const response_service = await fetch(`http://localhost:8080/service-info/${task.service_id}`)
-          const service_data = await response_service.json()
-          const response_tasker = await fetch(`http://localhost:8080/tasker-info/${task.tasker_id}`)
-          const tasker_data = await response_tasker.json()
-          const response_user = await fetch(`http://localhost:8080/user/user-info/${tasker_data.user_id}`)
-          const user_data = await response_user.json()
-          var btn = await getButtonForTask(task.status)
-          if (btn)
-          {
-            if (task.status == 'Completed')
-            {
-              var check_review = undefined
-              const response = await fetch(`http://localhost:8080/review/check-info/${task.task_id}`)
-              check_review = await response.json()
-              if (check_review.success)
-                btn.disabled = true
+// FUNCTION MỚI: CHUYỂN TRANG
+function goToPage(page) {
+    currentPage = page;
+    displayCurrentPage();
+    
+    // Scroll to top của task container
+    document.getElementById('task_container').scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+    });
+}
+
+// FUNCTION MỚI: HIỂN THỊ TRANG HIỆN TẠI
+async function displayCurrentPage() {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const tasksToShow = allTasks.slice(startIndex, endIndex);
+    
+    const list = document.getElementById("task_container");
+    list.innerHTML = ''; // Clear current display
+    
+    // Hiển thị tasks của trang hiện tại (GIỐNG HỆT LOGIC CŨ)
+    for (const task of tasksToShow) {
+        let temp_list = document.getElementsByTagName("template");
+        let temp = temp_list[0];
+        let clon = temp.content.cloneNode(true);
+        
+        const response_service = await fetch(`http://localhost:8080/service-info/${task.service_id}`);
+        const service_data = await response_service.json();
+        const response_tasker = await fetch(`http://localhost:8080/tasker-info/${task.tasker_id}`);
+        const tasker_data = await response_tasker.json();
+        const response_user = await fetch(`http://localhost:8080/user/user-info/${tasker_data.user_id}`);
+        const user_data = await response_user.json();
+        
+        var btn = await getButtonForTask(task.status);
+        if (btn) {
+            if (task.status == 'Completed') {
+                var check_review = undefined;
+                const response = await fetch(`http://localhost:8080/review/check-info/${task.task_id}`);
+                check_review = await response.json();
+                if (check_review.success)
+                    btn.disabled = true;
             }
             btn.addEventListener('click', () => {
-              overlay.style.display = 'flex';
-              changePopUp(task.status, task.task_id)
+                overlay.style.display = 'flex';
+                changePopUp(task.status, task.task_id);
             });
-            clon.querySelector(".order-card").appendChild(btn)
-          }
-          var task_infos = clon.querySelectorAll(".order-info")
-          task_infos[0].innerHTML += service_data.name
-          task_infos[1].innerHTML += user_data.name
-          task_infos[2].innerHTML += user_data.phone_number
-          task_infos[3].innerHTML += task.location
-          task_infos[4].innerHTML += task.description
-          task_infos[5].innerHTML += task.task_date
-          list.appendChild(clon)
-        });
-      } catch (err) {
-        console.log('Lỗi tải dữ liệu:', err);
-      }
+            clon.querySelector(".order-card").appendChild(btn);
+        }
+        
+        var task_infos = clon.querySelectorAll(".order-info");
+        task_infos[0].innerHTML += service_data.name;
+        task_infos[1].innerHTML += user_data.name;
+        task_infos[2].innerHTML += user_data.phone_number;
+        task_infos[3].innerHTML += task.location;
+        task_infos[4].innerHTML += task.description;
+        task_infos[5].innerHTML += task.task_date;
+        list.appendChild(clon);
     }
+    
+    // Update pagination controls
+    createPaginationControls(allTasks.length, currentPage, itemsPerPage);
+}
+
+//Xử lý hiển thị Task - MODIFIED TO SUPPORT PAGINATION
+async function loadTaskers(sortType) {
+    try {
+        // Reset pagination khi change tab
+        currentPage = 1;
+        currentStatus = sortType;
+        
+        const response = await fetch(`http://localhost:8080/user/tasks?status=${sortType}`);
+        const data = await response.json();
+        
+        // LỰU TOÀN BỘ DATA VÀO BIẾN GLOBAL
+        allTasks = data;
+        
+        // HIỂN THỊ TRANG ĐẦU TIÊN
+        await displayCurrentPage();
+        
+    } catch (err) {
+        console.log('Lỗi tải dữ liệu:', err);
+    }
+}
 
 async function getButtonForTask(status) {
   var btn = document.createElement("button")
