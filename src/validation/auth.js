@@ -13,5 +13,18 @@ const registerValidator = (data) => {
     return rule.validate(data)
 }
 
-module.exports.registerValidator = registerValidator;
+const changeInfoValidator = (data) => {
+    const rule = Joi.object({
+        name: Joi.string().min(6).max(225).required(),
+        email: Joi.string().min(6).max(225).required().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+        phone_number: Joi.string().pattern(new RegExp(/(?:\+84|0084|0)[235789][0-9]{1,2}[0-9]{7}(?:[^\d]+|$)/)).optional(),
+        address: Joi.string().min(6).max(225).optional(),
+    })
+    return rule.validate(data)
+}
+module.exports.registerValidator = 
+{
+    registerValidator,
+    changeInfoValidator
+}
 

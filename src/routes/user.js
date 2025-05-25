@@ -29,7 +29,7 @@ const {
 user.get('/user/info', verifyTokenUser, showUserInfo)
 user.get('/get-user-info', verifyTokenUser, getUserInfo)
 user.get('/user/change-info', verifyTokenUser, showChangeUserInfoForm)
-user.post('/user-info-change', verifyTokenUser, updateUserInfo)
+user.put('/user-info-change', verifyTokenUser, updateUserInfo)
 user.get('/logout', logOut)
 user.put('/change-user-password', verifyTokenUser, changeUserPassword)
 user.get('/user/change-password', verifyTokenUser, showchangePasswordForm)

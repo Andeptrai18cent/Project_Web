@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
-const { registerValidator } = require('../validation/auth');
+const { registerValidator, changeInfoValidator } = require('../validation/auth');
 const connection = require('../config/database')
 require("dotenv").config()
 const {
@@ -135,7 +135,8 @@ const showUserInfo = async(req, res) => {
 }
 
 const showChangeUserInfoForm = async(req, res) => {
-    res.render('changeUserInfoForm.ejs')
+    const {data} = await get_user_info(req)
+    res.render('changeUserInfoForm.ejs', {user_info: data})
 }
 
 const logOut = async(req, res) => {
@@ -155,13 +156,6 @@ const changeUserPassword = async(req, res) => {
     {
         const {user_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET);
         const { new_password, repeat_new_password } = req.body;
-        if (!new_password || !repeat_new_password) {
-            return res.status(400).json({ error: 'Điền thiếu thông tin' });
-        }
-
-        if (new_password !== repeat_new_password) {
-            return res.status(400).json({ error: 'Hai mật khẩu không trùng nhau' });
-        }
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(new_password, salt);
         const { data, error } = await connection
@@ -210,15 +204,11 @@ const updateUserInfo = async (req, res) => {
 
     // Build update object dynamically
     const updateData = {
-      ...(email !== undefined && { email }),
-      ...(name !== undefined && { name }),
-      ...(phone_number !== undefined && { phone_number }),
-      ...(address !== undefined && { address }),
+      email: email,
+      name: name,
+      phone_number: phone_number,
+      address: address
     };
-
-    if (Object.keys(updateData).length === 0) {
-      return res.status(400).json({ message: 'No valid fields to update' });
-    }
 
     const { error } = await connection
       .from('Users')
