@@ -39,7 +39,7 @@ document.getElementById("form").addEventListener("submit", async function (e) {
       {
         alert("Số điện thoại không hợp lệ")
       }
-    else if (err_message.includes("exists"))
+    else if (err_message.includes("thử email"))
     {
         alert("Email đã tồn tại, vui lòng chọn email khác")
     }

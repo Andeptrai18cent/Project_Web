@@ -32,12 +32,23 @@ const authenUser = async (req, res) => {
     const checkEmailExist = await connection
             .from('Users')
             .select('email')
-            .eq('email', req.body.email);
-
-    if (checkEmailExist.data.length) {
+            .eq('email', req.body.email)
+            .single()
+    const checkUserNameExist = await connection
+            .from('Users')
+            .select('username')
+            .eq('username', req.body.username)
+            .single()
+    if (checkEmailExist.data) {
             return res.status(422).send({
                 status: 422,
-                message: 'Email already exists'
+                message: 'Email đã tồn tại, vui lòng thử email khác'
+            });
+    }
+    if (checkUserNameExist.data) {
+        return res.status(422).send({
+                status: 422,
+                message: 'Tên người dùng đã tồn tại, vui lòng thử tên khác'
             });
     }
     const salt = await bcrypt.genSalt(10);
