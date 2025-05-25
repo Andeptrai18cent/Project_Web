@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/step2.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="">
+    <script src="/js/book-tasker-step-2.js" type="text/javascript" defer></script>
+    <title>Tham khảo Tasker và giá</title>
+</head>
+<body>
+    <div class="pop-up">
+        <div class="pop-up-content">
+            <button class="close-pop-up" onclick="turnOffPopUp()">X</button>
+            <h1>Chọn ngày và giờ để đặt lịch</h1>
+            <div class="datepicker">
+                <!-- .datepicker-header -->
+                <div class="datepicker-header">
+                    <button class="prev">Prev</button>
+                    <div>
+                        <select class="month-input">
+                        <option>January</option>
+                        <option>February</option>
+                        <option>March</option>
+                        <option>April</option>
+                        <option>May</option>
+                        <option>June</option>
+                        <option>July</option>
+                        <option>August</option>
+                        <option>September</option>
+                        <option>October</option>
+                        <option>November</option>
+                        <option>December</option>
+                        </select>
+                        <input type="number" class="year-input" />
+                    </div>
+                    <button class="next">Next</button>
+                </div>
+                <!-- /.datepicker-header -->
+                <!-- .days -->
+                <div class="days-and-dates">
+                    <div class="days">
+                    <span>Sun</span>
+                    <span>Mon</span>
+                    <span>Tue</span>
+                    <span>Wed</span>
+                    <span>Thu</span>
+                    <span>Fri</span>
+                    <span>Sat</span>
+                    </div>
+                    <!-- /.days -->
+                    <!-- .dates -->
+                    <div class="dates"></div>
+                </div>
+                <!-- /.dates -->
+            </div>
+            <select class="dropdown-button">
+                <option value="800" selected>8:00</option>
+                <option value="830">8:30</option>
+                <option value="900">9:00</option>
+                <option value="930">9:30</option>
+                <option value="1000">10:00</option>
+                <option value="1030">10:30</option>
+                <option value="1100">11:00</option>
+                <option value="1130">11:30</option>
+                <option value="1200">12:00</option>
+                <option value="1230">12:30</option>
+                <option value="1300">13:00</option>
+                <option value="1330">13:30</option>
+                <option value="1400">14:00</option>
+                <option value="1430">14:30</option>
+                <option value="1500">15:00</option>
+                <option value="1530">15:30</option>
+                <option value="1600">16:00</option>
+                <option value="1630">16:30</option>
+                <option value="1700">17:00</option>
+                <option value="1730">17:30</option>
+                <option value="1800">18:00</option>
+                <option value="1830">18:30</option>
+                <option value="1900">19:00</option>
+                <option value="1930">19:30</option>
+                <option value="2000">20:00</option>
+                <option value="2030">20:30</option>
+                <option value="2100">21:00</option>
+                <option value="2130">21:30</option>
+            </select>
+            <button class="select-date-tasker-button" onclick="confirmPage()">Chọn và tiếp tục</button>
+        </div>
+    </div>
+    <div class="logo">Home-<span>Task</span></div>
+    <div class="intro_title">Tìm người phù hợp với yêu cầu của bạn</div>
+    <div class="tasker-choosing-zone">
+        <div class="sort-tasker-by">
+            <p>Sắp xếp theo:</p> 
+            <select id="select-sort-tasker-mode">
+                <option id="sort-option-1" value="0" selected >Đề nghị</option>
+                <option id="sort-option-2" value="1" >Giá tăng dần</option>
+                <option id="sort-option-3" value="2" >Giá giảm dần</option>
+                <option id="sort-option-4" value="3" >Số đánh giá tích cực</option>
+                <option id="sort-option-5" value="4">Số công việc đã hoàn thành</option>
+            </select>
+        </div>
+        <div class="tasker-info-box">
+        </div>
+    </div>
+    <template>
+        <div class="tasker-info">
+            <div class="tasker-info-left">
+                <div class="profile-img">
+                    <img src="/Img/tasker_placeholder_1.jpg">
+                </div>
+                <button class="select-tasker-button">Chọn và tiếp tục</button>
+                <p>Bạn có thể trò chuyện với Tasker, thay đổi thông tin về công việc hoặc thay đổi thời gian làm việc sau khi đặt</p>
+            </div>
+            <div class="tasker-info-right">
+                <div class="name-and-pay">
+                    <div class="tasker-name"></div>
+                    <div class="tasker-wage"></div>
+                </div>
+                <div class="task-and-review">
+                    <span>★</span>
+                    <span class="star_count"></span>
+                    <p class="specific-task-count"></p>
+                    <!--<p class="task-group-count"></p>-->
+                    <div class="introduction-tasker">
+                        <h4>Giới thiệu bản thân:</h4>
+                        <p class="introduction-info">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+</body>
+</html>

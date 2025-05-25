@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
+    <meta name="author" content="Hỏi Dân IT" />
+    <title>Edit Tasker</title>
+    <link href="/Admin/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <%- include('../layout/header') -%>
+    <div id="layoutSidenav">
+        <%-include('../layout/sidenav') -%>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Edit Tasker</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="/admin/tasker">Taskers</a></li>
+                        <li class="breadcrumb-item active">Edit</li>
+                    </ol>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Chỉnh sửa thông tin Tasker</h5>
+                        </div>
+                        <div class="card-body">
+                            <form action="/admin/tasker/edit/<%= tasker.tasker_id %>" method="POST">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Username</label>
+                                            <input type="text" class="form-control" id="username" name="username" 
+                                                   value="<%= tasker.Users.username %>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Tên</label>
+                                            <input type="text" class="form-control" id="name" name="name" 
+                                                   value="<%= tasker.Users.name %>" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="phone_number" class="form-label">Số điện thoại</label>
+                                            <input type="text" class="form-control" id="phone_number" name="phone_number" 
+                                                   value="<%= tasker.Users.phone_number %>" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="hourly_rate" class="form-label">Lương theo giờ</label>
+                                            <input type="number" class="form-control" id="hourly_rate" name="hourly_rate" 
+                                                   value="<%= tasker.hourly_rate %>" step="0.01" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Địa chỉ</label>
+                                    <textarea class="form-control" id="address" name="address" rows="2" required><%= tasker.Users.address %></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="bio" class="form-label">Mô tả</label>
+                                    <textarea class="form-control" id="bio" name="bio" rows="3"><%= tasker.bio || '' %></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="group_name" class="form-label">Nhóm dịch vụ</label>
+                                    <input type="text" class="form-control" id="group_name" name="group_name" 
+                                           value="<%= tasker.ServiceGroup.group_name %>" readonly>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <a href="/admin/tasker" class="btn btn-secondary">Quay lại</a>
+                                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <%- include('../layout/footer') -%>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="/Admin/js/scripts.js"></script>
+</body>
+
+</html>
