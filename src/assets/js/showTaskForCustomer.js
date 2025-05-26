@@ -112,8 +112,9 @@ function changePopUp(status, task_id) {
   }
   else if (status=="Completed")
   {
-    const comment = document.querySelector('.pop_up_btn_task_comment').value;
     confirmBtn.addEventListener('click', async () =>{
+      const comment = document.querySelector('.pop_up_btn_task_comment').value;
+      console.log(comment)
       const response = await fetch(`http://localhost:8080/user/task/review?task_id=${task_id}`,
         {
           method: "POST",
@@ -291,6 +292,20 @@ async function displayCurrentPage() {
         task_infos[3].innerHTML += task.location;
         task_infos[4].innerHTML += task.description;
         task_infos[5].innerHTML += task.task_date;
+        if (task.status=='Payment_waiting' || task.status=='Payment_Confirmation_waiting')
+        {
+          const start_work = new Date(task.work_start_at)
+          const end_work = new Date(task.work_end_at)
+          const diffInMs = end_work - start_work;
+          const diffInMinutes = Math.round(diffInMs / (1000 * 60)); // Làm tròn theo phút
+          const diffInHours = diffInMinutes / 60; // Chuyển về giờ thập phân
+          console.log(`${start_work}/ ${end_work}`)
+          console.log(diffInHours)
+          console.log(tasker_data.hourly_rate)
+          var taskerEarning = tasker_data.hourly_rate * diffInHours;
+          task_infos[6].style.display = 'block';
+          task_infos[6].innerHTML += `${Math.round(taskerEarning)} đồng`
+        }
         list.appendChild(clon);
     }
     

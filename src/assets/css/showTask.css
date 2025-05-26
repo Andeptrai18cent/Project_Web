@@ -1119,3 +1119,8 @@ h1::after {
     border-radius: 2px;
     opacity: 0.3;
 }
+
+/* Display none */
+#display_none{
+    display: none
+}

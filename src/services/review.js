@@ -30,6 +30,7 @@ const get_Review_by_TaskId = async(task_id) => {
     try{
         const {data, error} = await connection.from("Review").select().eq("task_id", task_id).single().limit(1)
         if (error) {
+            console.log("Task_id:", task_id)
             console.error("Lỗi database khi lấy đánh giá", error)
             return { success: false, error }
         }

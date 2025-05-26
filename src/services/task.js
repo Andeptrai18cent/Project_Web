@@ -191,8 +191,8 @@ const get_Tasks_By_TaskerID_And_Status = async (tasker_id, status, limit = 10, p
             .eq('tasker_id', tasker_id)
             .eq('status', status)
             .order('created_at', { ascending: false })
-            .limit(limit)
-            .range(offset, offset + limit - 1);
+            // .limit(limit)
+            // .range(offset, offset + limit - 1);
 
         if (error) {
             console.error("Error getting tasks by tasker_id:", error)
@@ -215,8 +215,8 @@ const get_Tasks_By_UserID_And_Status = async (user_id, status, limit = 10, page 
             .eq('user_id', user_id)
             .eq('status', status)
             .order('created_at', { ascending: false })
-            .limit(limit)
-            .range(offset, offset + limit - 1);
+            // .limit(limit)
+            // .range(offset, offset + limit - 1);
         if (error) {
             console.error("Error getting tasks by user_id:", error)
             return []
