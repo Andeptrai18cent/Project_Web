@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/serviceinfo.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <title>Serviceinfo</title>
+</head>
+<body>
+    <nav class="navbar .navbar-expand-lg fixed-top">
+        <img class="logo" src="/Img/Group 30.svg" alt="Logo">
+            <div class="nav_link">
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/service">Service</a>
+                <a href=/login id="Login_Link">Login</a>
+                <a href="/signup" id="Sign_up_Link">Signup</a>
+                <button class="to_tasker_btn" id="Become_Tasker">Become Tasker</button>                
+                <!-- class="dropdown"-->
+                <div id="user_dropdown_only">
+                    <button onclick="myFunction()" class="user-button">Tùy chọn▼</button>
+                    <div id="myDropdown" class="dropdown-content-user">
+                      <a href="/user/info">Xem thông tin cá nhân</a>
+                      <a href="/user/change-info">Thay đổi thông tin cá nhân</a>
+                      <a href="/user/change-password">Thay đổi mật khẩu</a>
+                      <a href="/user/task-list">Xem các task đã đặt</a>
+                      <a href="/logout">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+    </nav>
+    <div class="hero-section" style="background: url('/Img/hero_image_1.png') center/cover no-repeat;">
+        <div class="content-box">
+            <h2><%=service_info.name%></h2>
+            <p>Cần người xử lý công việc '<%=service_info.name%>'? Thuê một Tasker để xử lý công việc
+                '<%=service_info.name%>' cho bạn và để họ đảm nhận công việc.
+            </p>
+            <button><a href="/order-task/step1/<%= service_id %>">Đặt ngay</a></button>
+        </div>
+    </div>
+    <div class="task-section">
+        <h2 class="task-title"><%=service_info.name%></h2>
+        <div class="task-content">
+            <div class="task-info">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                    , quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <p>
+                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+                    sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+            </div>
+            <img class="task-image" src="/Img/task_description_1.png" alt="Task Image">
+        </div>
+    </div>
+    <div class="how-it-works">
+        <h1>Quá trình thuê tasker</h1>
+        <div class="step-by-step">
+            <div id="step1">
+                <img src="/Img/how-it-works-step-1.webp">
+                <h2>1. Miêu tả công việc của bạn</h2>
+                <p>Hãy cho chúng tôi biết bạn cần gì, khi nào và ở đâu</p>
+            </div>
+            <div>
+                <img src="/Img/how-it-works-step-2.webp">
+                <h2>2. Chọn Tasker của bạn</h2>
+                <p>Duyệt qua các Tasker đáng tin cậy theo kỹ năng, đánh giá và giá cả. Trò chuyện với họ để xác nhận chi tiết</p>
+            </div>
+            <div id="step3">
+                <img src="/Img/how-it-works-step-3.webp">
+                <h2>3. Hoàn thành công việc!</h2>
+                <p>Tasker của bạn đến và hoàn thành công việc. Thanh toán an toàn và để lại đánh giá, tất cả đều thông qua Home-Task</p>       
+            </div>     
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-social-app-link">
+                <div class="social-icons">
+                    Hãy theo dõi chúng tôi
+                    <a href="https://www.linkedin.com/"><img src="/Img/icon-linkedin.svg" alt="LinkedIn"></a>
+                    <a href="https://www.instagram.com/"><img src="/Img/icon-instagram.svg" alt="Instagram"></a>
+                    <a href="https://www.facebook.com/"><img src="/Img/icon-facebook.svg" alt="Facebook"></a>
+                </div>
+                <div class="footer-app">
+                    <p><strong>Tải ứng dụng của chúng tôi</strong></p>
+                    <p>Xử lý công việc cần làm của bạn với ứng dụng của chúng tôi.</p>
+                    <div class="app-links">
+                        <a><img src="/Img/icon-appstore.svg" alt="App Store"></a>
+                        <a><img src="/Img/icon-ggplay.svg" alt="Google Play"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-address">
+                <p><strong>Địa chỉ</strong></p>
+                <a href="https://maps.app.goo.gl/hCHZG71dhwLz2tvo8">Km10, Đường Nguyễn Trãi, Q. Hà Đông, Hà Nội</a>
+            </div>
+        </div>
+        <hr>
+        <p class="footer-text">2025 All Right Reserved</p>
+    </footer> 
+    <script src="/js/service_info.js"></script>
+</body>
+</html>

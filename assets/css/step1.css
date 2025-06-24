@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+body{
+    margin: 0;
+    font-family: "IBM Plex Sans", sans-serif;
+    background-color: #ffffff;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 0px 10px 100px;
+}
+.logo span {
+    color: #007bff;
+}
+.intro_title{
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 0px 10px 100px;
+    border:1px solid #9095A0;
+}
+
+.box {
+    width: 80%; /* 80% of the body's width */
+    max-width: 1200px; /* Optional: Set a max width for large screens */
+    background-color: white; /* White background */
+    border: 1px solid #9095A0;
+    padding: 30px; /* Some spacing inside the box */
+    padding-right: 42px;
+    margin: 20px auto; /* Centering the box horizontally */
+    display: block; /* Ensures block-level behavior */
+}
+
+.task_title{
+    width: 80%; /* 80% of the body's width */
+    max-width: 1200px; /* Optional: Set a max width for large screens */
+    padding: 10px 72px 0px 0px;
+    padding-right: 72px;
+    margin: 0px auto; /* Centering the box horizontally */
+    display: block;
+    font-weight: bold;
+    font-size: 30px;
+}
+.form_label {
+    font-weight: bold;
+}
+
+#address{
+    width: 100%;
+    border: black solid 1px;
+    border-radius: 8px;
+    padding: 12px;  
+    padding-right: 0px;
+}
+
+textarea{
+    width: 100%;
+    height: 100px;
+    padding: 12px;
+    padding-right: 0px;
+}
+
+button{
+    display: block;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: 0px;
+    border-radius: 1000px;
+    padding: 12px 24px;
+    background-color: #007bff;
+    margin: 0 auto;
+}
