@@ -2,14 +2,24 @@ const connection = require('../config/database')
 const express = require('express')
 const app = express()
 const serviceService = require('../services/service');
-const {getServiceGroupAndService,getServiceByID} = require('../services/service')
+const {
+  getServiceGroupAndService,
+  getServiceByID,
+  getAllServiceGroup
+} = require('../services/service')
 
 const getService = async(req, res) => {
     res.send(await getServiceByID(req.params.service_id))
 }
+
+const getServiceGroupAPI = async(req, res) => {
+  res.send(await getAllServiceGroup())
+}
+
 const showServiceInfo = async (req, res) => {
     let result = await serviceService.getAllServiceGroup();
     let service_info = await getServiceByID(req.params.id);
+    console.log("Service_info:", service_info)
     res.render('service_info.ejs', {service_id: req.params.id, service_info: service_info})
 }
 
@@ -76,5 +86,6 @@ module.exports = {
     showServiceByServiceGroup,
     showServiceInfo,
     searchServicesController,
-    suggestServices
+    suggestServices,
+    getServiceGroupAPI
 }

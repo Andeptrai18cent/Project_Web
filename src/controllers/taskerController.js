@@ -12,7 +12,7 @@ const {
     update_Tasker_Info
 } = require('../services/tasker')
 const {
-    create_Payment
+    update_payment_date_by_taskID
 } = require('../services/payment')
 const {
     get_Review_by_TaskId
@@ -103,12 +103,10 @@ const confirmTaskPayment = async(req, res) => {
         {
             return res.send(update_task_status.error)
         }
-        const create_payment = await create_Payment(req, res)
-        if (!create_payment.success)
-        {
-            return res.send(create_payment.error)
-        }
-        return res.send({ message: "Xác nhận đã thanh toán thành công",success: true, data: [update_task_status.data, create_payment.data]})
+        const update_payment = await update_payment_date_by_taskID(req.query.task_id)
+        if (!update_payment.succes)
+            return res.send(update_payment.error)
+        return res.send({ message: "Xác nhận đã thanh toán thành công",success: true})
     }
     else
     {

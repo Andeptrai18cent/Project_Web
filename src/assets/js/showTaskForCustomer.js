@@ -4,6 +4,8 @@ const closeBtn = document.querySelector('.pop_up_btn_task_close');
 const cancelBtn = document.querySelector('.pop_up_btn_task_cancel');
 const confirmBtn = document.querySelector('.pop_up_btn_task_confirm');
 const stars = document.querySelectorAll('.pop_up_btn_task_stars span');
+const temp = document.getElementsByTagName("template")[0];
+const list = document.getElementById("task_container");
 
 let selectedRating = 0;
 
@@ -253,15 +255,12 @@ async function displayCurrentPage() {
     const endIndex = startIndex + itemsPerPage;
     const tasksToShow = allTasks.slice(startIndex, endIndex);
     
-    const list = document.getElementById("task_container");
+    //const list = document.getElementById("task_container");
     list.innerHTML = ''; // Clear current display
     
     // Hiển thị tasks của trang hiện tại (GIỐNG HỆT LOGIC CŨ)
     for (const task of tasksToShow) {
-        let temp_list = document.getElementsByTagName("template");
-        let temp = temp_list[0];
         let clon = temp.content.cloneNode(true);
-        
         const response_service = await fetch(`http://localhost:8080/service-info/${task.service_id}`);
         const service_data = await response_service.json();
         const response_tasker = await fetch(`http://localhost:8080/tasker-info/${task.tasker_id}`);
@@ -292,17 +291,14 @@ async function displayCurrentPage() {
         task_infos[3].innerHTML += task.location;
         task_infos[4].innerHTML += task.description;
         task_infos[5].innerHTML += task.task_date;
-        if (task.status=='Payment_waiting' || task.status=='Payment_Confirmation_waiting')
+        //Hiện số tiền cần thanh toán
+        if (task.status=='Payment_waiting' || task.status=='Payment_Confirmation_waiting' || task.status=='Completed')
         {
-          const start_work = new Date(task.work_start_at)
-          const end_work = new Date(task.work_end_at)
-          const diffInMs = end_work - start_work;
-          const diffInMinutes = Math.round(diffInMs / (1000 * 60)); // Làm tròn theo phút
-          const diffInHours = diffInMinutes / 60; // Chuyển về giờ thập phân
-          console.log(`${start_work}/ ${end_work}`)
-          console.log(diffInHours)
-          console.log(tasker_data.hourly_rate)
-          var taskerEarning = tasker_data.hourly_rate * diffInHours;
+          const get_payment_res = await fetch(`http://localhost:8080/payment/get_by_task_id?task_id=${task.task_id}`)
+          const get_payment = await get_payment_res.json()
+          var taskerEarning = 0
+          if (get_payment.success)
+            taskerEarning = Number(get_payment.data.total_price)
           task_infos[6].style.display = 'block';
           task_infos[6].innerHTML += `${Math.round(taskerEarning)} đồng`
         }

@@ -3,13 +3,15 @@ const payment = express.Router()
 
 const {
     createPayment,
-    showPaymentForm
+    showPaymentForm,
+    getPaymentByTaskID
 } = require('../controllers/paymentController')
 
 const {
-    verifyTokenUser_Task
+    verifyTokenTasker_Task
 } = require('../middlerware/verifyToken')
-payment.post('/create-payment/', verifyTokenUser_Task, createPayment)
+payment.post('/create-payment/', verifyTokenTasker_Task, createPayment)
 payment.get('/payment/create', showPaymentForm)
+payment.get('/payment/get_by_task_id', getPaymentByTaskID)
 
 module.exports = payment

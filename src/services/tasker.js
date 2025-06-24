@@ -75,19 +75,20 @@ const get_Taskers_by_Wage = async (req, limit = 10, page = 0) => {
 
 const create_New_Tasker = async(req, res) => {
   const {user_id} = jwt.verify(req.cookies.token, process.env.TOKEN_SECRET)
+  // console.log(req.body.wage)
   const {data} = await connection.from("ServiceGroup").select().eq('group_id', req.body.service_group_id)
   if (data)
   {
       var existedTasker = await connection.from("Taskers").select("user_id").eq("user_id", user_id)
       if (existedTasker.data.length)
           return res.status(402).send("Tài khoản đã đăng ký trở thành Tasker, vui lòng dùng tài khoản khác")
-      const {error} = await connection.from("Taskers").insert({user_id: user_id, bio: "New tasker", hourly_rate: data[0].hourly_wage, actual_income: 0, service_group_id: req.body.service_group_id})
+      const {error} = await connection.from("Taskers").insert({user_id: user_id, bio: "Tasker mới", hourly_rate: req.body.wage, actual_income: 0, service_group_id: req.body.service_group_id})
       if (error)
       {
           console.log(error)
           return res.status(401).send("Không tạo được tasker mới")
       }
-      res.send("Tạo tasker mới thành công")
+      return res.status(200).send("Tạo tasker mới thành công")
   }
   else             
       return res.status(404).send("Nhóm dịch vụ không tồn tại")

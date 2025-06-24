@@ -1,7 +1,7 @@
 const connection = require('../config/database')
 const jwt = require('jsonwebtoken');
 const Task = require('../models/task')
-
+const {create_Payment} = require('../services/payment')
 const get_Task_by_TaskId = async(task_id) => {
     const {data, error} = await connection.from("Tasks").select().eq("task_id", task_id)
     if (error)
@@ -164,19 +164,24 @@ const change_task_info = async(task_id, req) => {
     return {success: true, message: "Chỉnh sửa thông tin Task thành công"}
 }
 
-const post_working_end_at = async(task_id) => {
+const post_working_end_at = async(req, res) => {
     try{
         const {error} = await connection
             .from("Tasks")
             .update({work_end_at: new Date().toISOString(), status: "Payment_waiting"})
-            .eq("task_id", task_id)
+            .eq("task_id", req.query.task_id)
         if (error){
-            console("Lỗi truy vấn khi sửa task", error)
+            console.log("Lỗi truy vấn khi sửa task", error)
             return {success: false, error}
         }
+        // const create_payment = await create_Payment(req, res)
+        // if (!create_payment.success)
+        // {
+        //     return {success: false, error:create_payment.error}
+        // }
     }
     catch (error){
-        console("Lỗi code khi sửa task", error)
+        console.log("Lỗi code khi sửa task", error)
         return { success: false, error }
     }
     return {success: true, message: "Đã sửa task"}

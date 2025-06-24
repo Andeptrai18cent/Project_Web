@@ -79,7 +79,7 @@ const startWork = async(req, res) => {
 }
 
 const endWork = async(req, res) => {
-    return res.send(await post_working_end_at(req.query.task_id))
+    return res.send(await post_working_end_at(req, res))
 }
 module.exports = {
     getStep1OrderTask,

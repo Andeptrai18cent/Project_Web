@@ -5,6 +5,9 @@ const cancelBtn = document.querySelector('.pop_up_btn_task_cancel');
 const confirmBtn = document.querySelector('.pop_up_btn_task_confirm');
 const stars = document.querySelectorAll('.pop_up_btn_task_stars span');
 const confirmNotBtn = document.querySelector('.pop_up_btn_task_confirm-not')
+const temp = document.getElementsByTagName("template")[0];
+const list = document.getElementById("task_container")
+
 let selectedRating = 0;
 
 // Đóng popup
@@ -26,6 +29,7 @@ function changePopUp(status, task_id) {
   review_content.style.display = 'none'
   context.style.display = 'block'
   confirmNotBtn.style.display = 'none'
+  confirmBtn.style.display = 'inline-block'
   if (status=='Cancel_Confirmation_waiting' || status=='Payment_Confirmation_waiting' || status=='Pending')
   {
     confirmNotBtn.style.display = 'inline-block'
@@ -131,13 +135,20 @@ function changePopUp(status, task_id) {
         }
       )
       const data = await response.json()
-      if (data.success)
+      const response_create_payment = await fetch(`http://localhost:8080/create-payment/?task_id=${task_id}`,
+        {
+          method: "POST"
+        }
+      )
+      const data_create_payment = await response_create_payment.json()
+      if (data.success && data_create_payment.success)
       {
         alert("kết thúc công việc thành công")
         location.reload()
       }
       else
         alert("kết thúc công việc không thành công, vui lòng thử lại sau")
+        console.log(data.error + '\n' + data_create_payment.error)
     })
   }
   else if (status=="Payment_Confirmation_waiting")
@@ -177,6 +188,8 @@ function changePopUp(status, task_id) {
   }
   else if (status=="Completed")
   {
+    confirmNotBtn.style.display = 'none'
+    confirmBtn.style.display = 'none'
     title_popup.innerHTML="Đánh giá"
     context.style.display = 'block'
     const check_review = async() => {
@@ -187,7 +200,7 @@ function changePopUp(status, task_id) {
     const get_review_data = async() => {
       const review_data = await check_review()
       console.log("review data: ", review_data)
-      if (review_data)
+      if (review_data.success)
       {
         stars_div.style.display = 'flex'
         selectedRating = parseInt(review_data.data.rating)
@@ -213,10 +226,8 @@ async function loadTaskers(sortType) {
       try {
         const response = await fetch(`http://localhost:8080/tasker/tasks/?status=${sortType}`);
         const data = await response.json();
-        const list = document.getElementById("task_container")
         list.innerHTML = ''; // Xóa danh sách cũ
         data.forEach(async task => {
-          let temp = document.getElementsByTagName("template")[0];
           let clon = temp.content.cloneNode(true);
           const response_service = await fetch(`http://localhost:8080/service-info/${task.service_id}`)
           const service_data = await response_service.json()
@@ -238,19 +249,13 @@ async function loadTaskers(sortType) {
           task_infos[3].innerHTML += task.location
           task_infos[4].innerHTML += task.description
           task_infos[5].innerHTML += task.task_date
-          if (task.status=='Payment_waiting' || task.status=='Payment_Confirmation_waiting')
+          if (task.status=='Payment_waiting' || task.status=='Payment_Confirmation_waiting' || task.status=='Completed')
           {
-            const response_tasker = await fetch(`http://localhost:8080/tasker-info/${task.tasker_id}`);
-            const tasker_data = await response_tasker.json();
-            const start_work = new Date(task.work_start_at)
-            const end_work = new Date(task.work_end_at)
-            const diffInMs = end_work - start_work;
-            const diffInMinutes = Math.round(diffInMs / (1000 * 60)); // Làm tròn theo phút
-            const diffInHours = diffInMinutes / 60; // Chuyển về giờ thập phân
-            console.log(`${start_work}/ ${end_work}`)
-            console.log(diffInHours)
-            console.log(tasker_data.hourly_rate)
-            var taskerEarning = tasker_data.hourly_rate * diffInHours;
+            const get_payment_res = await fetch(`http://localhost:8080/payment/get_by_task_id?task_id=${task.task_id}`)
+            const get_payment = await get_payment_res.json()
+            var taskerEarning = 0
+            if (get_payment.success)
+              taskerEarning = Number(get_payment.data.total_price)
             task_infos[6].style.display = 'block';
             task_infos[6].innerHTML += `${Math.round(taskerEarning)} đồng`
           }
