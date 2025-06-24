@@ -1,7 +1,6 @@
 const connection = require('../config/database')
 const jwt = require('jsonwebtoken');
 const Payment = require('../models/payment')
-const {create_Revenue} = require('./revenue')
 
 const create_Payment = async (req, res) => {
     try {
@@ -59,7 +58,7 @@ const create_Payment = async (req, res) => {
             console.error("Error creating new payment", error)
             return { success: false, error }
         }
-        return await create_Revenue(data, task, tasker)
+        return { success: true, data}
     } catch (err) {
         console.error("Exception in createPayment:", err)
         return { success: false, error: err.message }
@@ -67,8 +66,6 @@ const create_Payment = async (req, res) => {
 }
 
 const update_payment_date_by_taskID = async(task_id) => {
-    console.log("Update Date Payment: " + new Date().toISOString())
-    console.log(task_id)
     const {error} = await connection.from("Payment").update(
         {
             payment_date: new Date().toISOString()

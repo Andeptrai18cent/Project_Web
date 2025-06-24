@@ -1,14 +1,26 @@
 const connection = require('../config/database')
 const Revenue = require('../models/revenue')
-
-const create_Revenue = async (payment, task, tasker) => {
+const {
+    getPayment_by_taskID
+} = require('../services/payment')
+const {
+    get_Task_by_TaskId
+} = require('../services/task')
+const {
+    get_tasker_for_revenue
+} = require('../services/tasker')
+const create_Revenue = async (req, res, task_id) => {
     try {
+        var payment = await getPayment_by_taskID(task_id)
+        const task = await get_Task_by_TaskId(task_id)
+        payment = payment.data
+        var tasker = await get_tasker_for_revenue(task.tasker_id)
+        tasker = tasker.data
         var taskerEarning = payment.total_price
         const companyRevenue = taskerEarning * 0.05; // 5% phí cho công ty
-
         const revenue = new Revenue(
             payment.payment_id,
-            task.task_id,
+            task_id,
             task.tasker_id,
             taskerEarning,
             companyRevenue  
@@ -22,7 +34,7 @@ const create_Revenue = async (payment, task, tasker) => {
         }
 
         // Update tasker income
-        const currentIncome = tasker.data[0].actual_income || 0;
+        const currentIncome = tasker.actual_income || 0;
         const update_income_tasker = await connection
             .from('Taskers')
             .update({actual_income: currentIncome + taskerEarning})

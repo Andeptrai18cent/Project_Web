@@ -259,6 +259,11 @@ async function loadTaskers(sortType) {
             task_infos[6].style.display = 'block';
             task_infos[6].innerHTML += `${Math.round(taskerEarning)} đồng`
           }
+          if (task.status=='Work_waiting')
+          {
+            task_infos[7].style.display = 'block'
+            task_infos[7].innerHTML += task.work_start_at
+          }
           list.appendChild(clon)
         });
       } catch (err) {

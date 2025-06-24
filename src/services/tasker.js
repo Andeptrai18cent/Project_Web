@@ -182,6 +182,18 @@ const update_Tasker_Info = async (req, res) => {
     return res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
+
+const get_tasker_for_revenue = async(tasker_id) =>
+{
+  const { data: tasker, error } = await connection
+    .from('Taskers')
+    .select('*')
+    .eq('tasker_id', tasker_id)
+    .single();
+  if (error)
+    return {success: false, error: error}
+  return {success: true, data: tasker}
+}
 module.exports = {
     get_Taskers_by_Service_group_id,
     get_Taskers_By_TaskCount,
@@ -189,5 +201,6 @@ module.exports = {
     create_New_Tasker,
     get_Tasker_By_Tasker_ID,
     update_Tasker_Info,
-    get_Taskers_by_Wage
+    get_Taskers_by_Wage,
+    get_tasker_for_revenue
 }

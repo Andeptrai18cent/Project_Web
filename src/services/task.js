@@ -242,5 +242,6 @@ module.exports = {
     post_working_end_at,
     get_Tasks_By_TaskerID_And_Status,
     get_Tasks_By_UserID_And_Status,
-    change_task_info
+    change_task_info,
+    get_Task_by_TaskId
 }

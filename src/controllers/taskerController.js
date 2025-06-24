@@ -17,6 +17,9 @@ const {
 const {
     get_Review_by_TaskId
 } = require('../services/review')
+const {
+    create_Revenue
+} = require('../services/revenue')
 const getBecomeTaskerForm = async (req, res) => {
     let result = await getAllServiceGroup()
     try
@@ -106,6 +109,9 @@ const confirmTaskPayment = async(req, res) => {
         const update_payment = await update_payment_date_by_taskID(req.query.task_id)
         if (!update_payment.succes)
             return res.send(update_payment.error)
+        const create_revenue = await create_Revenue(req, res, req.query.task_id)
+        if (!create_revenue.success)
+            return res.send(create_revenue.error)
         return res.send({ message: "Xác nhận đã thanh toán thành công",success: true})
     }
     else
