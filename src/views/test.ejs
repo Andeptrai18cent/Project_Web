@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up | Auth System</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">AuthSystem</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/login.html" class="nav-link">Login</a>
+        <a href="/signup.html" class="nav-link active">Sign up</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="auth-container">
+    <div class="auth-box">
+      <h2 class="auth-title">Create your account</h2>
+      <p class="auth-subtitle">
+        Or <a href="/login.html" class="link">sign in to your account</a>
+      </p>
+
+      <form id="signup-form" class="auth-form">
+        <div class="form-group">
+          <label for="fullName" class="form-label">Full Name</label>
+          <input type="text" id="fullName" name="fullName" class="form-input" required>
+          <p class="error-message" id="fullName-error"></p>
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" id="email" name="email" class="form-input" required>
+          <p class="error-message" id="email-error"></p>
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" id="password" name="password" class="form-input" required>
+          <p class="error-message" id="password-error"></p>
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" required>
+          <p class="error-message" id="confirmPassword-error"></p>
+        </div>
+
+        <button type="submit" id="signup-button" class="button primary full-width">
+          Sign up
+        </button>
+      </form>
+
+      <div id="general-error" class="alert error hidden">
+        <p id="general-error-message"></p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p class="footer-text">&copy; 2025 AuthSystem. All rights reserved.</p>
+  </footer>
+
+  <script src="/js/validation.js"></script>
+</body>
+</html>

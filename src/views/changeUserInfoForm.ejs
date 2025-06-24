@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thay đổi mật khẩu</title>
+    <link href="/css/changePassWordForm.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="container">
+        <div class="form-header">
+            <h1>Thay đổi thông tin</h1>
+            <p>Điền thông tin cần đổi ở đây</p>
+        </div>
+
+        <form id="changePasswordForm">
+            <div class="form-group">
+                <label for="new_email">Email</label>
+                <input type="text" id="new_email" name="email" required value="<%=user_info.email%>">
+            </div>
+            <div class="form-group">
+                <label for="new name">Họ và tên</label>
+                <input type="text" id="new name" name="name" required value="<%=user_info.name%>">
+            </div>
+            <div class="form-group">
+                <label for="new phone_number">Số điện thoại</label>
+                <input type="text" id="new phone_number" name="phone_number" required value="<%=user_info.phone_number%>">
+            </div>
+             <div class="form-group">
+                <label for="new address">Địa chỉ</label>
+                <input type="text" id="new address" name="address" required value="<%=user_info.address%>">
+            </div>                       
+            <button type="submit" class="submit-btn" id="submit-btn">Cập nhật thông tin</button>
+        </form>
+    <script src="/js/changeUserInfo.js"></script>
+</body>
+</html>

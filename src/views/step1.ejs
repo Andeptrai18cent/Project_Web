@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/step1.css" rel="stylesheet"/>
+    <title>Miêu tả công việc</title>
+</head>
+<body>
+  <div class="logo">Home-<span>Task</span></div>
+  <div class="intro_title">Vui lòng cung cấp thông tin về địa chỉ và công việc bạn cần</div>
+   <div class="task_title">Tên công việc</div>
+    <div class="box">
+      <form class="<%=service_id%>" id="form">
+        <label for="address" class="form_label">Nhập địa chỉ của bạn</label>
+          <br>
+            <input type="text" id="address" placeholder="Địa chỉ" required name="address">
+          <br>
+        <label class="form_label">Khối lượng công việc của bạn như thế nào?</label><br>
+          <input type="radio" id="small" name="workload" value="Ít, làm trong khoảng 1 tiếng">
+          <label for="small">Ít, làm trong khoảng 1 tiếng</label><br>
+          <input type="radio" id="medium" name="workload" value="Bình thường, làm trong khoảng 2 - 3 tiếng">
+          <label for="medium">Bình thường, làm trong khoảng 2 - 3 tiếng</label><br>
+          <input type="radio" id="large" name="workload" value="Nhiều, làm trong khoảng hơn 4 tiếng" required>
+          <label for="large">Nhiều, làm trong khoảng hơn 4 tiếng </label><br>
+        <label for="task_detail" class="form_label">Hãy miêu tả về công việc bạn cần</label><br>
+          <textarea placeholder="Miêu tả công việc bạn cần" name="task_description" required></textarea>
+          <button type="submit">Tiếp tục</button>
+       </form>
+    </div>
+    <script src="/js/book-tasker-step-1.js"></script>
+</body>
+</html>

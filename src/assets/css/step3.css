@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+body{
+    margin: 0;
+    font-family: "IBM Plex Sans", sans-serif;
+    background-color: #ffffff;
+}
+/* Header */
+.tasker_info{
+    margin-bottom: 24px;
+    padding: 24px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(191, 194, 193);
+    border-radius: 16px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 0px 10px 100px;
+}
+.logo span {
+    color: #007bff;
+}
+.intro_title{
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 0px 10px 100px;
+    border:1px solid #9095A0;
+}
+/* Header //*/
+
+/* Confirm page */
+.confirmed_page{
+    width: 100%;
+    text-align: center;
+}
+
+.return-homepage{
+    font-size: 16px;
+    font-weight: 600;
+    height: 43px;
+    color: rgb(255, 255, 255);
+    margin: 20px 0px;
+    text-decoration: none;
+    background: #0360D9;
+    border-radius: 1000px;
+    outline: revert;
+    padding: 12px 24px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #0360D9;
+    border-image: initial;
+}
+
+.return-homepage:hover{
+    background-color: #00377f;
+}
+/* Confirm page // */
