@@ -1,10 +1,20 @@
 const connection = require('../config/database')
 const express = require('express')
 const app = express()
-
+const jwt = require('jsonwebtoken')
+const user = require('../routes/user')
 const getHomePage = (req, res) => {
-    //console.log(res.header('auth-token'))
-    res.render('HomePage.ejs')
+    let user_id = '';
+    try{
+        const token = req.cookies.token;
+        if (token) {
+            user_id = jwt.verify(token, process.env.TOKEN_SECRET).user_id;
+        }
+    }
+    catch (err) {
+       user_id = '';
+    }
+    res.render('HomePage.ejs', {userId: user_id});
 }
 
 const getAboutPage = (req, res) => {

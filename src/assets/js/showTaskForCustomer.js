@@ -294,10 +294,8 @@ async function displayCurrentPage() {
         //Hiện số tiền cần thanh toán
         if (task.status=='Payment_waiting' || task.status=='Payment_Confirmation_waiting' || task.status=='Completed')
         {
-          console.log(task.task_id)
           const get_payment_res = await fetch(`http://localhost:8080/payment/get_by_task_id?task_id=${task.task_id}`)
           const get_payment = await get_payment_res.json()
-          console.log("KH: ", get_payment)
           var taskerEarning = 0
           if (get_payment.success)
             taskerEarning = Number(get_payment.data.total_price)

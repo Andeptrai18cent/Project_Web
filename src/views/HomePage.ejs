@@ -17,7 +17,8 @@
 <body>
     <nav class="navbar navbar-expand-lg fixed-top">
         <img class="logo" src="/Img/Group 30.svg" alt="Logo">
-            <div class="nav_link">
+            <div class="nav_link">   
+                <a href="/notifications/history" id = "Notification_Link">Notification</a>
                 <a href="/">Home</a>
                 <a href="/about">About</a>
                 <a href="/service">Service</a>
@@ -259,5 +260,16 @@
 <!-- Sau đó tải các file JavaScript của bạn -->
 <script src="/js/homepage.js"></script>
 <script src="/js/dropdown.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const userId = "<%= userId %>";
+    console.log("User ID phía client:", userId);
+    const socket = io();
+    socket.emit('join-room', `user-${userId}`);
+    socket.on('new-notification',function(data) {
+        console.log("Nhận thông báo mới:", data);
+        alert("Bạn có đơn hàng mới: " + data.message);
+    });
+</script>
 </body>
 </html>

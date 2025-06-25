@@ -41,7 +41,34 @@ const finishStep1OrderTask = async (req, res) => {
     return res.send(JSON.stringify(req.session.step1Data))
 }
 const postNewTask = async (req, res) => {
-    return res.send(JSON.stringify(await create_Task(req ,req.body)))
+  const result = await create_Task(req, req.body);
+
+    if(result.success && result.data && result.data.tasker_id) {
+        const io = req.app.get('io');
+        const tasker_id = result.data.tasker_id;
+        const { data: taskerData, error } = await connection
+            .from('Taskers')
+            .select('user_id')
+            .eq('tasker_id', tasker_id)
+            .single();
+
+        if (error || !taskerData) {
+            console.error("Không tìm thấy user_id của tasker:", error);
+        } else {
+            const tasker_user_id = taskerData.user_id;
+            // Gửi notification tới room user-<tasker_user_id>
+            io.to(`user-${tasker_user_id}`).emit('new-notification', {
+                type: 'new_order',
+                message: 'Bạn có một đơn hàng mới',
+                task_id: result.data.task_id,
+                service_id: result.data.service_id,
+                time: new Date(),
+                status: result.data.status
+            });
+            console.log(`Đã gửi notification tới room user-${tasker_user_id}`);
+        }
+    }
+    return res.json(result);
 }
 
 const putTaskStatus = async (req, res) => {

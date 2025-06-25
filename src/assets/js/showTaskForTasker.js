@@ -1,3 +1,135 @@
+// ================== PHÂN TRANG - CHỈ THÊM CODE NÀY ==================
+let currentPage = 1;
+let itemsPerPage = 6; // Số task/trang
+let allTasks = [];    // Toàn bộ danh sách task
+
+function createPaginationControls(totalItems, currentPage, itemsPerPage) {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    let paginationContainer = document.getElementById('pagination-container');
+    if (!paginationContainer) {
+        paginationContainer = document.createElement('div');
+        paginationContainer.id = 'pagination-container';
+        paginationContainer.className = 'pagination-container';
+        const ordersContainer = document.getElementById('task_container');
+        ordersContainer.parentNode.insertBefore(paginationContainer, ordersContainer.nextSibling);
+    }
+    paginationContainer.innerHTML = '';
+    if (totalPages <= 1) return;
+    const paginationHTML = `
+        <div class="pagination-info">
+            <span>Hiển thị ${Math.min((currentPage - 1) * itemsPerPage + 1, totalItems)}-${Math.min(currentPage * itemsPerPage, totalItems)} của ${totalItems} tasks</span>
+        </div>
+        <div class="pagination-controls">
+            <button class="pagination-btn" id="prev-btn" ${currentPage === 1 ? 'disabled' : ''}>
+                <i class="fas fa-chevron-left"></i>
+                Trước
+            </button>
+            <div class="pagination-pages" id="pagination-pages"></div>
+            <button class="pagination-btn" id="next-btn" ${currentPage === totalPages ? 'disabled' : ''}>
+                Sau
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    `;
+    paginationContainer.innerHTML = paginationHTML;
+    const pagesContainer = document.getElementById('pagination-pages');
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    if (endPage - startPage + 1 < maxVisiblePages) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    if (startPage > 1) {
+        pagesContainer.innerHTML += `<button class="pagination-number" data-page="1">1</button>`;
+        if (startPage > 2) {
+            pagesContainer.innerHTML += `<span class="pagination-ellipsis">...</span>`;
+        }
+    }
+    for (let i = startPage; i <= endPage; i++) {
+        pagesContainer.innerHTML += `
+            <button class="pagination-number ${i === currentPage ? 'active' : ''}" data-page="${i}">
+                ${i}
+            </button>
+        `;
+    }
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            pagesContainer.innerHTML += `<span class="pagination-ellipsis">...</span>`;
+        }
+        pagesContainer.innerHTML += `<button class="pagination-number" data-page="${totalPages}">${totalPages}</button>`;
+    }
+    document.getElementById('prev-btn').addEventListener('click', () => {
+        if (currentPage > 1) {
+            goToPage(currentPage - 1);
+        }
+    });
+    document.getElementById('next-btn').addEventListener('click', () => {
+        if (currentPage < totalPages) {
+            goToPage(currentPage + 1);
+        }
+    });
+    document.querySelectorAll('.pagination-number').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const page = parseInt(e.target.dataset.page);
+            goToPage(page);
+        });
+    });
+}
+function goToPage(page) {
+    currentPage = page;
+    displayCurrentPage();
+    document.getElementById('task_container').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+}
+async function displayCurrentPage() {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const tasksToShow = allTasks.slice(startIndex, endIndex);
+
+    const list = document.getElementById("task_container");
+    list.innerHTML = '';
+    for (const task of tasksToShow) {
+        let temp = document.getElementsByTagName("template")[0];
+        let clon = temp.content.cloneNode(true);
+        const response_service = await fetch(`http://localhost:8080/service-info/${task.service_id}`)
+        const service_data = await response_service.json()
+        const response_user = await fetch(`http://localhost:8080/user/user-info/${task.user_id}`)
+        const user_data = await response_user.json()
+        var btn = await getButtonForTask(task.status)
+        if (btn) {
+            btn.addEventListener('click', () => {
+                overlay.style.display = 'flex';
+                changePopUp(task.status, task.task_id)
+            });
+            clon.querySelector(".order-card").appendChild(btn)
+        }
+        var task_infos = clon.querySelectorAll(".order-info")
+        task_infos[0].innerHTML += service_data.name
+        task_infos[1].innerHTML += user_data.name
+        task_infos[2].innerHTML += user_data.phone_number
+        task_infos[3].innerHTML += task.location
+        task_infos[4].innerHTML += task.description
+        task_infos[5].innerHTML += task.task_date
+        if (task.status=='Payment_waiting' || task.status=='Payment_Confirmation_waiting')
+        {
+            const response_tasker = await fetch(`http://localhost:8080/tasker-info/${task.tasker_id}`);
+            const tasker_data = await response_tasker.json();
+            const start_work = new Date(task.work_start_at)
+            const end_work = new Date(task.work_end_at)
+            const diffInMs = end_work - start_work;
+            const diffInMinutes = Math.round(diffInMs / (1000 * 60));
+            const diffInHours = diffInMinutes / 60;
+            var taskerEarning = tasker_data.hourly_rate * diffInHours;
+            task_infos[6].style.display = 'block';
+            task_infos[6].innerHTML += `${Math.round(taskerEarning)} đồng`
+        }
+        list.appendChild(clon)
+    }
+    createPaginationControls(allTasks.length, currentPage, itemsPerPage);
+}
+// ================== KẾT THÚC PHÂN TRANG ==================
 // Xử lý khi nhấn pop-up
 const overlay = document.querySelector('.pop_up_btn_task_overlay');
 const closeBtn = document.querySelector('.pop_up_btn_task_close');
